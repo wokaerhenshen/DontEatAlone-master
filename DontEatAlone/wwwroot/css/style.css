@@ -1,0 +1,175 @@
+﻿
+
+body{
+ right: 0; bottom: 0;
+ left: 0;
+}
+
+.main_bar{
+	width: 100%;
+	height: 800px;
+	background-image: url(../images/home.jpg);
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: white;
+
+}
+
+.main_bar_title_1{
+	clear: both;
+	text-align: center;
+	font-size: 60px;
+	display: block;
+	padding-top: 100px;
+	font-family: 'Playfair Display', serif;
+}
+
+.small_bar{
+	height: 350px;
+	background-image: url(../images/sub8.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+   
+}
+
+.main_nav_bar a:hover{
+	color: gray;
+	-webkit-transition: color 0.6s linear;
+}
+
+#back{
+	margin-right: 20%;
+	margin-left: 20%;  
+}
+
+#back:hover{
+	opacity: 0.5;
+	-webkit-transition: opacity 0.6s linear;
+}
+
+.main_bar ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 42px;
+}
+
+.main_bar li {
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+}
+
+.main_bar a {
+	width: 8%;
+	margin-top: 50px;
+	font-size:14px;
+	float: left;
+	display: block;
+	height: 42px;
+	text-decoration: none;
+	text-align: center;
+	line-height: 42px;
+	color: white;
+	
+
+}
+
+
+.main_body{
+	width: 100%;
+	height: 800px;
+   
+}
+
+.content{
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+   
+}
+
+footer{
+	clear: both;
+	width: 100%;
+	height: 500px;
+	background-image: url(../images/bcg.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	color: white;
+	font-size: 15px;
+}
+
+
+
+.footer_content{
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#foot_logos{
+	margin-top: 15%;
+}
+
+#foot_back{
+	width: 15%;
+	margin-left: 60%;    
+}
+
+#foot_address{
+	margin-top: 8%;
+	font-family: 'Raleway', sans-serif;
+}
+
+.foot_copyright{
+	width: 31%;
+	float: left;
+	font-size: 9px;
+	margin-top: 7%;
+}
+
+.foot_nav{
+	width: 60%;
+	float: left;
+	margin-top: 7%;
+	margin-left: 1
+}
+
+.foot_nav ul{
+	list-style: none;    
+}
+
+.foot_nav li {
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+}
+
+.foot_nav a {
+	font-size: 12px;
+	width: 25%;
+	float: left;
+	display: block;
+	text-decoration: none;
+	text-align: center;
+	color: white;
+	
+
+}
+
+
+.foot_nav a:hover{
+	color: gray;
+	-webkit-transition: color 0.6s linear;
+}
+
+#foot_logos:hover{
+	opacity: 0.5;
+	-webkit-transition: opacity 0.3s linear;
+}
+
+#foot_back:hover{
+	opacity: 0.5;
+	-webkit-transition: opacity 0.3s linear;
+}
+

@@ -1,0 +1,72 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "CreateReservation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<style>
+    .comment-wrapper .panel-body {
+        overflow: auto;
+    }
+
+    .comment-wrapper .media-list .media img {
+        height: 64px;
+        border: 2px solid #e5e7e8;
+    }
+
+    .comment-wrapper .media-list .media {
+        border-bottom: 1px dashed #efefef;
+        margin-bottom: 25px;
+    }
+</style>*@
+
+<h2>Create a Reservation</h2>
+
+<img src="~/images/view_reservations_map.JPG" class="img-responsive" alt="Cinque Terre">
+<h3 style="text-align: center">Use the map to select your restaurant</h3>
+<br />
+<input class="form-control" placeholder="Selected Restaurant" type="text" />
+<br />
+<p><strong>Date: <input id="date" type="date">   Start Time: <input id="starttime" type="time"> End Time: <input id="endtime" type="time"></strong></p>
+@{
+
+    if (!HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+    {
+        <p>Party Size: <input type="radio" name="partysize" value="two" checked="checked"> 2*</p>
+        <p>Limitations: **</p>
+    }
+    else
+    {
+        <p>
+            Party Size:
+            <select>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        </p>
+        <p>
+            Limitations:
+            <span><textarea class="form-control" placeholder="" type="text" rows="6" cols="100"></textarea></span>
+        </p>
+    }
+
+}
+
+<br />
+<textarea class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
+<br />
+<button style="position:relative">Make Reservation</button>
+
+@if (ViewData["UserType"].Equals("regular"))
+{
+    <div class="footnotes">
+        <h6>* Regular Users are limited to a party size of 2.</h6>
+        <h6>** Specifying limitations is a premium feature.</h6>
+    </div>
+}
