@@ -17,10 +17,6 @@ using Microsoft.AspNetCore.Http;
 
 namespace DontEatAlone.Controllers
 {
-
-   
-
-
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
@@ -31,7 +27,7 @@ namespace DontEatAlone.Controllers
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        
+
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -68,7 +64,7 @@ namespace DontEatAlone.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-              //  Address = user.Address,
+                //  Address = user.Address,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
@@ -138,16 +134,9 @@ namespace DontEatAlone.Controllers
                                      Response);
 
             cookieHelper.Remove(CookieHelper.USER_NAME);
-            cookieHelper.Set(CookieHelper.USER_NAME,"Prime",1);
-            return RedirectToAction("Index","Manage");
+            cookieHelper.Set(CookieHelper.USER_NAME, "Prime", 1);
+            return RedirectToAction("Index", "Manage");
         }
-
-        //[HttpPost]
-        //public IActionResult SignUp(bool usertype)
-        //{
-        //    return View();
-        //}
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
