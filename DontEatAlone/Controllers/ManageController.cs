@@ -14,6 +14,8 @@ using DontEatAlone.Models;
 using DontEatAlone.Models.ManageViewModels;
 using DontEatAlone.Services;
 using Microsoft.AspNetCore.Http;
+using DontEatAlone.Repo;
+using System.Web;
 
 namespace DontEatAlone.Controllers
 {
@@ -27,6 +29,7 @@ namespace DontEatAlone.Controllers
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private IServiceProvider _serviceProvider;
 
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -37,6 +40,7 @@ namespace DontEatAlone.Controllers
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
+          IServiceProvider serviceProvider,
           IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
@@ -45,6 +49,7 @@ namespace DontEatAlone.Controllers
             _logger = logger;
             _urlEncoder = urlEncoder;
             this._httpContextAccessor = httpContextAccessor;
+            _serviceProvider = serviceProvider;
         }
 
         [TempData]
@@ -119,22 +124,44 @@ namespace DontEatAlone.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignDown()
+        public async Task<IActionResult> SignDown()
         {
+            //We use cookie before but now I comment them
             CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
                          Response);
             cookieHelper.Remove(CookieHelper.USER_NAME);
+
+            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+            var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
+                                          "Preminm");
+
+            var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
+                                                      "Regular");
+
+            ViewBag.status = "Regular";
+
             return RedirectToAction("Index", "Manage");
         }
 
         [HttpGet]
-        public IActionResult FinishSignUp()
+        public async Task<IActionResult> FinishSignUp()
         {
+            
             CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
                                      Response);
 
             cookieHelper.Remove(CookieHelper.USER_NAME);
             cookieHelper.Set(CookieHelper.USER_NAME, "Prime", 1);
+
+            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+
+
+            var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
+                              "Regular");
+            var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
+                                                      "Preminm");
+           // FormsAuthentication.SignOut();
+
             return RedirectToAction("Index", "Manage");
         }
 

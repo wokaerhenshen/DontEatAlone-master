@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using DontEatAlone.Models;
 using DontEatAlone.Models.AccountViewModels;
 using DontEatAlone.Services;
+using DontEatAlone.Data;
+using DontEatAlone.Repo;
 
 namespace DontEatAlone.Controllers
 {
@@ -24,17 +26,23 @@ namespace DontEatAlone.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        public ApplicationDbContext _context;
+        private IServiceProvider _serviceProvider;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+             ApplicationDbContext context,
+            ILogger<AccountController> logger,
+            IServiceProvider serviceProvider)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
+            _serviceProvider = serviceProvider;
         }
 
         [TempData]
@@ -226,11 +234,17 @@ namespace DontEatAlone.Controllers
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+
+                    var addUR = await userRoleRepo.AddUserRole(model.Email,
+                                                              "Regular");
+                    ViewBag.status = "Regular";
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                   // await _signInManager.SignInAsync(user, isPersistent: false);
+                  //  await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
