@@ -28,7 +28,8 @@
     <div class="col-md-6">
         <div>Status</div>
         @{
-            if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+           // if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+           if (User.IsInRole("Preminm"))
             {
 
                 <div>Prime User</div>

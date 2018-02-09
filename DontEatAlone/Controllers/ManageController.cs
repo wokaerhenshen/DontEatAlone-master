@@ -127,9 +127,9 @@ namespace DontEatAlone.Controllers
         public async Task<IActionResult> SignDown()
         {
             //We use cookie before but now I comment them
-            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
-                         Response);
-            cookieHelper.Remove(CookieHelper.USER_NAME);
+            //CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+            //             Response);
+            //cookieHelper.Remove(CookieHelper.USER_NAME);
 
             UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
             var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
@@ -138,7 +138,12 @@ namespace DontEatAlone.Controllers
             var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
                                                       "Regular");
 
+            
             ViewBag.status = "Regular";
+
+            await _signInManager.SignOutAsync();
+            var user = await _userManager.GetUserAsync(User);
+            await _signInManager.SignInAsync(user, false, null);
 
             return RedirectToAction("Index", "Manage");
         }
@@ -147,11 +152,11 @@ namespace DontEatAlone.Controllers
         public async Task<IActionResult> FinishSignUp()
         {
             
-            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
-                                     Response);
+            //CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+            //                         Response);
 
-            cookieHelper.Remove(CookieHelper.USER_NAME);
-            cookieHelper.Set(CookieHelper.USER_NAME, "Prime", 1);
+            //cookieHelper.Remove(CookieHelper.USER_NAME);
+            //cookieHelper.Set(CookieHelper.USER_NAME, "Prime", 1);
 
             UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
 
@@ -160,7 +165,10 @@ namespace DontEatAlone.Controllers
                               "Regular");
             var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
                                                       "Preminm");
-           // FormsAuthentication.SignOut();
+            // FormsAuthentication.SignOut();
+            await _signInManager.SignOutAsync();
+            var user = await _userManager.GetUserAsync(User);
+            await _signInManager.SignInAsync(user, false, null);
 
             return RedirectToAction("Index", "Manage");
         }
