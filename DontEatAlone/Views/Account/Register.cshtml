@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+<head>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
@@ -46,6 +48,16 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
+
+            @*This don't need to be clicked at this time, need to fix in the future.
+              follow the doc in pat's websecurity 1 .  
+                *@
+            <div class="g-recaptcha" data-sitekey="6LdqLkYUAAAAAFnx8Zk4hCba-qUH6RIber1ZSYK1"></div>
+           
+                        @*
+        <div class="g-recaptcha" data-sitekey="6LfWdUMUAAAAAFcRp28GqcVQcetKrSN7HClg2VEJ"></div>
+                        *@
+            <br />
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>
@@ -53,4 +65,5 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
 }
