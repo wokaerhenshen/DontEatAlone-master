@@ -15,7 +15,7 @@ namespace DontEatAlone.Controllers
     // The annotation could include a comma separated list or different
     // roles.
     //[Authorize(Roles = "Admin")]
-      //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserRoleController : Controller
     {
         private ApplicationDbContext _context;
