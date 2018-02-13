@@ -79,7 +79,7 @@ namespace DontEatAlone
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            app.UseCors("AllowAll");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
