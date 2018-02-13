@@ -1,4 +1,5 @@
-﻿using DontEatAlone.Models;
+﻿using DontEatAlone.Data;
+using DontEatAlone.Models;
 using DontEatAlone.Models.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,10 +13,12 @@ namespace DontEatAlone.Repo
     public class UserRoleRepository
     {
         IServiceProvider serviceProvider;
+        ApplicationDbContext _context;
 
-        public UserRoleRepository(IServiceProvider serviceProvider)
+        public UserRoleRepository(IServiceProvider serviceProvider, ApplicationDbContext context)
         {
             this.serviceProvider = serviceProvider;
+            this._context = context;
         }
 
         // Assign a role to a user.
@@ -26,7 +29,12 @@ namespace DontEatAlone.Repo
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
-                await UserManager.AddToRoleAsync(user, roleName);
+                _context.UserRoles.Add(new IdentityUserRole<string>() {
+                    UserId= user.Id,
+                    RoleId = roleName
+                });
+                _context.SaveChanges();
+                //await UserManager.AddToRoleAsync(user, roleName);
             }
             return true;
         }
@@ -39,7 +47,9 @@ namespace DontEatAlone.Repo
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
-                await UserManager.RemoveFromRoleAsync(user, roleName);
+                _context.UserRoles.Remove(_context.UserRoles.Where(i => i.UserId == user.Id && i.RoleId == roleName).FirstOrDefault());
+                _context.SaveChanges();
+               // await UserManager.RemoveFromRoleAsync(user, roleName);
             }
             return true;
         }

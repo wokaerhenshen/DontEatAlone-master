@@ -234,7 +234,7 @@ namespace DontEatAlone.Controllers
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+                    UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
 
                     var addUR = await userRoleRepo.AddUserRole(model.Email,
                                                               "Regular");
