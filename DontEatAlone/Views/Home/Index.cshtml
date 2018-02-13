@@ -39,12 +39,28 @@
             </div>
         </div>
     }
+
     <div class="row" id="box-search">
         <div class="thumbnail text-center">
             <img src="~/images/donteatalone.jpeg" alt="Sample Photo" class="img-responsive" />
         </div>
     </div>
+
     <footer>
+        @*Project Documentation Links*@
+        <div class="dropup">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                Documentation
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="~/doc/Application Summary.docx">Application Summary</a></li>
+                <li><a href="~/doc/Functional Requirements.docx">Functional Requirements</a></li>
+                <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram</a></li>
+                <li><a href="~/doc/ERD.png">ERD</a></li>
+            </ul>
+        </div>
+
         <div class="row justify-content-between">
             <div class="col-xs-2 text-center">
                 <p>Connect with us via social media!  </p>
@@ -55,10 +71,9 @@
                 <button style="font-size:24px" onclick="relocate_flickr()"> <i class="fa fa-flickr"></i></button>
                 <button style="font-size:24px" onclick="relocate_vimeo()"> <i class="fa fa-vimeo-square"></i></button>
             </div>
+
             <div class="col-sm-push-9 text-right">
-
                 <p>&copy; 2017</p>
-
             </div>
         </div>
     </footer>
@@ -84,9 +99,6 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-
 </body>
 
 </html>
-
-
