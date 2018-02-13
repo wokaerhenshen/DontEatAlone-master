@@ -15,7 +15,7 @@ namespace DontEatAlone.Controllers
     // The annotation could include a comma separated list or different
     // roles.
     //[Authorize(Roles = "Admin")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UserRoleController : Controller
     {
         private ApplicationDbContext _context;
@@ -38,7 +38,7 @@ namespace DontEatAlone.Controllers
         // Show all roles for a specific user.
         public async Task<IActionResult> Detail(string userName)
         {
-            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
             var roles = await userRoleRepo.GetUserRoles(userName);
             ViewBag.UserName = userName;
             return View(roles);
@@ -95,7 +95,7 @@ namespace DontEatAlone.Controllers
         [HttpPost]
         public async Task<IActionResult> Assign(UserRoleVM userRoleVM)
         {
-            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
 
             if (ModelState.IsValid)
             {

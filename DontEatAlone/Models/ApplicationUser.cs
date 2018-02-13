@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using DontEatAlone.Data;
 
 namespace DontEatAlone.Models
 {
@@ -10,5 +11,6 @@ namespace DontEatAlone.Models
     public class ApplicationUser : IdentityUser
     {
        // public string Address { get; set; }
+       public virtual User User { get; set; }
     }
 }

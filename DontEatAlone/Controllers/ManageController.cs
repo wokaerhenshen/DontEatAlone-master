@@ -16,6 +16,7 @@ using DontEatAlone.Services;
 using Microsoft.AspNetCore.Http;
 using DontEatAlone.Repo;
 using System.Web;
+using DontEatAlone.Data;
 
 namespace DontEatAlone.Controllers
 {
@@ -30,6 +31,7 @@ namespace DontEatAlone.Controllers
         private readonly UrlEncoder _urlEncoder;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IServiceProvider _serviceProvider;
+        public ApplicationDbContext _context;
 
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -41,7 +43,8 @@ namespace DontEatAlone.Controllers
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
           IServiceProvider serviceProvider,
-          IHttpContextAccessor httpContextAccessor)
+          IHttpContextAccessor httpContextAccessor,
+          ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -50,6 +53,7 @@ namespace DontEatAlone.Controllers
             _urlEncoder = urlEncoder;
             this._httpContextAccessor = httpContextAccessor;
             _serviceProvider = serviceProvider;
+            _context = context;
         }
 
         [TempData]
@@ -131,7 +135,7 @@ namespace DontEatAlone.Controllers
             //             Response);
             //cookieHelper.Remove(CookieHelper.USER_NAME);
 
-            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
             var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
                                           "Preminm");
 
@@ -158,7 +162,7 @@ namespace DontEatAlone.Controllers
             //cookieHelper.Remove(CookieHelper.USER_NAME);
             //cookieHelper.Set(CookieHelper.USER_NAME, "Prime", 1);
 
-            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider);
+            UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
 
 
             var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
