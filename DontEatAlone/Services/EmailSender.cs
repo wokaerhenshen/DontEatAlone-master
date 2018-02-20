@@ -48,7 +48,7 @@ namespace DontEatAlone.Services
 
 				//need to cahnge this when use in case
 				System.Net.NetworkCredential credentials
-				= new System.Net.NetworkCredential("wokaerhenshen", "xuwenjie410");
+				= new System.Net.NetworkCredential("Veetreos", "123456789Fs");
 
 				smtpClient.Credentials = credentials;
 				smtpClient.Send(mailMsg);
