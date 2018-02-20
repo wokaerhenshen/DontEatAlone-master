@@ -38,6 +38,11 @@ namespace DontEatAlone
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
+            });
+
             services.AddIdentity<ApplicationUser, IdentityRole>(
                     config =>
                     {
@@ -96,7 +101,7 @@ namespace DontEatAlone
 
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseAuthentication();
             app.UseCors("AllowAll");
             app.UseMvc(routes =>
