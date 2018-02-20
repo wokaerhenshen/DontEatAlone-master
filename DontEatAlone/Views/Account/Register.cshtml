@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+<head>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
@@ -46,11 +48,25 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+
+            @*For azure recaptcha:6LdqLkYUAAAAAFnx8Zk4hCba-qUH6RIber1ZSYK1
+            *@
+            <div class="g-recaptcha" data-sitekey="6LfWdUMUAAAAAFcRp28GqcVQcetKrSN7HClg2VEJ" data-callback="recaptcha_callback"></div>
+            <script type="text/javascript">
+                           function recaptcha_callback() {
+                               $('#sell_house_submit').removeAttr('disabled');
+                           };
+            </script>
+                        @*
+        <div class="g-recaptcha" data-sitekey="6LfWdUMUAAAAAFcRp28GqcVQcetKrSN7HClg2VEJ"></div>
+                        *@
+            <br />
+            <button type="submit" class="btn btn-default" disabled="disabled" id="sell_house_submit">Register</button>
         </form>
     </div>
 </div>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
 }

@@ -31,7 +31,7 @@
 <p><strong>Date: <input id="date" type="date">   Start Time: <input id="starttime" type="time"> End Time: <input id="endtime" type="time"></strong></p>
 @{
 
-    if (!HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+     if (User.IsInRole("Regular"))
     {
         <p>Party Size: <input type="radio" name="partysize" value="two" checked="checked"> 2*</p>
         <p>Limitations: **</p>
@@ -63,7 +63,7 @@
 <br />
 <button style="position:relative">Make Reservation</button>
 
-@if (ViewData["UserType"].Equals("regular"))
+@if (User.IsInRole("Regular"))
 {
     <div class="footnotes">
         <h6>* Regular Users are limited to a party size of 2.</h6>
