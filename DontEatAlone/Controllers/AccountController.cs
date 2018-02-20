@@ -29,6 +29,8 @@ namespace DontEatAlone.Controllers
         private readonly ILogger _logger;
         public ApplicationDbContext _context;
         private IServiceProvider _serviceProvider;
+        private ReservationRepository rr;
+        private int ReservationId;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -43,6 +45,7 @@ namespace DontEatAlone.Controllers
             _emailSender = emailSender;
             _logger = logger;
             _context = context;
+            this.rr = new ReservationRepository(_context);
             _serviceProvider = serviceProvider;
         }
 
@@ -256,7 +259,23 @@ namespace DontEatAlone.Controllers
 
                     _context.SaveChanges();
 
-                    //_context.Reservation.Add
+                    _context.Reservation.Add(new Reservation
+                    {
+                        id = rr.GenerateReservationId(),
+                        title = "my_test_reservation"
+                    });
+
+                    this.ReservationId = rr.GenerateReservationId();
+                    _context.SaveChanges();
+
+                    _context.UserReservation.Add(new UserReservation
+                    {
+                        userID = user.Id,
+                        reservationID = ReservationId,
+                        isHost = true
+                    });
+
+                    _context.SaveChanges();
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);

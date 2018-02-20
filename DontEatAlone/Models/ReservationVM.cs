@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DontEatAlone.Models
 {
-    public class Reservation
+    public class ReservationVM
     {
         public int ID { get; set; }
         public string Title { get; set; }

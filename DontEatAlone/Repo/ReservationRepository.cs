@@ -1,4 +1,5 @@
-﻿using DontEatAlone.Models;
+﻿using DontEatAlone.Data;
+using DontEatAlone.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +9,37 @@ namespace DontEatAlone.Repo
 {
     public class ReservationRepository
     {
-        public List<Reservation> GetAllReservations()
+
+        ApplicationDbContext _context;
+
+        public ReservationRepository(ApplicationDbContext context)
         {
-            return new List<Reservation>();
+            _context = context;
         }
 
-        public Reservation GetReservation(int id)
+        public List<ReservationVM> GetAllReservations()
         {
-            return new Reservation();
+            return new List<ReservationVM>();
         }
 
-        public bool UpdateReservation(Reservation r)
+        public int GenerateReservationId()
+        {
+            if (_context.Reservation.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return _context.Reservation.Select(o => o.id).Max() + 1;
+            }
+        }
+
+        public ReservationVM GetReservation(int id)
+        {
+            return new ReservationVM();
+        }
+
+        public bool UpdateReservation(ReservationVM r)
         {
             return true;
         }
@@ -28,7 +49,7 @@ namespace DontEatAlone.Repo
             return true;
         }
 
-        public bool CreateReservation(Reservation r)
+        public bool CreateReservation(ReservationVM r)
         {
             return true;
         }
