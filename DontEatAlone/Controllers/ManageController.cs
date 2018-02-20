@@ -137,7 +137,7 @@ namespace DontEatAlone.Controllers
 
             UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
             var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
-                                          "Preminm");
+                                          "Premium");
 
             var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
                                                       "Regular");
@@ -168,7 +168,7 @@ namespace DontEatAlone.Controllers
             var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
                               "Regular");
             var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
-                                                      "Preminm");
+                                                      "Premium");
             // FormsAuthentication.SignOut();
             await _signInManager.SignOutAsync();
             var user = await _userManager.GetUserAsync(User);

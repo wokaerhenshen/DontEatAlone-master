@@ -49,10 +49,9 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
-            @*This don't need to be clicked at this time, need to fix in the future.
-              follow the doc in pat's websecurity 1 .  
-                *@
-            <div class="g-recaptcha" data-sitekey="6LdqLkYUAAAAAFnx8Zk4hCba-qUH6RIber1ZSYK1" data-callback="recaptcha_callback"></div>
+            @*For azure recaptcha:6LdqLkYUAAAAAFnx8Zk4hCba-qUH6RIber1ZSYK1
+            *@
+            <div class="g-recaptcha" data-sitekey="6LfWdUMUAAAAAFcRp28GqcVQcetKrSN7HClg2VEJ" data-callback="recaptcha_callback"></div>
             <script type="text/javascript">
                            function recaptcha_callback() {
                                $('#sell_house_submit').removeAttr('disabled');

@@ -238,7 +238,16 @@ namespace DontEatAlone.Controllers
 
                     var addUR = await userRoleRepo.AddUserRole(model.Email,
                                                               "Regular");
-                    ViewBag.status = "Regular";
+                    //ViewBag.status = "Regular";
+
+                    _context.User.Add(new User
+                    {
+                        Id = user.Id
+                    });
+
+                    _context.SaveChanges();
+
+                    //_context.Reservation.Add
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);

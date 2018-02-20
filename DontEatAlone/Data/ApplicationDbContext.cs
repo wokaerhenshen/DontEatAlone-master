@@ -54,12 +54,19 @@ namespace DontEatAlone.Data
                 .HasForeignKey(fk => new { fk.reservationID })
                 .OnDelete(DeleteBehavior.Restrict);
 
-
-
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Reservation> Reservation { get; set; }
+        public DbSet<UserReservation> UserReservation { get; set; }
+        public DbSet<Limitations> Limitations { get; set; }
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<PremiumSubscription> PremiumSubscription { get; set; }
+
     }
 }

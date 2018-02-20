@@ -29,14 +29,14 @@ namespace DontEatAlone.Controllers
 
         public IActionResult CreateReservation()
         {
-            ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
+           // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             return View();
         }
 
         public IActionResult ViewReservations()
         {
             
-            ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
+           // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             return View();
         }
 
