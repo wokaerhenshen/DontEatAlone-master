@@ -17,7 +17,7 @@ namespace DontEatAlone.Controllers
         public IActionResult CreateReservation(string title, long dateStart, long dateEnd, int peopleNumber, string status, string locationID)
         {
             return new ObjectResult(
-                new Reservation()
+                new ReservationVM()
                 {
                     ID = 1,
                     Title = title,
@@ -33,14 +33,14 @@ namespace DontEatAlone.Controllers
         [Route("Get/{id}")]
         public IActionResult GetReservation(int id)
         {
-            return new OkObjectResult(new Reservation());
+            return new OkObjectResult(new ReservationVM());
         }
 
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAllReservations()
         {
-            return new OkObjectResult(new List<Reservation>() { new Reservation(), new Reservation(), new Reservation() });
+            return new OkObjectResult(new List<ReservationVM>() { new ReservationVM(), new ReservationVM(), new ReservationVM() });
         }
 
         [HttpPut]
@@ -48,7 +48,7 @@ namespace DontEatAlone.Controllers
         public IActionResult UpdateReservation(int id, string title, long dateStart, long dateEnd, int peopleNumber, string status, string locationID)
         {
             return new ObjectResult(
-                new Reservation()
+                new ReservationVM()
                 {
                     ID = id,
                     Title = title,
