@@ -15,6 +15,7 @@ using DontEatAlone.Models.AccountViewModels;
 using DontEatAlone.Services;
 using DontEatAlone.Data;
 using DontEatAlone.Repo;
+using Microsoft.AspNetCore.Http;
 
 namespace DontEatAlone.Controllers
 {
@@ -70,6 +71,11 @@ namespace DontEatAlone.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+              const  string SESSION_LOGIN_ATTEMPTS="Attempts Count";
+              
+
+                if (!ModelState.IsValid)
+                    return View();
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
@@ -89,6 +95,9 @@ namespace DontEatAlone.Controllers
                 }
                 else
                 {
+                    
+                    string countsValue =  HttpContext.Session.GetString(SESSION_LOGIN_ATTEMPTS);
+                    System.Threading.Thread.Sleep(2000); // Add two second delay
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
