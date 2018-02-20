@@ -15,6 +15,11 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        public IActionResult APIDocs()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             return View();
