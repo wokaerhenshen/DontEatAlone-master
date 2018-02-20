@@ -21,7 +21,7 @@
             <input class="form-control" placeholder="Enter keyword..." type="text" />
         </div>
     </div>
-    @if (ViewData["UserType"].Equals("premium"))
+    @if (User.IsInRole("Regular"))
     {
         <div class="form-group row">
             <div class="col-md-12">
@@ -263,7 +263,7 @@
         </tr>
     </tbody>
 </table>
-@if (ViewData["UserType"].Equals("regular"))
+@if (User.IsInRole("Regular"))
 {
     <div class="footnotes">
         <h6>* Specifying limitations is a premium feature.</h6>
