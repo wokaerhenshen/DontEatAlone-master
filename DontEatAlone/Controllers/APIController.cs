@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DontEatAlone.Models;
+using DontEatAlone.Models.AccountViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,6 +64,20 @@ namespace DontEatAlone.Controllers
         [HttpDelete]
         [Route("Delete/{id}")]
         public IActionResult DeleteReservation(int id)
+        {
+            return new OkObjectResult(true);
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public IActionResult Login(LoginViewModel model)
+        {
+            return new OkObjectResult(true);
+        }
+
+        [HttpPost]
+        [Route("Signup")]
+        public IActionResult Signup(RegisterViewModel model)
         {
             return new OkObjectResult(true);
         }
