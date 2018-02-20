@@ -59,21 +59,31 @@
                 <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram</a></li>
                 <li><a href="~/doc/ERD.png">ERD</a></li>
             </ul>
+
+            @*Default Login Account info*@
+            <span>
+                <label for="loginExample">Default login info:</label>
+                <label for="exampleInputEmail1">test@user.com</label>
+                <label for="exampleInputPassword1">, Bcit123!</label>
+            </span>
+            <p>
+                <strong>
+                    Last updated: (2018-02-20 3:30 PM)
+                </strong>
+            </p>
+
         </div>
 
-        <div class="row justify-content-between">
-            <div class="col-xs-2 text-center">
-                <p>Connect with us via social media! (2018-02-13 3:26 PM) </p>
-
-                <button style="font-size:24px" onclick="relocate_facebook()"> <i class="fa fa-facebook-official"></i></button>
-                <button style="font-size:24px" onclick="relocate_instagram()"> <i class="fa fa-instagram"></i></button>
-                <button style="font-size:24px" onclick="relocate_twitter()"> <i class="fa fa-twitter-square"></i></button>
-                <button style="font-size:24px" onclick="relocate_flickr()"> <i class="fa fa-flickr"></i></button>
-                <button style="font-size:24px" onclick="relocate_vimeo()"> <i class="fa fa-vimeo-square"></i></button>
-            </div>
-
-            <div class="col-sm-push-9 text-right">
-                <p>&copy; 2017</p>
+        <div class="text-center">
+            <div class="pull-center">
+                <p>Connect with us via social media!</p>
+                <p>
+                    <button style="font-size:24px" onclick="relocate_facebook()"> <i class="fa fa-facebook-official"></i></button>
+                    <button style="font-size:24px" onclick="relocate_instagram()"> <i class="fa fa-instagram"></i></button>
+                    <button style="font-size:24px" onclick="relocate_twitter()"> <i class="fa fa-twitter-square"></i></button>
+                    <button style="font-size:24px" onclick="relocate_flickr()"> <i class="fa fa-flickr"></i></button>
+                    <button style="font-size:24px" onclick="relocate_vimeo()"> <i class="fa fa-vimeo-square"></i></button>
+                </p>
             </div>
         </div>
     </footer>
@@ -98,7 +108,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
 </body>
 
 </html>
