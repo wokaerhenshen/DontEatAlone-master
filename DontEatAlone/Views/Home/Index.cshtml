@@ -1,113 +1,13 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@Html.Partial("~/Views/Shared/_LoginPartial.cshtml")
-<html>
-<head>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    <script src="~/js/homepagescripts.js"></script>
-</head>
-<body>
-    <div class="container-fluid">
-        @if (!SignInManager.IsSignedIn(User))
-    {
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-xl-4">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            Login or Register
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-                            <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<div class="row">
+    <div class="row" id="box-search">
+        <div class="thumbnail text-center">
+            <img src="~/images/donteatalone.jpeg" alt="Sample Photo" class="img-responsive" />
         </div>
-}
-
-        <div class="row" id="box-search">
-            <div class="thumbnail text-center">
-                <img src="~/images/donteatalone.jpeg" alt="Sample Photo" class="img-responsive" />
-            </div>
-        </div>
-
-        <footer>
-            @*Project Documentation Links*@
-            <div class="dropup">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    Documentation
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="~/doc/Application Summary.docx">Application Summary</a></li>
-                    <li><a href="~/doc/Functional Requirements.docx">Functional Requirements</a></li>
-                    <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram</a></li>
-                    <li><a href="~/doc/ERD.png">ERD</a></li>
-                </ul>
-
-                @*Default Login Account info*@
-                <span>
-                    <label for="loginExample">Default login info:</label>
-                    <label for="exampleInputEmail1">test@user.com</label>
-                    <label for="exampleInputPassword1">, Bcit123!</label>
-                </span>
-                <p>
-                    <strong>
-                        Last updated: (2018-02-20 3:30 PM)
-                    </strong>
-                </p>
-
-            </div>
-
-            <div class="text-center">
-                <div class="pull-center">
-                    <p>Connect with us via social media!</p>
-                    <p>
-                        <button style="font-size:24px" onclick="relocate_facebook()"> <i class="fa fa-facebook-official"></i></button>
-                        <button style="font-size:24px" onclick="relocate_instagram()"> <i class="fa fa-instagram"></i></button>
-                        <button style="font-size:24px" onclick="relocate_twitter()"> <i class="fa fa-twitter-square"></i></button>
-                        <button style="font-size:24px" onclick="relocate_flickr()"> <i class="fa fa-flickr"></i></button>
-                        <button style="font-size:24px" onclick="relocate_vimeo()"> <i class="fa fa-vimeo-square"></i></button>
-                    </p>
-                </div>
-            </div>
-        </footer>
-
-        <environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>
     </div>
-</body>
-
-</html>
+</div>
