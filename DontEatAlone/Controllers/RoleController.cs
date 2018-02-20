@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DontEatAlone.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         ApplicationDbContext _context;
