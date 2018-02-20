@@ -61,7 +61,7 @@ namespace DontEatAlone.Repo
         {
             // Create roles if none exist.
             // This is a simple way to do it but it would be better to use a seeder.
-            string[] roleNames = { "Regular", "Preminm","Admin" };
+            string[] roleNames = { "Regular", "Premium","Admin" };
             foreach (var roleName in roleNames)
             {
                 var created = CreateRole(roleName);

@@ -29,7 +29,7 @@
         <div>Status</div>
         @{
            // if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
-           if (User.IsInRole("Preminm"))
+           if (User.IsInRole("Premium"))
             {
 
                 <div>Prime User</div>

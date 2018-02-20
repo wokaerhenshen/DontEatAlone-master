@@ -63,7 +63,7 @@
 <br />
 <button style="position:relative">Make Reservation</button>
 
-@if (ViewData["UserType"].Equals("regular"))
+@if (User.IsInRole("Regular"))
 {
     <div class="footnotes">
         <h6>* Regular Users are limited to a party size of 2.</h6>
