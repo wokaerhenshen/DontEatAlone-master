@@ -30,7 +30,7 @@ namespace DontEatAlone.Repo
             }
             else
             {
-                return _context.Reservation.Select(o => o.id).Max() + 1;
+                return _context.Reservation.Select(o => o.Id).Max() + 1;
             }
         }
 
