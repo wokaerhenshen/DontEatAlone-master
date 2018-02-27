@@ -17,9 +17,9 @@ namespace DontEatAlone.Repo
             _context = context;
         }
 
-        public List<ReservationVM> GetAllReservations()
+        public List<Reservation> GetAllReservations()
         {
-            return new List<ReservationVM>();
+            return _context.Reservation.ToList();
         }
 
         public int GenerateReservationId()
@@ -34,23 +34,55 @@ namespace DontEatAlone.Repo
             }
         }
 
-        public ReservationVM GetReservation(int id)
+        public Reservation GetReservation(int id)
         {
-            return new ReservationVM();
+            return _context.Reservation.Where(r => r.Id == id).FirstOrDefault();
         }
 
-        public bool UpdateReservation(ReservationVM r)
+        public bool UpdateReservation(Reservation res)
         {
-            return true;
+            Reservation reservation = _context.Reservation.Where(r => r.Id == res.Id).FirstOrDefault();
+            if (reservation != null)
+            {
+                reservation.Title = res.Title;
+                reservation.DateStart = new DateTime(res.DateStart.Millisecond);
+                reservation.DateEnd = new DateTime(res.DateEnd.Millisecond);
+                reservation.NumberOfPeople = res.NumberOfPeople;
+                reservation.Status = res.Status;
+                reservation.LocationID = res.LocationID;
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
         }
 
         public bool DeleteReservation(int id)
         {
-            return true;
+            Reservation res = _context.Reservation.Where(r => r.Id == id).FirstOrDefault();
+            if (res != null)
+            {
+                _context.Remove(res);
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
         }
 
-        public bool CreateReservation(ReservationVM r)
+        public bool CreateReservation(Reservation reservation)
         {
+            Reservation r = new Reservation();
+            r.Title = reservation.Title;
+            r.DateStart = new DateTime(reservation.DateStart.Millisecond);
+            r.DateEnd = new DateTime(reservation.DateEnd.Millisecond);
+            r.NumberOfPeople = reservation.NumberOfPeople;
+            r.Status = reservation.Status;
+            r.LocationID = reservation.LocationID;
+            _context.Add(r);
+            _context.SaveChanges();
+
             return true;
         }
     }
