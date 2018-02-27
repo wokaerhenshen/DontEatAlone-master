@@ -10,10 +10,10 @@ namespace DontEatAlone.Data
     public class UserReservation
     {
         [Key, Column(Order = 0)]
-        public string userID { get; set; }
+        public string UserID { get; set; }
         [Key, Column(Order = 1)]
-        public int reservationID { get; set; }
-        public bool isHost { get; set; }
+        public int ReservationID { get; set; }
+        public bool IsHost { get; set; }
 
         public virtual User User {get;set;}
         public virtual Reservation Reservation { get; set; }

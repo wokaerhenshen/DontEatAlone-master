@@ -11,15 +11,15 @@ namespace DontEatAlone.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
-        public string gender { get; set; }
-        public string cuisineType { get; set; }
-        public string age { get; set; }
-        public bool smoking { get; set; }
-        public bool pets { get; set; }
-        public bool alcohol { get; set; }
-        public string languages { get; set; }
-        public string description { get; set; }
+        public int Id { get; set; }
+        public string Gender { get; set; }
+        public string CuisineType { get; set; }
+        public string Age { get; set; }
+        public bool Smoking { get; set; }
+        public bool Pets { get; set; }
+        public bool Alcohol { get; set; }
+        public string Languages { get; set; }
+        public string Description { get; set; }
 
         public virtual Reservation Reservation { get; set; }
     }
