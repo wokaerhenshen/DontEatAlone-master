@@ -11,12 +11,12 @@ namespace DontEatAlone.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int id { get; set; }
-        public string title { get; set; }
-        public DateTime dateStart { get; set; }
-        public DateTime dateEnd { get; set; }
-        public int numberOfPeople { get; set; }
-        public string status { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime DateStart { get; set; }
+        public DateTime DateEnd { get; set; }
+        public int NumberOfPeople { get; set; }
+        public string Status { get; set; }
         public string LocationID { get; set; }
         
         public virtual ICollection<UserReservation> UserReservations { get; set; }
