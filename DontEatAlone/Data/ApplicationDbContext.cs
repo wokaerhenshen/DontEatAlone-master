@@ -25,33 +25,33 @@ namespace DontEatAlone.Data
             builder.Entity<User>()
                 .HasOne(ps => ps.PremiumSubscription)
                 .WithOne(ur => ur.User)
-                .HasForeignKey<PremiumSubscription>(ps => ps.ID);
+                .HasForeignKey<PremiumSubscription>(ps => ps.Id);
 
             builder.Entity<UserReservation>()
-                .HasKey(ur => new { ur.userID, ur.reservationID });
+                .HasKey(ur => new { ur.UserID, ur.ReservationID });
 
             builder.Entity<UserReservation>()
                 .HasOne(u => u.User)
                 .WithMany(ur => ur.UserReservations)
-                .HasForeignKey(fk => new { fk.userID })
+                .HasForeignKey(fk => new { fk.UserID })
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<UserReservation>()
                 .HasOne(u => u.Reservation)
                 .WithMany(ur => ur.UserReservations)
-                .HasForeignKey(fk => new { fk.reservationID })
+                .HasForeignKey(fk => new { fk.ReservationID })
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Reservation>()
                 .HasOne(lm => lm.Limitations)
                 .WithOne(rv => rv.Reservation)
-                .HasForeignKey<Limitations>(lm => lm.id)
+                .HasForeignKey<Limitations>(lm => lm.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Comment>()
                 .HasOne(rv => rv.Reservation)
                 .WithMany(cm => cm.Comments)
-                .HasForeignKey(fk => new { fk.reservationID })
+                .HasForeignKey(fk => new { fk.ReservationID })
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

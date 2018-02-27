@@ -24,99 +24,99 @@ namespace DontEatAlone.Data
             {
                 _context.Reservation.Add(new Reservation
                 {
-                    id = 1,
-                    title = "my_first_reservation"
+                    Id = 1,
+                    Title = "my_first_reservation"
                 });
 
                // _context.SaveChanges();
 
                 _context.Reservation.Add(new Reservation
                 {
-                    id = 2,
-                    title = "my_second_reservation"
+                    Id = 2,
+                    Title = "my_second_reservation"
                 });
 
                 _context.SaveChanges();
 
                 _context.UserReservation.Add(new UserReservation
                 {
-                    userID = _context.User.FirstOrDefault().Id,
-                    reservationID = 1,
-                    isHost = true
+                    UserID = _context.User.FirstOrDefault().Id,
+                    ReservationID = 1,
+                    IsHost = true
                 });
 
                 _context.UserReservation.Add(new UserReservation
                 {
-                    userID = _context.User.FirstOrDefault().Id,
-                    reservationID = 2,
-                    isHost = true
+                    UserID = _context.User.FirstOrDefault().Id,
+                    ReservationID = 2,
+                    IsHost = true
                 });
 
                 _context.SaveChanges();
 
                 _context.Limitations.Add(new Limitations
                 {
-                    id = 1,
-                    gender = "male",
-                    cuisineType = "chinese",
-                    age = "any",
-                    smoking = false,
-                    pets = false,
-                    alcohol = false,
-                    languages = "chinese",
-                    description = "hello welcome!"
+                    Id = 1,
+                    Gender = "male",
+                    CuisineType = "chinese",
+                    Age = "any",
+                    Smoking = false,
+                    Pets = false,
+                    Alcohol = false,
+                    Languages = "chinese",
+                    Description = "hello welcome!"
                 });
 
                 _context.Limitations.Add(new Limitations
                 {
-                    id = 2,
-                    gender = "female",
-                    cuisineType = "Canada",
-                    age = "over 18",
-                    smoking = false,
-                    pets = false,
-                    alcohol = false,
-                    languages = "English",
-                    description = "welcome lady!!"
+                    Id = 2,
+                    Gender = "female",
+                    CuisineType = "Canada",
+                    Age = "over 18",
+                    Smoking = false,
+                    Pets = false,
+                    Alcohol = false,
+                    Languages = "English",
+                    Description = "welcome lady!!"
                 });
 
                 _context.SaveChanges();
 
                 _context.Comment.Add(new Comment
                 {
-                    id = 1,
-                    body = "very nice man!",
-                    authorID = _context.User.FirstOrDefault().Id,
-                    date = DateTime.Now,
-                    reservationID = 1
+                    Id = 1,
+                    Body = "very nice man!",
+                    AuthorID = _context.User.FirstOrDefault().Id,
+                    Date = DateTime.Now,
+                    ReservationID = 1
                 });
 
                 _context.Comment.Add(new Comment
                 {
-                    id = 2,
-                    body = "very good man!",
-                    authorID = _context.User.FirstOrDefault().Id,
-                    date = DateTime.Now,
-                    reservationID = 1
+                    Id = 2,
+                    Body = "very good man!",
+                    AuthorID = _context.User.FirstOrDefault().Id,
+                    Date = DateTime.Now,
+                    ReservationID = 1
                 });
 
                 _context.Comment.Add(new Comment
                 {
-                    id = 3,
-                    body = "very beautiful lady!",
-                    authorID = _context.User.FirstOrDefault().Id,
-                    date = DateTime.Now,
-                    reservationID = 2
+                    Id = 3,
+                    Body = "very beautiful lady!",
+                    AuthorID = _context.User.FirstOrDefault().Id,
+                    Date = DateTime.Now,
+                    ReservationID = 2
                 });
 
 
                 _context.Comment.Add(new Comment
                 {
-                    id = 4,
-                    body = "like her so much!",
-                    authorID = _context.User.FirstOrDefault().Id,
-                    date = DateTime.Now,
-                    reservationID = 2
+                    Id = 4,
+                    Body = "like her so much!",
+                    AuthorID = _context.User.FirstOrDefault().Id,
+                    Date = DateTime.Now,
+                    ReservationID = 2
                 });
 
                 _context.SaveChanges();
