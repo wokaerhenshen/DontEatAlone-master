@@ -1,7 +1,140 @@
-﻿
-@{
-    ViewData["Title"] = "APIDocs";
-}
+﻿<br />
+<h2>@ViewData["Title"] <small>@ViewData["Message"]</small></h2>
+<hr />
+<br />
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 hidden-sm hidden-xs">
+                <br />
+                <div class="list-group">
+                    <a class="list-group-item" href="~/Home/APIDocs/#10">1. Overview</a>
+                    <a class="list-group-item" href="~/Home/APIDocs/#11">2. Login & Registration</a>
+                    <a class="list-group-item" href="~/Home/APIDocs/#12">3. Reservations</a>
+                </div>
+            </div>
+            <div class="col-md-9 about">
+                <a name="10">  </a>
 
-<h2>APIDocs</h2>
+                <h3 class="bg-primary">Overview</h3>
+                <p><strong>Hello Developers.</strong></p>
+                <p>
+                    The Don't Eat Alone API Platform can be used to build automated, authentic, high-quality apps and services that:
+                </p>
+                <ul>
+                    <li>Help individuals share their own content with 3rd party apps.</li>
+                    <li>Help developers generate content and build apps baced on our service</li>
+                    <li>Help brands and advertisers understand, manage their audience and media rights.</li>
+                    <li>Help to connect your software to Our application</li>
+                </ul>
+                <a name="11">  </a>
 
+                <h3 class="bg-primary">Login & Registration</h3>
+
+                <h5 class="bg-info"><strong>Login</strong></h5>
+                <p>You can simply login to the system by sending <strong>[POST]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/login</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/login, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                    "email": "myemail@mail.ru",
+                    "password": "password",
+                    "rememberMe": "false"
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+
+                <h5 class="bg-info"><strong>SignUp</strong></h5>
+                <p>You can simply signup to the system by sending <strong>[POST]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/signup</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/signup, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                    "email": "myemail@mail.ru",
+                    "firstname": "John",
+                    "lastname": "Doe",
+                    "city": "Vancouver",
+                    "province": "BC",
+                    "password": "password",
+                    "confirmpassword": "password"
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+
+                <a name="12">  </a>
+
+                <h3 class="bg-primary">Reservations</h3>
+
+                <h5 class="bg-info"><strong>Get All Reservations</strong></h5>
+                <p>You can simply get list of reservations by sending <strong>[GET]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/getall</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/getall)
+                </code>
+
+                <h5 class="bg-info"><strong>Get All Reservations</strong></h5>
+                <p>You can simply get a specific resertation information by sending <strong>[GET]</strong> request with <strong>ID</strong> parameter to: <strong>https://donteatalone.azurewebsites.net/api/get/ID</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/get/$#id)
+                </code>
+
+                <h5 class="bg-info"><strong>Delete Reservation</strong></h5>
+                <p>You can simply delete a specific resertation information by sending <strong>[DELETE]</strong> request with <strong>ID</strong> parameter to: <strong>https://donteatalone.azurewebsites.net/api/delete/ID</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/delete/$#id)
+                </code>
+
+                <h5 class="bg-info"><strong>Update Reservation</strong></h5>
+                <p>You can simply update a specific resertation information by sending <strong>[Put]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/update</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/update, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                    "id": "31312312",
+                    "title": "Food is good",
+                    "dateStart": "2016-05-06T20:14:25.694Z",
+                    "dateEnd": "2016-05-06T23:12:00.694Z",
+                    "peopleNumber": "5",
+                    "status": "available",
+                    "locationId": "1231223123"
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+
+                <h5 class="bg-info"><strong>Create Reservation</strong></h5>
+                <p>You can simply create a specific resertation information by sending <strong>[Put]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/create</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/create, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                    "title": "Food is good",
+                    "dateStart": "2016-05-06T20:14:25.694Z",
+                    "dateEnd": "2016-05-06T23:12:00.694Z",
+                    "peopleNumber": "5",
+                    "status": "available",
+                    "locationId": "1231223123"
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+            </div>
+        </div>
+    </div>
+</div>
