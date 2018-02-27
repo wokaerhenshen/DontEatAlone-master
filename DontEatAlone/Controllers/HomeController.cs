@@ -17,6 +17,9 @@ namespace DontEatAlone.Controllers
 
         public IActionResult APIDocs()
         {
+            ViewData["Title"] = "Public API";
+            ViewData["Message"] = "Easy way to do a lot!";
+
             return View();
         }
 
