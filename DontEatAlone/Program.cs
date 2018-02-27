@@ -30,6 +30,8 @@ namespace DontEatAlone
                     //initializer.InitializeData();
                     RoleRepo roleIni = new RoleRepo(context);
                     roleIni.CreateInitialRoles();
+                    Initialize DataIni = new Initialize(context);
+                    DataIni.InitializeData();
 
                 }
                 catch (Exception ex)
