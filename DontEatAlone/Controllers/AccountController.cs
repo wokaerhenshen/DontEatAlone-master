@@ -30,7 +30,6 @@ namespace DontEatAlone.Controllers
         public ApplicationDbContext _context;
         private IServiceProvider _serviceProvider;
         private ReservationRepository rr;
-        private int ReservationId;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,

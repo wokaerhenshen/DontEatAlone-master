@@ -11,6 +11,7 @@
                     <a class="list-group-item" href="~/Home/APIDocs/#10">1. Overview</a>
                     <a class="list-group-item" href="~/Home/APIDocs/#11">2. Login & Registration</a>
                     <a class="list-group-item" href="~/Home/APIDocs/#12">3. Reservations</a>
+                    <a class="list-group-item" href="~/Home/APIDocs/#13">4. Comments</a>
                 </div>
             </div>
             <div class="col-md-9 about">
@@ -33,6 +34,31 @@
 
                 <h5 class="bg-info"><strong>Login</strong></h5>
                 <p>You can simply login to the system by sending <strong>[POST]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/login</strong></p>
+                <h6>Data Types:</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td class="danger">email</td>
+                            <td>String</td>
+                            <td>Standard email adress</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">password</td>
+                            <td>String</td>
+                            <td>Password must include one uppercase and lower case letter, a number and a special symbol and be at least 8 characters</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">rememberMe</td>
+                            <td>boolean</td>
+                            <td>True or False</td>
+                        </tr>
+                    </table>
+                </div>
                 <p>Code example:</p>
                 <code>
                     fetch(https://donteatalone.azurewebsites.net/api/login, {
@@ -50,6 +76,51 @@
 
                 <h5 class="bg-info"><strong>SignUp</strong></h5>
                 <p>You can simply signup to the system by sending <strong>[POST]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/signup</strong></p>
+                <h6>Data Types:</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td class="danger">email</td>
+                            <td>String</td>
+                            <td>Standard email adress</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">firstname</td>
+                            <td>String</td>
+                            <td>Regular string</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">lastname</td>
+                            <td>String</td>
+                            <td>Regular string</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">city</td>
+                            <td>String</td>
+                            <td>Valid city</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">province</td>
+                            <td>String</td>
+                            <td>Valid Province</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">password</td>
+                            <td>String</td>
+                            <td>Password must include one uppercase and lower case letter, a number and a special symbol and be at least 8 characters</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">confirm password</td>
+                            <td>String</td>
+                            <td>Password must include one uppercase and lower case letter, a number and a special symbol and be at least 8 characters</td>
+                        </tr>
+                    </table>
+                </div>
                 <p>Code example:</p>
                 <code>
                     fetch(https://donteatalone.azurewebsites.net/api/signup, {
@@ -96,6 +167,51 @@
 
                 <h5 class="bg-info"><strong>Update Reservation</strong></h5>
                 <p>You can simply update a specific resertation information by sending <strong>[Put]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/update</strong></p>
+                <h6>Data Types:</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td class="danger">id</td>
+                            <td>Integer</td>
+                            <td>Long value</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">title</td>
+                            <td>String</td>
+                            <td>Regular string</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">dateStart</td>
+                            <td>long</td>
+                            <td>Time in milliseconds</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">dateEnd</td>
+                            <td>long</td>
+                            <td>Time in milliseconds</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">peopleNumber</td>
+                            <td>Integer</td>
+                            <td>From 1 to 20</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">status</td>
+                            <td>String</td>
+                            <td>[available, finished, in progress]</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">locationsId</td>
+                            <td>Integer</td>
+                            <td>Long value</td>
+                        </tr>
+                    </table>
+                </div>
                 <p>Code example:</p>
                 <code>
                     fetch(https://donteatalone.azurewebsites.net/api/update, {
@@ -117,6 +233,46 @@
 
                 <h5 class="bg-info"><strong>Create Reservation</strong></h5>
                 <p>You can simply create a specific resertation information by sending <strong>[Put]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/create</strong></p>
+                <h6>Data Types:</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td class="danger">title</td>
+                            <td>String</td>
+                            <td>Regular string</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">dateStart</td>
+                            <td>long</td>
+                            <td>Time in milliseconds</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">dateEnd</td>
+                            <td>long</td>
+                            <td>Time in milliseconds</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">peopleNumber</td>
+                            <td>Integer</td>
+                            <td>From 1 to 20</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">status</td>
+                            <td>String</td>
+                            <td>[available, finished, in progress]</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">locationsId</td>
+                            <td>Long</td>
+                            <td>Long value</td>
+                        </tr>
+                    </table>
+                </div>
                 <p>Code example:</p>
                 <code>
                     fetch(https://donteatalone.azurewebsites.net/api/create, {
@@ -133,6 +289,139 @@
                     'Content-Type': 'application/json'
                     })
                     })
+                </code>
+
+                <a name="13">  </a>
+
+                <h3 class="bg-primary">Comments</h3>
+
+                <h5 class="bg-info"><strong>Create Comment</strong></h5>
+                <p>You can simply create a comment by sending <strong>[PUT]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/createcomment</strong></p>
+                <h6>Data Types:</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td class="danger">reservationId</td>
+                            <td>Long</td>
+                            <td>Long value</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">body</td>
+                            <td>String</td>
+                            <td>Regular string</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">date</td>
+                            <td>long</td>
+                            <td>Time in milliseconds</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">authorId</td>
+                            <td>Long</td>
+                            <td>Long value</td>
+                        </tr>
+                    </table>
+                </div>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/createcomment, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                    "reservationId": "12323112",
+                    "body": "My new comment",
+                    "date": "2016-05-06T23:12:00.694Z",
+                    "AuthorID": "5",
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+
+                <h5 class="bg-info"><strong>Update Comment</strong></h5>
+                <p>You can simply update a comment by sending <strong>[PUT]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/updatecomment</strong></p>
+                <h6>Data Types:</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td class="danger">id</td>
+                            <td>Long</td>
+                            <td>Long value</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">reservationId</td>
+                            <td>Long</td>
+                            <td>Long value</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">body</td>
+                            <td>String</td>
+                            <td>Regular string</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">date</td>
+                            <td>long</td>
+                            <td>Time in milliseconds</td>
+                        </tr>
+                        <tr>
+                            <td class="danger">authorId</td>
+                            <td>Long</td>
+                            <td>Long value</td>
+                        </tr>
+                    </table>
+                </div>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/updatecomment, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                    "id": "913762719",
+                    "reservationId": "12323112",
+                    "body": "My new comment",
+                    "date": "2016-05-06T23:12:00.694Z",
+                    "AuthorID": "5",
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+
+                <h5 class="bg-info"><strong>Delete Comment</strong></h5>
+                <p>You can simply delete a comment by sending <strong>[DELETE]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/deletecomment</strong></p>
+
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/deletecomment, {
+                    method: 'DELETE',
+                    body: JSON.stringify({
+                    "id": "913762719"
+                    }),
+                    headers: new Headers({
+                    'Content-Type': 'application/json'
+                    })
+                    })
+                </code>
+
+                <h5 class="bg-info"><strong>Get All Comments For a Specific Reservation</strong></h5>
+                <p>You can simply get all comments for a specific reservation by sending <strong>[GET]</strong> with a specific <strong>ID</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/getcomments/{id}</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/getcomments/{id})
+                </code>
+
+                <h5 class="bg-info"><strong>Get All Comments</strong></h5>
+                <p>You can simply get all comments for a specific reservation by sending <strong>[GET]</strong> request to: <strong>https://donteatalone.azurewebsites.net/api/getcomments</strong></p>
+                <p>Code example:</p>
+                <code>
+                    fetch(https://donteatalone.azurewebsites.net/api/getcomments)
                 </code>
             </div>
         </div>
