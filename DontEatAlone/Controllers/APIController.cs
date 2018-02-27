@@ -15,11 +15,13 @@ namespace DontEatAlone.Controllers
     [Route("api/")]
     public class APIController : Controller
     {
-        ReservationRepository _repository;
+        ReservationRepository _reservationRepo;
+        CommentRepository _commentRepo;
 
         public APIController(ApplicationDbContext context)
         {
-            _repository = new ReservationRepository(context);
+            _reservationRepo = new ReservationRepository(context);
+            _commentRepo = new CommentRepository(context);
         }
 
         [HttpPut]
@@ -34,21 +36,21 @@ namespace DontEatAlone.Controllers
             r.Status = status;
             r.LocationID = locationID;
 
-            return new OkObjectResult(_repository.CreateReservation(r));
+            return new OkObjectResult(_reservationRepo.CreateReservation(r));
         }
 
         [HttpGet]
         [Route("Get/{id}")]
         public IActionResult GetReservation(int id)
         {
-            return new OkObjectResult(_repository.GetReservation(id));
+            return new OkObjectResult(_reservationRepo.GetReservation(id));
         }
 
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAllReservations()
         {
-            return new OkObjectResult(_repository.GetAllReservations());
+            return new OkObjectResult(_reservationRepo.GetAllReservations());
         }
 
         [HttpPut]
@@ -63,14 +65,49 @@ namespace DontEatAlone.Controllers
             reservation.Status = status;
             reservation.LocationID = locationID;
 
-            return new OkObjectResult(_repository.UpdateReservation(reservation));
+            return new OkObjectResult(_reservationRepo.UpdateReservation(reservation));
         }
 
         [HttpDelete]
         [Route("Delete/{id}")]
         public IActionResult DeleteReservation(int id)
         {
-            return new OkObjectResult(_repository.DeleteReservation(id));
+            return new OkObjectResult(_reservationRepo.DeleteReservation(id));
+        }
+
+        [HttpGet]
+        [Route("GetComments/{id}")]
+        public IActionResult GetAllCommentsByReservation(int id)
+        {
+            return new OkObjectResult(_commentRepo.GetAllCommentsByReservation(id));
+        }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public IActionResult GetAllComments()
+        {
+            return new OkObjectResult(_commentRepo.GetAllComments());
+        }
+
+        [HttpPut]
+        [Route("UpdateComment")]
+        public IActionResult UpdateComment(Comment c)
+        {
+            return new OkObjectResult(_commentRepo.UpdateComment(c));
+        }
+
+        [HttpDelete]
+        [Route("DeleteComment")]
+        public IActionResult DeleteComment(int id)
+        {
+            return new OkObjectResult(_commentRepo.DeleteComment(id));
+        }
+
+        [HttpPut]
+        [Route("CreateComment")]
+        public IActionResult CreateComment(Comment c)
+        {
+            return new OkObjectResult(_commentRepo.CreateComment(c));
         }
 
         [HttpPost]
