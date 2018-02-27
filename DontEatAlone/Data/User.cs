@@ -12,15 +12,15 @@ namespace DontEatAlone.Data
         [Key]
         public string Id { get; set; }
         [Display(Name = "First Name")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
         [Display(Name = "Last Name")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
-        public string email { get; set; }
-        public string userType { get; set; }
-        public string phoneNumber { get; set; }
-        public string gender { get; set; }
-        public string dateOfBirth { get; set; }
+        public string Email { get; set; }
+        public string UserType { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Gender { get; set; }
+        public string DateOfBirth { get; set; }
 
         //public virtual 
         public virtual ApplicationUser ApplicationUser { get; set; }

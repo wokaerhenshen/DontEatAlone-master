@@ -11,10 +11,10 @@ namespace DontEatAlone.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string ID { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
-        public bool payment { get; set; }
+        public string Id { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public bool Payment { get; set; }
 
         public virtual User User { get; set; }
     }
