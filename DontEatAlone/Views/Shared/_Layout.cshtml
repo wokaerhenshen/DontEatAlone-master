@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DontEatAlone</title>
+    <title>@ViewData["Title"] - Don't Eat Alone</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">DontEatAlone</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Don't Eat Alone</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -49,58 +49,56 @@
         </div>
     </nav>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>
-                <strong>
-                    Last updated: (2018-02-27 2:30 PM)
-                </strong>
-            </p>
-            @*Project Documentation Links*@
-            <div class="dropup">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    Documentation
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="~/doc/Application Summary.docx">Application Summary (Updated: 13-Feb-2017 13:00)</a></li>
-                    <li><a href="~/doc/Functional Requirements.docx">Functional Requirements (Updated: 13-Feb-2017 15:00)</a></li>
-                    <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram (Updated: 20-Dec-2017 12:00)</a></li>
-                    <li><a href="~/doc/ERD.png">ERD (Updated: 27-Feb-2018 10:00)</a></li>
-                    <li><a href="~/doc/appdb.txt" >SQL Script (Updated: 27-Feb-2018 13:30)</a></li>
-                </ul>
-            </div>
+    @* <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>
+                    <strong>
+                        Last updated: (2018-02-27 2:30 PM)
+                    </strong>
+                </p>
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        Documentation
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="~/doc/Application Summary.docx">Application Summary (Updated: 13-Feb-2017 13:00)</a></li>
+                        <li><a href="~/doc/Functional Requirements.docx">Functional Requirements (Updated: 13-Feb-2017 15:00)</a></li>
+                        <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram (Updated: 20-Dec-2017 12:00)</a></li>
+                        <li><a href="~/doc/ERD.png">ERD (Updated: 27-Feb-2018 10:00)</a></li>
+                        <li><a href="~/doc/appdb.txt" >SQL Script (Updated: 27-Feb-2018 13:30)</a></li>
+                    </ul>
+                </div>
 
-            @*Default Login Account info*@
-            <div>
-                <label for="loginExample">Default login info:</label>
-                <p>
-                    <label for="exampleInputEmail1">admin@user.com</label>
-                    <label for="exampleInputPassword1">, Bcit123!</label>
-                </p>
-                <p>
-                    <label for="exampleInputEmail1">regular@user.com</label>
-                    <label for="exampleInputPassword1">, Bcit123!</label>
-                </p>
-                <p>
-                    <label for="exampleInputEmail1">premium@user.com</label>
-                    <label for="exampleInputPassword1">, Bcit123!</label>
-                </p>
-            </div>
-
-            @*Social media icons*@
-            <div class="text-center">
-                <div class="pull-center">
-                    <p>Connect with us via social media!</p>
+                <div>
+                    <label for="loginExample">Default login info:</label>
                     <p>
-                        <img src="~/images/Social-Media-Bar.png" alt="Social Media Links" style="width:360px;height:50px;border:unset"/>
+                        <label for="exampleInputEmail1">admin@user.com</label>
+                        <label for="exampleInputPassword1">, Bcit123!</label>
+                    </p>
+                    <p>
+                        <label for="exampleInputEmail1">regular@user.com</label>
+                        <label for="exampleInputPassword1">, Bcit123!</label>
+                    </p>
+                    <p>
+                        <label for="exampleInputEmail1">premium@user.com</label>
+                        <label for="exampleInputPassword1">, Bcit123!</label>
                     </p>
                 </div>
-            </div>
-        </footer>
-    </div>
+
+
+                <div class="text-center">
+                    <div class="pull-center">
+                        <p>Connect with us via social media!</p>
+                        <p>
+                            <img src="~/images/Social-Media-Bar.png" alt="Social Media Links" style="width:360px;height:50px;border:unset"/>
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
