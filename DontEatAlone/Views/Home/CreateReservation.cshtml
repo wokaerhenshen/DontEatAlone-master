@@ -27,7 +27,6 @@
 <br />
 <p><strong>Date: <input id="date" type="date">   Start Time: <input id="starttime" type="time"> End Time: <input id="endtime" type="time"></strong></p>
 @{
-
      if (User.IsInRole("Regular"))
     {
         <p>Party Size: <input type="radio" name="partysize" value="two" checked="checked"> 2*</p>
@@ -52,7 +51,6 @@
             <span><textarea class="form-control" placeholder="" type="text" rows="6" cols="100"></textarea></span>
         </p>
     }
-
 }
 
 <br />
