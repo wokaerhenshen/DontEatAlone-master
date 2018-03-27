@@ -83,7 +83,7 @@ namespace DontEatAlone.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("GetAllComments")]
         public IActionResult GetAllComments()
         {
             return new OkObjectResult(_commentRepo.GetAllComments());
