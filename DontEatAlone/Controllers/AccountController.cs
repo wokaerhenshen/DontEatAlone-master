@@ -68,11 +68,12 @@ namespace DontEatAlone.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            System.Threading.Thread.Sleep(1000); // Add one second delay
             if (ModelState.IsValid)
             {
               const  string SESSION_LOGIN_ATTEMPTS="Attempts Count";
               
-
                 if (!ModelState.IsValid)
                     return View();
                 // This doesn't count login failures towards account lockout
@@ -104,18 +105,6 @@ namespace DontEatAlone.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        [HttpPost]
-        [Route("MyEmail")] // Custom route
-        public IActionResult MyEmail(string Name, string Email, string Message)
-        {
-            Smtpmail newEmail = new Smtpmail();
-            newEmail.SendEmail(Name, Email, Message);
-
-            string result = "success";
-
-            return new ObjectResult(result);
         }
 
         [HttpGet]
