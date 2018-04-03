@@ -33,7 +33,10 @@ namespace DontEatAlone.Data
                 {
                     Id = 1,
                     Title = "Pasta day",
-                    PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id
+                    PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id,
+                    NumberOfPeople = 3,
+                    DateStart = DateTime.Now,
+                    DateEnd = DateTime.Now.AddHours(5)
                 });
 
                 // _context.SaveChanges();
@@ -42,28 +45,40 @@ namespace DontEatAlone.Data
                 {
                     Id = 2,
                     Title = "Tiesto pre party",
-                    PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id
+                    PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id,
+                    NumberOfPeople = 5,
+                    DateStart = DateTime.Now,
+                    DateEnd = DateTime.Now.AddHours(1)
                 });
 
                 _context.Reservation.Add(new Reservation()
                 {
                     Id = 3,
                     Title = "Party hard like Putin",
-                    PlaceID = _context.Place.Where(p => p.Name == "Black & Blue").FirstOrDefault().Id
+                    PlaceID = _context.Place.Where(p => p.Name == "Black & Blue").FirstOrDefault().Id,
+                    NumberOfPeople = 3,
+                    DateStart = DateTime.Now,
+                    DateEnd = DateTime.Now.AddHours(0.5)
                 });
 
                 _context.Reservation.Add(new Reservation()
                 {
                     Id = 4,
                     Title = "Good conversation and vibes",
-                    PlaceID = _context.Place.Where(p => p.Name == "Italian Kitchen").FirstOrDefault().Id
+                    PlaceID = _context.Place.Where(p => p.Name == "Italian Kitchen").FirstOrDefault().Id,
+                    NumberOfPeople = 2,
+                    DateStart = DateTime.Now,
+                    DateEnd = DateTime.Now.AddHours(1)
                 });
 
                 _context.Reservation.Add(new Reservation()
                 {
                     Id = 5,
                     Title = "We're going for the whole course",
-                    PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id
+                    PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
+                    NumberOfPeople = 5,
+                    DateStart = DateTime.Now,
+                    DateEnd = DateTime.Now.AddHours(4)
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -71,7 +86,9 @@ namespace DontEatAlone.Data
                     Id = 6,
                     Title = "Free vodka",
                     PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
-
+                    NumberOfPeople = 4,
+                    DateStart = DateTime.Now,
+                    DateEnd = DateTime.Now.AddHours(2)
                 });
 
                 _context.SaveChanges();
@@ -188,7 +205,7 @@ namespace DontEatAlone.Data
                     Latitude = 49.282966,
                     Longtitude = -123.122885,
                     Name = "Art gallery",
-                    Address = "750 Hornby St, Vancouver, BC V6Z 2H7"
+                    Address = "750 Hornby St, Vancouver, BC V6Z 2H7",
                 });
                 _context.Place.Add(new Place()
                 {

@@ -48,7 +48,6 @@ namespace DontEatAlone
                     {
                         config.SignIn.RequireConfirmedEmail = false;
                     }
-
                 )
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -67,14 +66,13 @@ namespace DontEatAlone
                 //options.Password.RequiredUniqueChars    = 6;
 
                 // Lockout settings (Freeze 1 minute only to make testing easier)
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 options.Lockout.MaxFailedAccessAttempts = 3; // Lock after 3 consec failed logins
                 options.Lockout.AllowedForNewUsers = true;
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
-
 
             services.AddMvc();
             services.Configure<AuthMessageSenderOptions>(Configuration);
@@ -83,8 +81,6 @@ namespace DontEatAlone
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
-
          //   var builder = new ConfigurationBuilder();
 
             if (env.IsDevelopment())
