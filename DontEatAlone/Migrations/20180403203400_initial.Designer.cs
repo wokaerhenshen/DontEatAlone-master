@@ -11,7 +11,7 @@ using System;
 namespace DontEatAlone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180403175423_initial")]
+    [Migration("20180403203400_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
