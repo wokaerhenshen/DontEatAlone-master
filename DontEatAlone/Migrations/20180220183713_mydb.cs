@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DontEatAlone.Migrations
 {
-    public partial class initial : Migration
+    public partial class mydb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,18 +48,20 @@ namespace DontEatAlone.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Place",
+                name: "Reservation",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    Latitude = table.Column<double>(nullable: false),
-                    Longtitude = table.Column<double>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    id = table.Column<int>(nullable: false),
+                    LocationID = table.Column<string>(nullable: true),
+                    dateEnd = table.Column<DateTime>(nullable: false),
+                    dateStart = table.Column<DateTime>(nullable: false),
+                    numberOfPeople = table.Column<int>(nullable: false),
+                    status = table.Column<string>(nullable: true),
+                    title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Place", x => x.Id);
+                    table.PrimaryKey("PK_Reservation", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,13 +175,13 @@ namespace DontEatAlone.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    DateOfBirth = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    UserType = table.Column<string>(nullable: true)
+                    dateOfBirth = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: true),
+                    firstName = table.Column<string>(nullable: true),
+                    gender = table.Column<string>(nullable: true),
+                    lastName = table.Column<string>(nullable: true),
+                    phoneNumber = table.Column<string>(nullable: true),
+                    userType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,66 +195,23 @@ namespace DontEatAlone.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    DateEnd = table.Column<DateTime>(nullable: false),
-                    DateStart = table.Column<DateTime>(nullable: false),
-                    NumberOfPeople = table.Column<int>(nullable: false),
-                    PlaceID = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reservation", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reservation_Place_PlaceID",
-                        column: x => x.PlaceID,
-                        principalTable: "Place",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PremiumSubscription",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    Payment = table.Column<bool>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PremiumSubscription", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PremiumSubscription_User_Id",
-                        column: x => x.Id,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    AuthorID = table.Column<string>(nullable: true),
-                    Body = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    ReservationID = table.Column<int>(nullable: false)
+                    id = table.Column<int>(nullable: false),
+                    authorID = table.Column<string>(nullable: true),
+                    body = table.Column<string>(nullable: true),
+                    date = table.Column<DateTime>(nullable: false),
+                    reservationID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comment", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Comment_Reservation_ReservationID",
-                        column: x => x.ReservationID,
+                        name: "FK_Comment_Reservation_reservationID",
+                        column: x => x.reservationID,
                         principalTable: "Reservation",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -260,48 +219,68 @@ namespace DontEatAlone.Migrations
                 name: "Limitations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    Age = table.Column<string>(nullable: true),
-                    Alcohol = table.Column<bool>(nullable: false),
-                    CuisineType = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
-                    Languages = table.Column<string>(nullable: true),
-                    Pets = table.Column<bool>(nullable: false),
-                    Smoking = table.Column<bool>(nullable: false)
+                    id = table.Column<int>(nullable: false),
+                    age = table.Column<string>(nullable: true),
+                    alcohol = table.Column<bool>(nullable: false),
+                    cuisineType = table.Column<string>(nullable: true),
+                    description = table.Column<string>(nullable: true),
+                    gender = table.Column<string>(nullable: true),
+                    languages = table.Column<string>(nullable: true),
+                    pets = table.Column<bool>(nullable: false),
+                    smoking = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Limitations", x => x.Id);
+                    table.PrimaryKey("PK_Limitations", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Limitations_Reservation_Id",
-                        column: x => x.Id,
+                        name: "FK_Limitations_Reservation_id",
+                        column: x => x.id,
                         principalTable: "Reservation",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PremiumSubscription",
+                columns: table => new
+                {
+                    ID = table.Column<string>(nullable: false),
+                    endDate = table.Column<DateTime>(nullable: false),
+                    payment = table.Column<bool>(nullable: false),
+                    startDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PremiumSubscription", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PremiumSubscription_User_ID",
+                        column: x => x.ID,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserReservation",
                 columns: table => new
                 {
-                    UserID = table.Column<string>(nullable: false),
-                    ReservationID = table.Column<int>(nullable: false),
-                    IsHost = table.Column<bool>(nullable: false)
+                    userID = table.Column<string>(nullable: false),
+                    reservationID = table.Column<int>(nullable: false),
+                    isHost = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserReservation", x => new { x.UserID, x.ReservationID });
-                    table.UniqueConstraint("AK_UserReservation_ReservationID_UserID", x => new { x.ReservationID, x.UserID });
+                    table.PrimaryKey("PK_UserReservation", x => new { x.userID, x.reservationID });
+                    table.UniqueConstraint("AK_UserReservation_reservationID_userID", x => new { x.reservationID, x.userID });
                     table.ForeignKey(
-                        name: "FK_UserReservation_Reservation_ReservationID",
-                        column: x => x.ReservationID,
+                        name: "FK_UserReservation_Reservation_reservationID",
+                        column: x => x.reservationID,
                         principalTable: "Reservation",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserReservation_User_UserID",
-                        column: x => x.UserID,
+                        name: "FK_UserReservation_User_userID",
+                        column: x => x.userID,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -345,14 +324,9 @@ namespace DontEatAlone.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_ReservationID",
+                name: "IX_Comment_reservationID",
                 table: "Comment",
-                column: "ReservationID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reservation_PlaceID",
-                table: "Reservation",
-                column: "PlaceID");
+                column: "reservationID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -392,9 +366,6 @@ namespace DontEatAlone.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "Place");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

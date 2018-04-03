@@ -106,6 +106,18 @@ namespace DontEatAlone.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Route("MyEmail")] // Custom route
+        public IActionResult MyEmail(string Name, string Email, string Message)
+        {
+            Smtpmail newEmail = new Smtpmail();
+            newEmail.SendEmail(Name, Email, Message);
+
+            string result = "success";
+
+            return new ObjectResult(result);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
@@ -422,8 +434,8 @@ namespace DontEatAlone.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Password Reset",
-                   EmailSender.ResetPwdHtml(callbackUrl));
+                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 

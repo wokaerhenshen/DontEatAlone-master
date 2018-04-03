@@ -11,111 +11,91 @@ using System;
 namespace DontEatAlone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180403175423_initial")]
-    partial class initial
+    [Migration("20180220183713_mydb")]
+    partial class mydb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
             modelBuilder.Entity("DontEatAlone.Data.Comment", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("id");
 
-                    b.Property<string>("AuthorID");
+                    b.Property<string>("authorID");
 
-                    b.Property<string>("Body");
+                    b.Property<string>("body");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("date");
 
-                    b.Property<int>("ReservationID");
+                    b.Property<int>("reservationID");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("ReservationID");
+                    b.HasIndex("reservationID");
 
                     b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("DontEatAlone.Data.Limitations", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("id");
 
-                    b.Property<string>("Age");
+                    b.Property<string>("age");
 
-                    b.Property<bool>("Alcohol");
+                    b.Property<bool>("alcohol");
 
-                    b.Property<string>("CuisineType");
+                    b.Property<string>("cuisineType");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("description");
 
-                    b.Property<string>("Gender");
+                    b.Property<string>("gender");
 
-                    b.Property<string>("Languages");
+                    b.Property<string>("languages");
 
-                    b.Property<bool>("Pets");
+                    b.Property<bool>("pets");
 
-                    b.Property<bool>("Smoking");
+                    b.Property<bool>("smoking");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Limitations");
                 });
 
-            modelBuilder.Entity("DontEatAlone.Data.Place", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
-
-                    b.Property<double>("Latitude");
-
-                    b.Property<double>("Longtitude");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Place");
-                });
-
             modelBuilder.Entity("DontEatAlone.Data.PremiumSubscription", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("ID");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime>("endDate");
 
-                    b.Property<bool>("Payment");
+                    b.Property<bool>("payment");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<DateTime>("startDate");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("PremiumSubscription");
                 });
 
             modelBuilder.Entity("DontEatAlone.Data.Reservation", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("id");
 
-                    b.Property<DateTime>("DateEnd");
+                    b.Property<string>("LocationID");
 
-                    b.Property<DateTime>("DateStart");
+                    b.Property<DateTime>("dateEnd");
 
-                    b.Property<int>("NumberOfPeople");
+                    b.Property<DateTime>("dateStart");
 
-                    b.Property<string>("PlaceID");
+                    b.Property<int>("numberOfPeople");
 
-                    b.Property<string>("Status");
+                    b.Property<string>("status");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("title");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlaceID");
+                    b.HasKey("id");
 
                     b.ToTable("Reservation");
                 });
@@ -124,19 +104,19 @@ namespace DontEatAlone.Migrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<string>("DateOfBirth");
+                    b.Property<string>("dateOfBirth");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("email");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("firstName");
 
-                    b.Property<string>("Gender");
+                    b.Property<string>("gender");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("lastName");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("phoneNumber");
 
-                    b.Property<string>("UserType");
+                    b.Property<string>("userType");
 
                     b.HasKey("Id");
 
@@ -145,15 +125,15 @@ namespace DontEatAlone.Migrations
 
             modelBuilder.Entity("DontEatAlone.Data.UserReservation", b =>
                 {
-                    b.Property<string>("UserID");
+                    b.Property<string>("userID");
 
-                    b.Property<int>("ReservationID");
+                    b.Property<int>("reservationID");
 
-                    b.Property<bool>("IsHost");
+                    b.Property<bool>("isHost");
 
-                    b.HasKey("UserID", "ReservationID");
+                    b.HasKey("userID", "reservationID");
 
-                    b.HasAlternateKey("ReservationID", "UserID");
+                    b.HasAlternateKey("reservationID", "userID");
 
                     b.ToTable("UserReservation");
                 });
@@ -319,7 +299,7 @@ namespace DontEatAlone.Migrations
                 {
                     b.HasOne("DontEatAlone.Data.Reservation", "Reservation")
                         .WithMany("Comments")
-                        .HasForeignKey("ReservationID")
+                        .HasForeignKey("reservationID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -327,7 +307,7 @@ namespace DontEatAlone.Migrations
                 {
                     b.HasOne("DontEatAlone.Data.Reservation", "Reservation")
                         .WithOne("Limitations")
-                        .HasForeignKey("DontEatAlone.Data.Limitations", "Id")
+                        .HasForeignKey("DontEatAlone.Data.Limitations", "id")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -335,16 +315,8 @@ namespace DontEatAlone.Migrations
                 {
                     b.HasOne("DontEatAlone.Data.User", "User")
                         .WithOne("PremiumSubscription")
-                        .HasForeignKey("DontEatAlone.Data.PremiumSubscription", "Id")
+                        .HasForeignKey("DontEatAlone.Data.PremiumSubscription", "ID")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DontEatAlone.Data.Reservation", b =>
-                {
-                    b.HasOne("DontEatAlone.Data.Place", "Place")
-                        .WithMany("Reservations")
-                        .HasForeignKey("PlaceID")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("DontEatAlone.Data.User", b =>
@@ -359,12 +331,12 @@ namespace DontEatAlone.Migrations
                 {
                     b.HasOne("DontEatAlone.Data.Reservation", "Reservation")
                         .WithMany("UserReservations")
-                        .HasForeignKey("ReservationID")
+                        .HasForeignKey("reservationID")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DontEatAlone.Data.User", "User")
                         .WithMany("UserReservations")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("userID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
