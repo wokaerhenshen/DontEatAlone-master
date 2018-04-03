@@ -1,4 +1,6 @@
-﻿using DontEatAlone.Repo;
+﻿using DontEatAlone.Models;
+using DontEatAlone.Repo;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +11,67 @@ namespace DontEatAlone.Data
     public class Initialize
     {
         private ApplicationDbContext _context;
+        UserManager<ApplicationUser> _userManager;
         ReservationRepository rr;
         //= new ReservationRepository(_context);
-        public Initialize(ApplicationDbContext context)
+        public Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
             this.rr = new ReservationRepository(context);
-            //InitializeData();
+            InitUsers();
+            initPlaces();
+            InitializeData();
+            //CleanData();
         }
 
-        public void InitializeData()
+        private void InitializeData()
         {
-           if (_context.Reservation.Count() == 0)
+            if (_context.Reservation.Count() == 0)
             {
                 _context.Reservation.Add(new Reservation
                 {
                     Id = 1,
-                    Title = "my_first_reservation"
+                    Title = "Pasta day",
+                    PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id
                 });
 
-               // _context.SaveChanges();
+                // _context.SaveChanges();
 
                 _context.Reservation.Add(new Reservation
                 {
                     Id = 2,
-                    Title = "my_second_reservation"
+                    Title = "Tiesto pre party",
+                    PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id
+                });
+
+                _context.Reservation.Add(new Reservation()
+                {
+                    Id = 3,
+                    Title = "Party hard like Putin",
+                    PlaceID = _context.Place.Where(p => p.Name == "Black & Blue").FirstOrDefault().Id
+                });
+
+                _context.Reservation.Add(new Reservation()
+                {
+                    Id = 4,
+                    Title = "Good conversation and vibes",
+                    PlaceID = _context.Place.Where(p => p.Name == "Italian Kitchen").FirstOrDefault().Id
+                });
+
+                _context.Reservation.Add(new Reservation()
+                {
+                    Id = 5,
+                    Title = "We're going for the whole course",
+                    PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id
+                });
+
+                _context.Reservation.Add(new Reservation()
+                {
+                    Id = 6,
+                    Title = "Free vodka",
+                    PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
+
                 });
 
                 _context.SaveChanges();
@@ -122,13 +160,65 @@ namespace DontEatAlone.Data
                 _context.SaveChanges();
 
             }
-           //else
-           // {
-           //     CleanData();
-           // }
         }
 
-        public void CleanData()
+        private void initPlaces()
+        {
+            if (_context.Place.Count() == 0)
+            {
+                _context.Place.Add(new Place()
+                {
+                    Latitude = 49.2834511,
+                    Longtitude = -123.1174435,
+                    Name = "BCIT Downtown",
+                    Address = "555 Seymour St"
+                });
+                _context.Place.Add(new Place()
+                {
+                    Latitude = 49.2808611,
+                    Longtitude = -123.1168084,
+                    Name = "Black & Blue",
+                    Address = "1032 Alberni Street, Vancouver, BC V6Z 2V6"
+                });
+                _context.Place.Add(new Place()
+                {
+                    Latitude = 49.282966,
+                    Longtitude = -123.122885,
+                    Name = "Art gallery",
+                    Address = "750 Hornby St, Vancouver, BC V6Z 2H7"
+                });
+                _context.Place.Add(new Place()
+                {
+                    Latitude = 49.282805,
+                    Longtitude = -123.120475,
+                    Name = "Italian Kitchen",
+                    Address = "860 Burrard St, Vancouver, BC V6Z 1X9"
+                });
+                _context.Place.Add(new Place()
+                {
+                    Latitude = 49.275073,
+                    Longtitude = -123.122762,
+                    Name = "Cactus Club Cafe",
+                    Address = "357 Davie St, Vancouver, BC V6B 1R2"
+                });
+                _context.SaveChanges();
+            }
+        }
+
+        private void InitUsers()
+        {
+            ApplicationUser testIfExists = _context.ApplicationUser.Where(au => au.Email.Equals("admin@admin.com")).FirstOrDefault();
+            if (testIfExists == null)
+            {
+                _userManager.CreateAsync(new ApplicationUser()
+                {
+                    UserName = "admin@user.com",
+                    Email = "admin@user.com",
+                }, "Bcit123!");
+            }
+        }
+
+        private void CleanData()
         {
             foreach (var co in _context.Comment)
             {
@@ -147,16 +237,12 @@ namespace DontEatAlone.Data
                 _context.UserReservation.Remove(ur);
             }
             _context.SaveChanges();
-   
+
             foreach (var re in _context.Reservation)
             {
                 _context.Reservation.Remove(re);
             }
             _context.SaveChanges();
-
-            
-
-
         }
     }
 }

@@ -54,6 +54,13 @@ namespace DontEatAlone.Data
                 .HasForeignKey(fk => new { fk.ReservationID })
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Reservation>()
+               .HasOne(p => p.Place)
+               .WithMany(r => r.Reservations)
+               .HasForeignKey(fk => new { fk.PlaceID })
+               .OnDelete(DeleteBehavior.Restrict);
+
+
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
@@ -67,6 +74,6 @@ namespace DontEatAlone.Data
         public DbSet<Limitations> Limitations { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<PremiumSubscription> PremiumSubscription { get; set; }
-
+        public DbSet<Place> Place { get; set; }
     }
 }

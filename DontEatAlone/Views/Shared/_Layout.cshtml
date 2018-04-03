@@ -19,6 +19,12 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -49,79 +55,79 @@
         </div>
     </nav>
 
-     <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                @*<p>
-            <strong>
-                Last updated: (2018-02-27 2:30 PM)
-            </strong>
-        </p>
-        <div class="dropup">
-            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                Documentation
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="~/doc/Application Summary.docx">Application Summary (Updated: 13-Feb-2017 13:00)</a></li>
-                <li><a href="~/doc/Functional Requirements.docx">Functional Requirements (Updated: 13-Feb-2017 15:00)</a></li>
-                <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram (Updated: 20-Dec-2017 12:00)</a></li>
-                <li><a href="~/doc/ERD.png">ERD (Updated: 27-Feb-2018 10:00)</a></li>
-                <li><a href="~/doc/appdb.txt" >SQL Script (Updated: 27-Feb-2018 13:30)</a></li>
-            </ul>
-        </div>*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            @*<p>
+                    <strong>
+                        Last updated: (2018-02-27 2:30 PM)
+                    </strong>
+                </p>
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        Documentation
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="~/doc/Application Summary.docx">Application Summary (Updated: 13-Feb-2017 13:00)</a></li>
+                        <li><a href="~/doc/Functional Requirements.docx">Functional Requirements (Updated: 13-Feb-2017 15:00)</a></li>
+                        <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram (Updated: 20-Dec-2017 12:00)</a></li>
+                        <li><a href="~/doc/ERD.png">ERD (Updated: 27-Feb-2018 10:00)</a></li>
+                        <li><a href="~/doc/appdb.txt" >SQL Script (Updated: 27-Feb-2018 13:30)</a></li>
+                    </ul>
+                </div>*@
 
-                <div>
-                    <label for="loginExample">Default login info:</label>
+            <div>
+                <label for="loginExample">Default login info:</label>
+                <p>
+                    <label for="exampleInputEmail1">admin@user.com</label>
+                    <label for="exampleInputPassword1">, Bcit123!</label>
+                </p>
+                <p>
+                    <label for="exampleInputEmail1">regular@user.com</label>
+                    <label for="exampleInputPassword1">, Bcit123!</label>
+                </p>
+                <p>
+                    <label for="exampleInputEmail1">premium@user.com</label>
+                    <label for="exampleInputPassword1">, Bcit123!</label>
+                </p>
+            </div>
+
+
+            <div class="text-center">
+                <div class="pull-center">
+                    <p>Connect with us via social media!</p>
                     <p>
-                        <label for="exampleInputEmail1">admin@user.com</label>
-                        <label for="exampleInputPassword1">, Bcit123!</label>
-                    </p>
-                    <p>
-                        <label for="exampleInputEmail1">regular@user.com</label>
-                        <label for="exampleInputPassword1">, Bcit123!</label>
-                    </p>
-                    <p>
-                        <label for="exampleInputEmail1">premium@user.com</label>
-                        <label for="exampleInputPassword1">, Bcit123!</label>
+                        <img src="~/images/Social-Media-Bar.png" alt="Social Media Links" style="width:360px;height:50px;border:unset" />
                     </p>
                 </div>
+            </div>
+        </footer>
+    </div>
 
-
-                <div class="text-center">
-                    <div class="pull-center">
-                        <p>Connect with us via social media!</p>
-                        <p>
-                            <img src="~/images/Social-Media-Bar.png" alt="Social Media Links" style="width:360px;height:50px;border:unset" />
-                        </p>
-                    </div>
-                </div>
-            </footer>
-        </div>
-
-                <environment include="Development">
-                    <script src="~/lib/jquery/dist/jquery.js"></script>
-                    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-                    <script src="~/js/site.js" asp-append-version="true"></script>
-                </environment>
-                <environment exclude="Development">
-                    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                            asp-fallback-test="window.jQuery"
-                            crossorigin="anonymous"
-                            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-                    </script>
-                    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                            crossorigin="anonymous"
-                            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-                    </script>
-                    <script src="~/js/site.min.js" asp-append-version="true"></script>
-                </environment>
-
-                @RenderSection("Scripts", required: false)
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0QzEsQpUEM66OCgzrMMgJKNLZ3pzPv6E&callback=initMap" async defer></script>
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>

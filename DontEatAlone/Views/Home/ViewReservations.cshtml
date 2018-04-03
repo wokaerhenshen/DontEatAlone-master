@@ -1,18 +1,60 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
+@model IEnumerable<Object>
 @{
     ViewData["Title"] = "ViewReservations";
 }
 
+<script>
+    function initMap() {
+
+        function generateMarkerInfoWIndow(title, address, reservations, placeId) {
+            let result = `<h5>${title}</h5><h6>${address}</h6>`
+            reservations.forEach(r => {
+                result += `<a href='https://localhost:44351/Home/ReservationPage/?id=${r.id}'><p>${r.title}</p></a>`
+            })
+            result += `<a href='https://localhost:44351/Home/CreateReservation/?id=${placeId}'><p>Create Reservation</p></a>`
+            return result
+        }
+
+
+        function addMarker(object) {
+            var marker = new google.maps.Marker({
+                position: { lat: object.latitude, lng: object.longtitude },
+                map: map
+            })
+            var infoWindow = new google.maps.InfoWindow({
+                content: generateMarkerInfoWIndow(object.name, object.address, object.reservations, object.id)
+            })
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker)
+            })
+        }
+
+        let options = {
+            zoom: 14,
+            center: { lat: 49.2827, lng: -123.1207 }
+        }
+
+        let map = new google.maps.Map(document.getElementById('map'), options)
+
+        let markersArray = @Html.Raw(Json.Serialize(Model));
+
+        console.log(@Html.Raw(Json.Serialize(Model)));
+
+        markersArray.map(r => addMarker(r))
+    }
+</script>
+
+
 <h2>View Reservations</h2>
 
 @*<form role="form">
-    <div class="form-group row">
-        <label for="contain">search</label>     
-         <input class="form-control col-sm-10" type="text" />
-         <button type="submit" class="btn btn-primary col-sm-1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>s
-    </div>
-</form>*@
+        <div class="form-group row">
+            <label for="contain">search</label>
+             <input class="form-control col-sm-10" type="text" />
+             <button type="submit" class="btn btn-primary col-sm-1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>s
+        </div>
+    </form>*@
 
 <form>
     <div class="form-group row">
@@ -173,23 +215,24 @@
         </div>
     }
 </form>
-<img src="~/images/view_reservations_map.JPG" class="img-responsive" alt="Cinque Terre"> 
+<div id="map"></div>
 <h3>Results</h3>
 <table class="table">
     <thead>
         <tr>
             <th scope="col">Created By</th>
             @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any()) {
-                <th scope="col">Evaluation</th>
+                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+                {
+                    <th scope="col">Evaluation</th>
                 }
             }
-            
+
             <th scope="col">Title</th>
             <th scope="col">Location</th>
             <th scope="col">Party Size</th>
-          
-            
+
+
             <th scope="col">Date and Time</th>
             <th scope="col">Status</th>
         </tr>
@@ -204,7 +247,7 @@
                 }
 
             }
-            
+
 
             <td>Russian Cuisine</td>
             <td>Kushat Podano</td>
