@@ -49,7 +49,7 @@ namespace DontEatAlone.Repo
                 reservation.DateEnd = new DateTime(res.DateEnd.Millisecond);
                 reservation.NumberOfPeople = res.NumberOfPeople;
                 reservation.Status = res.Status;
-                reservation.LocationID = res.LocationID;
+                reservation.PlaceID = res.PlaceID;
                 _context.SaveChanges();
 
                 return true;
@@ -79,7 +79,7 @@ namespace DontEatAlone.Repo
             r.DateEnd = new DateTime(reservation.DateEnd.Millisecond);
             r.NumberOfPeople = reservation.NumberOfPeople;
             r.Status = reservation.Status;
-            r.LocationID = reservation.LocationID;
+            r.PlaceID = reservation.PlaceID;
             _context.Add(r);
             _context.SaveChanges();
 

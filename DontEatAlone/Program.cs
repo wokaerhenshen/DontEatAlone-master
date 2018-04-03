@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using DontEatAlone.Data;
 using DontEatAlone.Repo;
+using Microsoft.AspNetCore.Identity;
 
 namespace DontEatAlone
 {
@@ -26,13 +27,12 @@ namespace DontEatAlone
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    //Initialize initializer = new Initialize(context);
+                    var userManager = services.GetRequiredService<UserManager<Models.ApplicationUser>>();
+                    Initialize initializer = new Initialize(context, userManager);
                     //initializer.InitializeData();
                     RoleRepo roleIni = new RoleRepo(context);
                     roleIni.CreateInitialRoles();
-                    Initialize DataIni = new Initialize(context);
-                    DataIni.InitializeData();
-
+                    Initialize DataIni = new Initialize(context, userManager);
                 }
                 catch (Exception ex)
                 {

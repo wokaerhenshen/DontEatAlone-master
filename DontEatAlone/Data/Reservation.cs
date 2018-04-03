@@ -17,11 +17,12 @@ namespace DontEatAlone.Data
         public DateTime DateEnd { get; set; }
         public int NumberOfPeople { get; set; }
         public string Status { get; set; }
-        public string LocationID { get; set; }
-        
+        public string PlaceID { get; set; }
+
         public virtual ICollection<UserReservation> UserReservations { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual Limitations Limitations { get; set; }
+        public virtual Place Place { get; set; }
 
     }
 }

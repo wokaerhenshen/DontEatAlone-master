@@ -34,7 +34,7 @@ namespace DontEatAlone.Controllers
             r.DateEnd = new DateTime(dateEnd);
             r.NumberOfPeople = numberOfPeople;
             r.Status = status;
-            r.LocationID = locationID;
+            r.PlaceID = locationID;
 
             return new OkObjectResult(_reservationRepo.CreateReservation(r));
         }
@@ -63,7 +63,7 @@ namespace DontEatAlone.Controllers
             reservation.DateEnd = new DateTime(dateEnd);
             reservation.NumberOfPeople = peopleNumber;
             reservation.Status = status;
-            reservation.LocationID = locationID;
+            reservation.PlaceID = locationID;
 
             return new OkObjectResult(_reservationRepo.UpdateReservation(reservation));
         }

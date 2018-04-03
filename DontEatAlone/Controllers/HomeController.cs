@@ -5,11 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DontEatAlone.Models;
+using DontEatAlone.Data;
 
 namespace DontEatAlone.Controllers
 {
     public class HomeController : Controller
     {
+        ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -43,9 +50,16 @@ namespace DontEatAlone.Controllers
 
         public IActionResult ViewReservations()
         {
-            
-           // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
-            return View();
+            var places = _context.Place.Select(p => new
+            {
+                Id = p.Id,
+                Address = p.Address,
+                Name = p.Name,
+                Longtitude = p.Longtitude,
+                Latitude = p.Latitude,
+                Reservations = _context.Reservation.Where(r => r.PlaceID == p.Id).ToList()
+            }).ToList();
+            return View(places);
         }
 
         public IActionResult ReservationPage()
