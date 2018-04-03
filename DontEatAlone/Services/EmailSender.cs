@@ -30,11 +30,10 @@ namespace DontEatAlone.Services
                 mailMsg.To.Add(new MailAddress(email, "To Name"));
 
                 // From
-                mailMsg.From = new MailAddress("emailaddress@home.com", "From Name");
+                mailMsg.From = new MailAddress("donteatalone@home.com", "Don't Eat Alone");
 
                 // Subject and multipart/alternative Body
                 mailMsg.Subject = subject;
-
 
                 // You can send text instead of HTML if you prefer.
                 // mailMsg.AlternateViews.Add(

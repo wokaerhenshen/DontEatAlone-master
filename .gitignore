@@ -119,6 +119,9 @@ nCrunchTemp_*
 *.mm.*
 AutoTest.Net/
 
+# Migrations
+DontEatAlone/Migrations/
+
 # Web workbench (sass)
 .sass-cache/
 
