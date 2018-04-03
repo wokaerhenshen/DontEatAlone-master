@@ -256,6 +256,7 @@ namespace DontEatAlone.Controllers
                         Id = user.Id
                     });
 
+        
                     _context.SaveChanges();
 
                     //_context.Reservation.Add(new Reservation

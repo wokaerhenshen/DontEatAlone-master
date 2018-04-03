@@ -1,6 +1,7 @@
 ﻿using DontEatAlone.Models;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -207,6 +208,7 @@ namespace DontEatAlone.Data
 
         private void InitUsers()
         {
+            // Check for _context.ApplicationUser.Where for count > 0 if yes, confirmed account 
             ApplicationUser testIfExists = _context.ApplicationUser.Where(au => au.Email.Equals("admin@admin.com")).FirstOrDefault();
             if (testIfExists == null)
             {
@@ -217,6 +219,56 @@ namespace DontEatAlone.Data
                 }, "Bcit123!");
             }
         }
+
+        private async Task createRolesandUsers(IServiceProvider serviceProvider)
+        {
+            var _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            bool x = await _roleManager.RoleExistsAsync("Admin");
+            if (!x)
+            {
+
+            // first we create Admin rool    
+            var role = new IdentityRole();
+            role.Name = "Admin";
+            await _roleManager.CreateAsync(role);
+
+            //Here we create a Admin super user who will maintain the website                   
+
+            var user = new ApplicationUser();
+            user.UserName = "default";
+            user.Email = "default@default.com";
+
+            string userPWD = "somepassword";
+
+            IdentityResult chkUser = await _userManager.CreateAsync(user, userPWD);
+
+            //Add default User to Role Admin    
+            if (chkUser.Succeeded)
+            {
+                var result1 = await _userManager.AddToRoleAsync(user, "Member");
+            }
+        }
+
+            // creating Creating Manager role     
+            x = await _roleManager.RoleExistsAsync("Premium");
+            if (!x)
+            {
+            var role = new IdentityRole();
+            role.Name = "Premium";
+            await _roleManager.CreateAsync(role);
+
+            }
+
+            // creating Creating Employee role     
+            x = await _roleManager.RoleExistsAsync("Admin");
+            if (!x)
+            {
+            var role = new IdentityRole();
+            role.Name = "Admin";
+            await _roleManager.CreateAsync(role);
+            }
+    }
 
         private void CleanData()
         {

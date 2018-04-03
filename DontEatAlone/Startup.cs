@@ -99,7 +99,6 @@ namespace DontEatAlone
                 app.UseExceptionHandler("/Home/Error");
             }
 
-
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
