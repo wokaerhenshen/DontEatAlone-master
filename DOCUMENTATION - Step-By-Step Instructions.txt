@@ -1,0 +1,8 @@
+Step-By-Step Instructions
+-------------------------
+
+Delete Migrations folder
+Delete app.db
+
+Add-Migration InitialCreate
+Update-Database
