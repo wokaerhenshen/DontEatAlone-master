@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DontEatAlone.Models;
 using DontEatAlone.Data;
+using DontEatAlone.Repo;
 
 namespace DontEatAlone.Controllers
 {
     public class HomeController : Controller
     {
         ApplicationDbContext _context;
+        ReservationRepository rr;
+
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
+            this.rr = new ReservationRepository(context);
         }
 
         public IActionResult Index()
@@ -42,9 +46,48 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        [HttpPost]
+        public void createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople)
+        {
+            // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
+            string startString = date + " " + startTime;
+            string endString = date + " " + endTime;
+            DateTime startDate = DateTime.ParseExact(startString, "yyyy-MM-dd HH:mm", null);
+            DateTime endDate = DateTime.ParseExact(endString, "yyyy-MM-dd HH:mm", null);
+
+            if (!rr.placeIdExist(placeId))
+            {
+                Place place = new Place()
+                {
+                    Id = placeId,
+                    Latitude = Convert.ToDouble(placeLat),
+                    Longtitude = Convert.ToDouble(placeLng),
+                    Name = placeName,
+                    Address = placeAddress
+                };
+                _context.Place.Add(place);
+                _context.SaveChanges();
+
+            }
+
+
+            Reservation reservation = new Reservation()
+            {
+                Id = rr.GenerateReservationId(),
+                Title = title,
+                DateStart = startDate,
+                DateEnd = endDate,
+                NumberOfPeople = Int32.Parse(numberPeople),
+                Status = "open",
+                PlaceID = placeId
+            };
+            rr.CreateReservation(reservation);
+
+        }
+
         public IActionResult CreateReservation()
         {
-           // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
+            // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             return View();
         }
 

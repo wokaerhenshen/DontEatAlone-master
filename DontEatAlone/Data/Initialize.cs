@@ -168,6 +168,7 @@ namespace DontEatAlone.Data
             {
                 _context.Place.Add(new Place()
                 {
+                    Id="ChIJ4S7wxnhxhlQRFGfmMvQ74LQ",
                     Latitude = 49.2834511,
                     Longtitude = -123.1174435,
                     Name = "BCIT Downtown",
@@ -175,6 +176,7 @@ namespace DontEatAlone.Data
                 });
                 _context.Place.Add(new Place()
                 {
+                    Id = "ChIJu1r9tIFxhlQRsfy5cILqdDs",
                     Latitude = 49.2808611,
                     Longtitude = -123.1168084,
                     Name = "Black & Blue",
@@ -182,6 +184,7 @@ namespace DontEatAlone.Data
                 });
                 _context.Place.Add(new Place()
                 {
+                    Id = "ChIJ3U0lgH9xhlQRtGkKYvE4DCA",
                     Latitude = 49.282966,
                     Longtitude = -123.122885,
                     Name = "Art gallery",
@@ -189,6 +192,7 @@ namespace DontEatAlone.Data
                 });
                 _context.Place.Add(new Place()
                 {
+                    Id = "ChIJhyhZHIBxhlQRVoXcHbmpVSo",
                     Latitude = 49.282805,
                     Longtitude = -123.120475,
                     Name = "Italian Kitchen",
@@ -196,6 +200,7 @@ namespace DontEatAlone.Data
                 });
                 _context.Place.Add(new Place()
                 {
+                    Id = "ChIJ4Vnv6dZzhlQRMLbmj6Ca0rU",
                     Latitude = 49.275073,
                     Longtitude = -123.122762,
                     Name = "Cactus Club Cafe",

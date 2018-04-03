@@ -74,9 +74,10 @@ namespace DontEatAlone.Repo
         public bool CreateReservation(Reservation reservation)
         {
             Reservation r = new Reservation();
+            r.Id = reservation.Id;
             r.Title = reservation.Title;
-            r.DateStart = new DateTime(reservation.DateStart.Millisecond);
-            r.DateEnd = new DateTime(reservation.DateEnd.Millisecond);
+            r.DateStart = reservation.DateStart;
+            r.DateEnd = reservation.DateEnd;
             r.NumberOfPeople = reservation.NumberOfPeople;
             r.Status = reservation.Status;
             r.PlaceID = reservation.PlaceID;
@@ -84,6 +85,18 @@ namespace DontEatAlone.Repo
             _context.SaveChanges();
 
             return true;
+        }
+
+        public bool placeIdExist(string placeId)
+        {
+          string name =  _context.Place.Where(i => i.Id == placeId).Select(place=> place.Name).FirstOrDefault();
+            if (name != null)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
         }
     }
 }

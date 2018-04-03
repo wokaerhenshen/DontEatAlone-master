@@ -21,47 +21,165 @@
     }
 </style>*@
 
-<h2>Create a Reservation</h2>
-<br />
-<input class="form-control" placeholder="Selected Restaurant" type="text" />
-<br />
-<p><strong>Date: <input id="date" type="date">   Start Time: <input id="starttime" type="time"> End Time: <input id="endtime" type="time"></strong></p>
-@{
-     if (User.IsInRole("Regular"))
-    {
-        <p>Party Size: <input type="radio" name="partysize" value="two" checked="checked"> 2*</p>
-        <p>Limitations: **</p>
-    }
-    else
-    {
-        <p>
-            Party Size:
-            <select>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
-        </p>
-        <p>
-            Limitations:
-            <span><textarea class="form-control" placeholder="" type="text" rows="6" cols="100"></textarea></span>
-        </p>
-    }
-}
+<head>
+    <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <!-- need to change this line in other places -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKtdwDUEBfyH1WIceQmylNKXn0HfT4LyU"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script>
+        var geocoder;
+        var map;
+        var placeID;
+        var lat;
+        var lng;
+        var Globaladdress;
+        var mapOptions = {
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var marker;
+        function initialize() {
+            geocoder = new google.maps.Geocoder();
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            codeAddress();
+        }
+        function codeAddress() {
+            var address = document.getElementById('address').value;
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    placeID = results[0].place_id
+                    lat = results[0].geometry.location.lat
+                    lng = results[0].geometry.location.lng
+                    Globaladdress = results[0].formatted_address
+                    map.setCenter(results[0].geometry.location);
+                    if (marker)
+                        marker.setMap(null);
+                    var contentString = '<div id= "addressOnMap">' + address + '</div><input id="confirmButton" type="button" value="Confirm" onclick="confirmAddress()">';
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+                    marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        draggable: true
+                    });
 
-<br />
-<textarea class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
-<br />
-<button style="position:relative">Make Reservation</button>
+                    marker.addListener('click', function () {
+                        infowindow.open(map, marker);
+                    });
 
-@if (User.IsInRole("Regular"))
-{
-    <div class="footnotes">
-        <h6>* Regular Users are limited to a party size of 2.</h6>
-        <h6>** Specifying limitations is a premium feature.</h6>
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        function confirmAddress() {
+            var address = document.getElementById('addressOnMap').innerHTML;
+            document.getElementById("confirmed_address").innerHTML = address
+        }
+
+        function makeReservation() {
+            var title = document.getElementById('reservation_title').value
+            var placeId = placeID
+            var placeName = document.getElementById('addressOnMap').innerHTML
+            var placeAddress = Globaladdress
+            var placeLat = marker.getPosition().lat()
+            var placeLng = marker.getPosition().lng()
+
+            var date = document.getElementById('date').value
+            var startTime = document.getElementById('starttime').value
+            var endtime = document.getElementById('endtime').value
+            var numberOfPeople = document.getElementById('number_of_People').value
+
+            alert(title)
+            alert(placeId)
+            alert(placeName)
+            alert(placeAddress)
+            alert(placeLat)
+            alert(placeLng)
+            
+            alert(date)
+            alert(startTime)
+            alert(endtime)
+            alert(numberOfPeople)
+            
+
+            $.ajax({
+                type: "post",
+                url: "createReservation",
+                data: { title: title, placeId: placeId, placeName:placeName,placeAddress:placeAddress, placeLat:placeLat,placeLng:placeLng,date: date, startTime: startTime, endTime: endtime, numberPeople: numberOfPeople},
+                datatype: "json",
+                success: function () {
+                    alert("success")
+
+                },
+                error: function () {
+                    alert("fail")
+                }
+            })
+        }
+    </script>
+</head>
+
+
+
+<body onload="initialize()">
+
+    <h2>Create a Reservation</h2>
+    <br />
+    <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
+    <br />
+
+    <div>
+        <input class="form-control" id="address" type="text" style="width:60%" value="bcit downtown">
+        <input type="button" value="Search location" onclick="codeAddress()">
+        @*<input type="text" id="lat" />
+            <input type="text" id="lng" />*@
     </div>
-}
+    <div id="map_canvas" style="height:300px;width:100%"></div>
+    <br />
+    <div id="confirmed_address"> You have not confirm the address!</div>
+    <br />
+    <p><strong>Date: <input id="date" type="date">   Start Time: <input id="starttime" type="time"> End Time: <input id="endtime" type="time"></strong></p>
+    @{
+        if (User.IsInRole("Regular"))
+        {
+            <p>Party Size: <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*</p>
+            <p>Limitations: **</p>
+        }
+        else
+        {
+            <p>
+                Party Size:
+                <select id="number_of_People">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </p>
+            <p>
+                Limitations:
+                <span><textarea class="form-control" placeholder="" type="text" rows="6" cols="100"></textarea></span>
+            </p>
+        }
+    }
+
+    <br />
+<textarea class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
+    <br />
+    <button onclick="makeReservation()" style="position:relative">Make Reservation</button>
+
+    @if (User.IsInRole("Regular"))
+    {
+        <div class="footnotes">
+            <h6>* Regular Users are limited to a party size of 2.</h6>
+            <h6>** Specifying limitations is a premium feature.</h6>
+        </div>
+    }
+
+</body>

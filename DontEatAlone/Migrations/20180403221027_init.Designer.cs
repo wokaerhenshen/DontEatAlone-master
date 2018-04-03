@@ -11,8 +11,8 @@ using System;
 namespace DontEatAlone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180403175423_initial")]
-    partial class initial
+    [Migration("20180403221027_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,8 +66,7 @@ namespace DontEatAlone.Migrations
 
             modelBuilder.Entity("DontEatAlone.Data.Place", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Address");
 

@@ -65,8 +65,7 @@ namespace DontEatAlone.Migrations
 
             modelBuilder.Entity("DontEatAlone.Data.Place", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Address");
 
