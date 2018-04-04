@@ -82,6 +82,7 @@
         function makeReservation() {
             var title = document.getElementById('reservation_title').value
             var placeId = placeID
+
             var placeName = document.getElementById('addressOnMap').innerHTML
             var placeAddress = Globaladdress
             var placeLat = marker.getPosition().lat()
@@ -92,23 +93,85 @@
             var endtime = document.getElementById('endtime').value
             var numberOfPeople = document.getElementById('number_of_People').value
 
-            alert(title)
-            alert(placeId)
-            alert(placeName)
-            alert(placeAddress)
-            alert(placeLat)
-            alert(placeLng)
-            
-            alert(date)
-            alert(startTime)
-            alert(endtime)
-            alert(numberOfPeople)
-            
+            var sexString = ""
+            var ageString = ""
+            var cuisineType
+            var smoke
+            var pet
+            var alcohol
+            var languages
+            var description
+
+
+            var sexCheck = document.getElementsByName("sexRadios")
+            for (var i = 0; i < sexCheck.length; i++) {
+                if (sexCheck[i].checked == true) {
+                    sexString = sexString + " " + sexCheck[i].value
+                }
+            }
+
+            cuisineType = document.getElementById("CuisineType").value
+
+            var ageCheck = document.getElementsByName("ageCheck")
+            for (var i = 0; i < ageCheck.length; i++) {
+                if (ageCheck[i].checked == true) {
+
+                    ageString += ageCheck[i].value
+                }
+
+            }
+
+            var smokingCheck = document.getElementById("Smoking")
+
+            if (smokingCheck.checked == true) {
+                smoke = false
+
+            } else {
+                smoke = true
+            }
+
+            if (document.getElementById("Animals").checked == true) {
+
+                pet = false
+            } else {
+                pet = true
+
+            }
+
+            if (document.getElementById("Alcohol").checked == true) {
+
+                alcohol = false
+            } else {
+                alcohol = true
+
+            }
+
+            languages = document.getElementById("Language").value
+
+
+            description = document.getElementById("Description").value
+
+            //alert(title)
+            //alert(placeId)
+            //alert(placeName)
+            //alert(placeAddress)
+            //alert(placeLat)
+            //alert(placeLng)
+
+            //alert(date)
+            //alercuisineTypet(startTime)
+            //alert(endtime)
+            //alert(numberOfPeople)
+
 
             $.ajax({
                 type: "post",
                 url: "createReservation",
-                data: { title: title, placeId: placeId, placeName:placeName,placeAddress:placeAddress, placeLat:placeLat,placeLng:placeLng,date: date, startTime: startTime, endTime: endtime, numberPeople: numberOfPeople},
+                data: {
+                    title: title, placeId: placeId, placeName: placeName, placeAddress: placeAddress, placeLat: placeLat, placeLng: placeLng, date: date, startTime: startTime, endTime: endtime, numberPeople: numberOfPeople,
+                    sexString: sexString, ageString: ageString, cuisineType: cuisineType, 
+                    smoke: smoke, pet: pet, alcohol: alcohol, languages: languages, description: description
+                },
                 datatype: "json",
                 success: function () {
                     alert("success")
@@ -119,7 +182,16 @@
                 }
             })
         }
+
+        //function showlimit() {
+
+            
+           
+
+        //    alert(description)
+        //}
     </script>
+
 </head>
 
 
@@ -135,51 +207,200 @@
         <input class="form-control" id="address" type="text" style="width:60%" value="bcit downtown">
         <input type="button" value="Search location" onclick="codeAddress()">
         @*<input type="text" id="lat" />
-            <input type="text" id="lng" />*@
+        <input type="text" id="lng" />*@
     </div>
     <div id="map_canvas" style="height:300px;width:100%"></div>
     <br />
     <div id="confirmed_address"> You have not confirm the address!</div>
     <br />
     <p><strong>Date: <input id="date" type="date">   Start Time: <input id="starttime" type="time"> End Time: <input id="endtime" type="time"></strong></p>
+    
     @{
-        if (User.IsInRole("Regular"))
-        {
-            <p>Party Size: <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*</p>
-            <p>Limitations: **</p>
-        }
-        else
-        {
+    if (User.IsInRole("Regular"))
+    {
+    <p>Party Size: <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*</p>
+    <p>Limitations: **</p>
+    }
+    else
+    {
+    <p>
+        Party Size:
+        <select id="number_of_People">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+
+    </p>
+
+
+    <br />
+
+    <div class="form-group row">
+        <div class="col-md-12">
             <p>
-                Party Size:
-                <select id="number_of_People">
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                   Limitations
+                </button>
             </p>
-            <p>
-                Limitations:
-                <span><textarea class="form-control" placeholder="" type="text" rows="6" cols="100"></textarea></span>
-            </p>
-        }
+            <div class="collapse" id="collapseExample">
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <div class="col-form-legend col-sm-2">Sex</div>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios1" value="male">
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios2" value="female">
+                                            Female
+                                        </label>
+                                    </div>
+                                    <div class="form-check disabled">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios3" value="others">
+                                            Others
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <div class="col-form-legend col-md-2">Other</div>
+                                <div class="col-md-10">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="gridRadios" id="Smoking" value="noSmoking">
+                                            Smoking free
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="gridRadios" id="Alcohol" value="noAlcohol">
+                                            Alcohol free
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="gridRadios" id="Animals" value="noAnimals">
+                                            Animals free
+                                        </label>
+                                    </div>
+                                    <div class="form-check disabled">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="gridRadios" id="otherRadios3" value="noKids">
+                                            Kids free
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <div class="col-form-legend col-md-2">Age</div>
+                                <div class="col-md-10">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="All" checked>
+                                            All
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="18-34">
+                                            18-34
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios2" value="35-50">
+                                            35-50
+                                        </label>
+                                    </div>
+                                    <div class="form-check disabled">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios3" value="51-69">
+                                            51-69
+                                        </label>
+                                    </div>
+                                    <div class="form-check disabled">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios3" value="70+">
+                                            70+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="inputPassword5">Cuisine</label>
+                        <input type="text" id="CuisineType" class="form-control" aria-describedby="passwordHelpBlock">
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            You can specify cuisine vie comma separated values. For example: Italian, Ukrainian, Canadian, Chinese
+                        </small>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputPassword5">Language</label>
+                        <input type="text" id="Language" class="form-control" aria-describedby="passwordHelpBlock">
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            You can specify languge vie comma separated values. For example: English, Russian, Italian, Chinese
+                        </small>
+                    </div>
+
+                </div>
+                <textarea id="Description" class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
     }
 
     <br />
-<textarea class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
+
     <br />
+    @*<button onclick="showlimit()">show limit</button>*@
     <button onclick="makeReservation()" style="position:relative">Make Reservation</button>
 
     @if (User.IsInRole("Regular"))
     {
-        <div class="footnotes">
-            <h6>* Regular Users are limited to a party size of 2.</h6>
-            <h6>** Specifying limitations is a premium feature.</h6>
-        </div>
+    <div class="footnotes">
+        <h6>* Regular Users are limited to a party size of 2.</h6>
+        <h6>** Specifying limitations is a premium feature.</h6>
+    </div>
     }
 
 </body>

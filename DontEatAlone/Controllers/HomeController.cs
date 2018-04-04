@@ -47,7 +47,8 @@ namespace DontEatAlone.Controllers
         }
 
         [HttpPost]
-        public void createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople)
+        public void createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
+           string sexString, string ageString,string cuisineType, bool smoke,bool pet,bool alcohol,string languages,string description)
         {
             // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             string startString = date + " " + startTime;
@@ -83,6 +84,24 @@ namespace DontEatAlone.Controllers
             };
             rr.CreateReservation(reservation);
 
+            Limitations limitations = new Limitations()
+            {
+                Id = reservation.Id,
+                Gender = sexString,
+                CuisineType = cuisineType,
+                Age = ageString,
+                Smoking = smoke,
+                Pets = pet,
+                Alcohol = alcohol,
+                Languages = languages,
+                Description = description
+
+            };
+
+            _context.Limitations.Add(limitations);
+            _context.SaveChanges();
+
+
         }
 
         public IActionResult CreateReservation()
@@ -99,7 +118,7 @@ namespace DontEatAlone.Controllers
                         from r in _context.Reservation
                         where r.PlaceID == p.Id
                         select new Place() { Id=p.Id, Address = p.Address, };
-            List < Place > places = _context.Place.Select(p => new Place
+            List <Place> places = _context.Place.Select(p => new Place
             {
                 Id = p.Id,
                 Address = p.Address,

@@ -111,9 +111,13 @@ namespace DontEatAlone.Migrations
 
                     b.Property<string>("Title");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PlaceID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reservation");
                 });
@@ -343,6 +347,11 @@ namespace DontEatAlone.Migrations
                         .WithMany("Reservations")
                         .HasForeignKey("PlaceID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DontEatAlone.Data.User", "User")
+                        .WithMany("Reservations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("DontEatAlone.Data.User", b =>
