@@ -1,4 +1,5 @@
-﻿
+﻿@model DontEatAlone.Data.Reservation;
+
 @{
     ViewData["Title"] = "Reservation Page";
 }
@@ -19,7 +20,8 @@
     }
 </style>
 
-<h1>Frog legs and other French delights<span class="badge badge-success" style="background-color:green;">Available</span></h1>
+<h1>@Html.Raw(ViewBag.id)</h1>
+<h1>@Html.DisplayFor(model => model.Title)<span class="badge badge-success" style="background-color:green;">Available</span></h1>
 <div class="row">
     <div class="col-md-6">
         <h3>Info</h3>
@@ -27,38 +29,38 @@
             <tbody>
                 <tr>
                     <th scope="row">Title</th>
-                    <td>Frog legs and other French delights</td>
+                    <td>@Html.DisplayFor(model => model.Title)</td>
                 </tr>
                 <tr>
                     <th scope="row">Location</th>
-                    <td>Chateau Aile Droite</td>
+                    <td>@Html.Raw(ViewBag.name)</td>
                 </tr>
                 <tr>
                     <th scope="row">Party Size</th>
-                    <td>4</td>
+                    <td>@Html.DisplayFor(model => model.NumberOfPeople)</td>
                 </tr>
                 <tr>
                     <th scope="row">Address</th>
-                    <td>Vancouver, 321 Commercial Dr, V3F 1B7</td>
+                    <td>@Html.Raw(ViewBag.address)</td>
                 </tr>
                 <tr>
                     <th scope="row">Limitations</th>
-                    <td>No limitations</td>
+                    <td>@Html.Raw(ViewBag.limitations)</td>
                 </tr>
                 <tr>
                     <th scope="row">Date and Time</th>
-                    <td>26 November 6PM - 11PM</td>
+                    <td>@Html.DisplayFor(model => model.DateStart) To @Html.DisplayFor(model => model.DateEnd) </td>
                 </tr>
                 <tr>
                     <th scope="row">Status</th>
-                    <td>Available</td>
+                    <td>@Html.DisplayFor(model => model.Status)</td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="col-md-6">
         <h3>Map</h3>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.6274800194483!2d-123.11742178431054!3d49.28345557933146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867178c92a69b9%3A0x6b40938af55472d6!2s555+Seymour+St%2C+Vancouver%2C+BC+V6B!5e0!3m2!1sen!2sca!4v1507095571512" width="100%" height="300px" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <iframe   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAhhb5fDHQ6ds91_9uEbw-X7aBKvmpr_Yw&q='@Html.Raw(ViewBag.address)'" width="100%" height="300px" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
 </div>
 <div class="row">

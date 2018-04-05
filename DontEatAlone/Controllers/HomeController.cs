@@ -141,9 +141,14 @@ namespace DontEatAlone.Controllers
             return View(places);
         }
 
-        public IActionResult ReservationPage()
+        public IActionResult ReservationPage(int id)
         {
-            return View();
+            Reservation reservation = rr.GetReservation(id);
+            ViewBag.id = id;
+            ViewBag.name = rr.getLocationNameByReservationId(id);
+            ViewBag.address = rr.getAddressByReservationId(id);
+            ViewBag.limitations = rr.getLimitationByReservationId(id);
+            return View(reservation);
         }
 
 

@@ -25,5 +25,6 @@ namespace DontEatAlone.Data
         public virtual Limitations Limitations { get; set; }
         public virtual Place Place { get; set; }
         public virtual User User { get; set; }
+
     }
 }

@@ -39,6 +39,8 @@ namespace DontEatAlone.Data
                     DateEnd = DateTime.Now.AddHours(5)
                 });
 
+
+
                 // _context.SaveChanges();
 
                 _context.Reservation.Add(new Reservation
@@ -133,6 +135,58 @@ namespace DontEatAlone.Data
                     Alcohol = false,
                     Languages = "English",
                     Description = "welcome lady!!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 3,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 4,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 5,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 6,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
                 });
 
                 _context.SaveChanges();
