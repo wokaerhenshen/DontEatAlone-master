@@ -1,6 +1,7 @@
 ﻿using DontEatAlone.Models;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -288,6 +289,7 @@ namespace DontEatAlone.Data
 
         private void InitUsers()
         {
+            // Check for _context.ApplicationUser.Where for count > 0 if yes, confirmed account 
             ApplicationUser testIfExists = _context.ApplicationUser.Where(au => au.Email.Equals("admin@admin.com")).FirstOrDefault();
             if (testIfExists == null)
             {

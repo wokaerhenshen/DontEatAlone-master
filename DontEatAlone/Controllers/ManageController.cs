@@ -166,7 +166,7 @@ namespace DontEatAlone.Controllers
 
 
             var dropUR = await userRoleRepo.RemoveUserRole(User.Identity.Name,
-                              "Regular");
+                              "Member");
             var addUR = await userRoleRepo.AddUserRole(User.Identity.Name,
                                                       "Premium");
             // FormsAuthentication.SignOut();
