@@ -19,24 +19,67 @@
     </style>*@
 
 
-@*map code*@
-<script>
-    function initMap() {
+    <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <!-- need to change this line in other places -->
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    @*map code*@
+    <script>
         var geocoder;
         var map;
         var placeID;
         var lat;
         var lng;
         var Globaladdress;
-        var mapOptions = {
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
+
         var marker;
 
-        geocoder = new google.maps.Geocoder();
-        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-        codeAddress(geocoder, map, marker);
+        function initMap() {
+            var mapOptions = {
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            geocoder = new google.maps.Geocoder();
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            codeAddress();
+        }
+
+        function codeAddress() {
+            var address = document.getElementById('address').value;
+            geocoder.geocode({
+                'address': address
+            }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    placeID = results[0].place_id
+                    lat = results[0].geometry.location.lat
+                    lng = results[0].geometry.location.lng
+                    Globaladdress = results[0].formatted_address
+                    map.setCenter(results[0].geometry.location);
+                    if (marker)
+                        marker.setMap(null);
+                    var contentString = '<div id= "addressOnMap">' + address +
+                        '</div><input id="confirmButton" type="button" value="Confirm" onclick="confirmAddress()">';
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+                    marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        draggable: true
+                    });
+
+                    marker.addListener('click', function () {
+                        infowindow.open(map, marker);
+                    });
+
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
 
         function confirmAddress() {
             var address = document.getElementById('addressOnMap').innerHTML;
@@ -53,8 +96,8 @@
             var placeLng = marker.getPosition().lng()
 
             var date = document.getElementById('date').value
-            var startTime = document.getElementById('startTime').value
-            var endtime = document.getElementById('endTime').value
+            var startTime = document.getElementById('starttime').value
+            var endtime = document.getElementById('endtime').value
             var numberOfPeople = document.getElementById('number_of_People').value
 
             var sexString = ""
@@ -123,7 +166,7 @@
             //alert(placeLng)
             //alert(date)
             //alercuisineTypet(startTime)
-            //alert(endTime)
+            //alert(endtime)
             //alert(numberOfPeople)
 
             $.ajax({
@@ -138,7 +181,7 @@
                     placeLng: placeLng,
                     date: date,
                     startTime: startTime,
-                    endTime: endTime,
+                    endTime: endtime,
                     numberPeople: numberOfPeople,
                     sexString: sexString,
                     ageString: ageString,
@@ -159,229 +202,196 @@
                 }
             })
         }
-    }
+        //function showlimit() {
+        //alert(description)
+        //}
+    </script>
 
-    function codeAddress(geocoder, map, marker) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({
-            'address': address
-        }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                placeID = results[0].place_id
-                lat = results[0].geometry.location.lat
-                lng = results[0].geometry.location.lng
-                Globaladdress = results[0].formatted_address
-                map.setCenter(results[0].geometry.location);
-                if (marker)
-                    marker.setMap(null);
-                var contentString = '<div id= "addressOnMap">' + address +
-                    '</div><input id="confirmButton" type="button" value="Confirm" onclick="confirmAddress()">';
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                marker = new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location,
-                    draggable: true
-                });
 
-                marker.addListener('click', function () {
-                    infowindow.open(map, marker);
-                });
 
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
-    }
-    //function showlimit() {
-    //alert(description)
-    //}
-</script>
-
-<div class="container">
-    <h2>Create a Reservation</h2>
-    <br />
-    <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
-    <br />
-
-    <div>
-        <input class="form-control" id="address" type="text" style="width:60%" value="bcit downtown">
+    <div class="container">
+        <h2>Create a Reservation</h2>
         <br />
-        <button type="button" class="btn btn-primary" onclick="codeAddress()">Search for Location</button>
-        @*
-            <input type="text" id="lat" />
-            <input type="text" id="lng" />*@
-    </div>
-    <br />
-    <div id="map_canvas" style="height:500px;width:100%"></div>
-    <br />
-    <div id="confirmed_address">Please confirm the address by selecting the map location.</div>
-    <br />
-    <div class="form-group">
-        <p>
-            <strong>
-                Date:
-            </strong>
-            <input type="date" id="date">
-        </p>
+        <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
+        <br />
 
-        <input id="startTime" type="time">
-        <input id="endTime" type="time">
-
-    </div>
-    @{ if (User.IsInRole("Regular"))
-        {
+        <div>
+            <input class="form-control" id="address" type="text" style="width:60%" value="bcit downtown">
+            <br />
+            <button type="button" class="btn btn-primary" onclick="codeAddress()">Search for Location</button>
+            @*
+                <input type="text" id="lat" />
+                <input type="text" id="lng" />*@
+        </div>
+        <br />
+        <div id="map_canvas" style="height:500px;width:100%"></div>
+        <br />
+        <div id="confirmed_address">Please confirm the address by selecting the map location.</div>
+        <br />
+        <div class="form-group">
             <p>
-                Party Size:
-                <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*
+                <strong>
+                    Date:
+                </strong>
+                <input type="date" id="date">
             </p>
-            <p>Limitations: **</p>
-        }
 
-        else
-        {
-            <p>
-                Party Size:
-                <select id="number_of_People">
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-            </p>
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <p>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-                                aria-controls="collapseExample">
-                            Limitations
-                        </button>
-                    </p>
-                    <div class="collapse" id="collapseExample">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <fieldset class="form-group">
-                                    <div class="row">
-                                        <div class="col-form-legend col-sm-2">Sex</div>
-                                        <div class="col-sm-10">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios1" value="male"> Male
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios2" value="female"> Female
-                                                </label>
-                                            </div>
-                                            <div class="form-check disabled">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios3" value="others"> Others
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-md-4">
-                                <fieldset class="form-group">
-                                    <div class="row">
-                                        <div class="col-form-legend col-md-2">Other</div>
-                                        <div class="col-md-10">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="gridRadios" id="Smoking" value="noSmoking"> Smoking free
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="gridRadios" id="Alcohol" value="noAlcohol"> Alcohol free
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="gridRadios" id="Animals" value="noAnimals"> Animals free
-                                                </label>
-                                            </div>
-                                            <div class="form-check disabled">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" name="gridRadios" id="otherRadios3" value="noKids"> Kids free
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-md-4">
-                                <fieldset class="form-group">
-                                    <div class="row">
-                                        <div class="col-form-legend col-md-2">Age</div>
-                                        <div class="col-md-10">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="All" checked> All
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="18-34"> 18-34
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios2" value="35-50"> 35-50
-                                                </label>
-                                            </div>
-                                            <div class="form-check disabled">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios3" value="51-69"> 51-69
-                                                </label>
-                                            </div>
-                                            <div class="form-check disabled">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios3" value="70+"> 70+
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="inputPassword5">Cuisine</label>
-                                <input type="text" id="CuisineType" class="form-control" aria-describedby="passwordHelpBlock">
-                                <small id="passwordHelpBlock" class="form-text text-muted">
-                                    You can specify cuisine vie comma separated values. For example: Italian, Ukrainian, Canadian, Chinese
-                                </small>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="inputPassword5">Language</label>
-                                <input type="text" id="Language" class="form-control" aria-describedby="passwordHelpBlock">
-                                <small id="passwordHelpBlock" class="form-text text-muted">
-                                    You can specify languge vie comma separated values. For example: English, Russian, Italian, Chinese
-                                </small>
-                            </div>
+            <input id="starttime" type="time" value="Start Time:">
+            <input id="endtime" type="time" value="End Time:">
 
+        </div>
+        @{ if (User.IsInRole("Regular"))
+            {
+                <p>
+                    Party Size:
+                    <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*
+                </p>
+                <p>Limitations: **</p>
+            }
+
+            else
+            {
+                <p>
+                    Party Size:
+                    <select id="number_of_People">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </p>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <p>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Limitations
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <div class="col-form-legend col-sm-2">Sex</div>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios1" value="male"> Male
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios2" value="female"> Female
+                                                    </label>
+                                                </div>
+                                                <div class="form-check disabled">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="sexRadios" id="sexRadios3" value="others"> Others
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-4">
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <div class="col-form-legend col-md-2">Other</div>
+                                            <div class="col-md-10">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="gridRadios" id="Smoking" value="noSmoking"> Smoking free
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="gridRadios" id="Alcohol" value="noAlcohol"> Alcohol free
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="gridRadios" id="Animals" value="noAnimals"> Animals free
+                                                    </label>
+                                                </div>
+                                                <div class="form-check disabled">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" name="gridRadios" id="otherRadios3" value="noKids"> Kids free
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-4">
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <div class="col-form-legend col-md-2">Age</div>
+                                            <div class="col-md-10">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="All" checked> All
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="18-34"> 18-34
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios2" value="35-50"> 35-50
+                                                    </label>
+                                                </div>
+                                                <div class="form-check disabled">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios3" value="51-69"> 51-69
+                                                    </label>
+                                                </div>
+                                                <div class="form-check disabled">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios3" value="70+"> 70+
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="inputPassword5">Cuisine</label>
+                                    <input type="text" id="CuisineType" class="form-control" aria-describedby="passwordHelpBlock">
+                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                        You can specify cuisine vie comma separated values. For example: Italian, Ukrainian, Canadian, Chinese
+                                    </small>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="inputPassword5">Language</label>
+                                    <input type="text" id="Language" class="form-control" aria-describedby="passwordHelpBlock">
+                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                        You can specify languge vie comma separated values. For example: English, Russian, Italian, Chinese
+                                    </small>
+                                </div>
+
+                            </div>
+                            <textarea id="Description" class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
                         </div>
-                        <textarea id="Description" class="form-control" placeholder="Message for your potential guests..." type="text" rows="6" cols="100"></textarea>
                     </div>
                 </div>
+            }
+        }
+
+        <button type="button" class="btn btn-primary" onclick="makeReservation()">Make Reservation</button>
+
+        @if (User.IsInRole("Regular"))
+        {
+            <div class="footnotes">
+                <h6>* Regular Users are limited to a party size of 2.</h6>
+                <h6>** Specifying limitations is a premium feature.</h6>
             </div>
         }
-    }
-
-    <button type="button" class="btn btn-primary" onclick="makeReservation()">Make Reservation</button>
-
-    @if (User.IsInRole("Regular"))
-    {
-        <div class="footnotes">
-            <h6>* Regular Users are limited to a party size of 2.</h6>
-            <h6>** Specifying limitations is a premium feature.</h6>
-        </div>
-    }
-</div>
+    </div>
