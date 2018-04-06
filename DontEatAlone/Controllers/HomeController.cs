@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DontEatAlone.Models;
 using DontEatAlone.Data;
+using DontEatAlone.Repo;
 
 namespace DontEatAlone.Controllers
 {
     public class HomeController : Controller
     {
         ApplicationDbContext _context;
+        ReservationRepository rr;
+
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
+            this.rr = new ReservationRepository(context);
         }
 
         public IActionResult Index()
@@ -42,15 +46,73 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        [HttpPost]
+        public void createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
+           string sexString, string ageString,string cuisineType, bool smoke,bool pet,bool alcohol,string languages,string description)
+        {
+            // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
+            string startString = date + " " + startTime;
+            string endString = date + " " + endTime;
+            DateTime startDate = DateTime.ParseExact(startString, "yyyy-MM-dd HH:mm", null);
+            DateTime endDate = DateTime.ParseExact(endString, "yyyy-MM-dd HH:mm", null);
+
+            if (!rr.placeIdExist(placeId))
+            {
+                Place place = new Place()
+                {
+                    Id = placeId,
+                    Latitude = Convert.ToDouble(placeLat),
+                    Longtitude = Convert.ToDouble(placeLng),
+                    Name = placeName,
+                    Address = placeAddress
+                };
+                _context.Place.Add(place);
+                _context.SaveChanges();
+
+            }
+
+
+            Reservation reservation = new Reservation()
+            {
+                Id = rr.GenerateReservationId(),
+                Title = title,
+                DateStart = startDate,
+                DateEnd = endDate,
+                NumberOfPeople = Int32.Parse(numberPeople),
+                Status = "open",
+                PlaceID = placeId
+            };
+            rr.CreateReservation(reservation);
+
+            Limitations limitations = new Limitations()
+            {
+                Id = reservation.Id,
+                Gender = sexString,
+                CuisineType = cuisineType,
+                Age = ageString,
+                Smoking = smoke,
+                Pets = pet,
+                Alcohol = alcohol,
+                Languages = languages,
+                Description = description
+
+            };
+
+            _context.Limitations.Add(limitations);
+            _context.SaveChanges();
+
+
+        }
+
         public IActionResult CreateReservation()
         {
-           // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
+            // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             return View();
         }
 
         public IActionResult ViewReservations()
         {
-            var places = _context.Place.Select(p => new
+            List <Place> places = _context.Place.Select(p => new Place
             {
                 Id = p.Id,
                 Address = p.Address,
@@ -59,21 +121,38 @@ namespace DontEatAlone.Controllers
                 Latitude = p.Latitude,
                 Reservations = _context.Reservation.Where(r => r.PlaceID == p.Id).ToList()
             }).ToList();
-            return View(places);
+            List<ReservationViewModel> reservations = _context.Reservation.Select(r => new ReservationViewModel
+            {
+                Id = r.Id,
+                Title = r.Title,
+                DateStart = r.DateStart,
+                DateEnd = r.DateEnd,
+                NumberOfPeople = r.NumberOfPeople,
+                Status = r.Status,
+                LocationAddress = _context.Place.Where(p => p.Id == r.PlaceID).FirstOrDefault().Address,
+                AuthorName = _context.ApplicationUser.Where(au => au.Id == r.UserId).FirstOrDefault().UserName
+            }).ToList();
+            PlaceReservationViewModel model = new PlaceReservationViewModel()
+            {
+                Reservations = reservations,
+                Places = places
+            };
+            return View(model);
         }
 
-        public IActionResult ReservationPage()
+        public IActionResult ReservationPage(int id)
         {
-            return View();
+            Reservation reservation = rr.GetReservation(id);
+            ViewBag.id = id;
+            ViewBag.name = rr.getLocationNameByReservationId(id);
+            ViewBag.address = rr.getAddressByReservationId(id);
+            ViewBag.limitations = rr.getLimitationByReservationId(id);
+            return View(reservation);
         }
-
-
 
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 }

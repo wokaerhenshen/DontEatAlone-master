@@ -1,5 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model IEnumerable<Object>
+@model DontEatAlone.Models.PlaceReservationViewModel
 @{
     ViewData["Title"] = "ViewReservations";
 }
@@ -37,9 +37,9 @@
 
         let map = new google.maps.Map(document.getElementById('map'), options)
 
-        let markersArray = @Html.Raw(Json.Serialize(Model));
+        let markersArray = @Html.Raw(Json.Serialize(Model.Places));
 
-        console.log(@Html.Raw(Json.Serialize(Model)));
+        //console.log(@Html.Raw(Json.Serialize(Model)));
 
         markersArray.map(r => addMarker(r))
     }
@@ -63,7 +63,7 @@
             <input class="form-control" placeholder="Enter keyword..." type="text" />
         </div>
     </div>
-    @if (User.IsInRole("Regular"))
+    @if (!User.IsInRole("Regular"))
     {
         <div class="form-group row">
             <div class="col-md-12">
@@ -216,8 +216,7 @@
     }
 </form>
 <div id="map"></div>
-<h3>Results</h3>
-<table class="table">
+<table class="table" style="margin-top: 40px">
     <thead>
         <tr>
             <th scope="col">Created By</th>
@@ -238,72 +237,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">Edgar</th>
-            @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
-                {
-                    <td>9.9</td>
-                }
+        @{ 
+            foreach (DontEatAlone.Models.ReservationViewModel p in Model.Reservations)
+            {
+            <tr>
+                <th scope="row">@p.AuthorName</th>
+                <td>@p.Title</td>
+                <td>@p.LocationAddress</td>
+                <td>@p.NumberOfPeople</td>
 
+                <td>@p.DateStart.ToString("d MMMM h:m tt") - @p.DateEnd.ToString("h:m tt")</td>
+                <td><button onclick="window.location.href='/Home/ReservationPage/?id=@p.Id'" class="btn btn-success">Open</button></td>
+            </tr>
             }
-
-
-            <td>Russian Cuisine</td>
-            <td>Kushat Podano</td>
-            <td>3</td>
-
-            <td>27 November 8PM - 12PM</td>
-            <td><button onclick="window.location.href='/Home/ReservationPage'" class="btn btn-success">Open</button></td>
-        </tr>
-        <tr>
-            <th scope="row">Daniel</th>
-            @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
-                {
-                    <td>9.9</td>
-                }
-
-            }
-            <td>Lumberjack Feast</td>
-            <td>Brewery House</td>
-            <td>6</td>
-
-            <td>1 December 1PM - 12PM</td>
-            <td><button onclick="window.location.href='/Home/ReservationPage'" class="btn btn-success">Open</button></td>
-        </tr>
-        <tr>
-            <th scope="row">Tor</th>
-            @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
-                {
-                    <td>9.9</td>
-                }
-
-            }
-            <td>Real Italian Pizza!</td>
-            <td>Pizzeria de Italia</td>
-            <td>15</td>
-
-            <td>6 November 6PM - 10PM</td>
-            <td><button onclick="window.location.href='/Home/ReservationPage'" class="btn btn-success">Open</button></td>
-        </tr>
-        <tr>
-            <th scope="row">Karl</th>
-            @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
-                {
-                    <td>9.9</td>
-                }
-
-            }
-            <td>Frog legs and other French delights</td>
-            <td>Chateau Aile Droite</td>
-            <td>2</td>
-
-            <td>26 November 6PM - 11PM</td>
-            <td><button onclick="window.location.href='/Home/ReservationPage'" class="btn btn-success">Open</button></td>
-        </tr>
+        }
     </tbody>
 </table>
 @if (User.IsInRole("Regular"))

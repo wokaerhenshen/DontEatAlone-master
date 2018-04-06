@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/wokaerhenshen/DontEatAlone-master/blob/master/DontEatAlone/wwwroot/images/icon-donteatalone-01.png?raw=true" alt="Don't Eat Alone"/>
+</p>
+
 # Don't Eat Alone
 
 Don't Eat Alone is an app to help you meet someone new and grab a bite. If you're the only one in your friend group who's interested in trying
