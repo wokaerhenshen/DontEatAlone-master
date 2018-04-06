@@ -95,8 +95,8 @@
             var placeLng = marker.getPosition().lng()
 
             var date = document.getElementById('date').value
-            var startTime = document.getElementById('starttime').value
-            var endtime = document.getElementById('endtime').value
+            var startTime = document.getElementById('startTime').value
+            var endtime = document.getElementById('endTime').value
             var numberOfPeople = document.getElementById('number_of_People').value
 
             var sexString = ""
@@ -165,7 +165,7 @@
             //alert(placeLng)
             //alert(date)
             //alercuisineTypet(startTime)
-            //alert(endtime)
+            //alert(endTime)
             //alert(numberOfPeople)
 
             $.ajax({
@@ -180,7 +180,7 @@
                     placeLng: placeLng,
                     date: date,
                     startTime: startTime,
-                    endTime: endtime,
+                    endTime: endTime,
                     numberPeople: numberOfPeople,
                     sexString: sexString,
                     ageString: ageString,
@@ -235,8 +235,8 @@
                 <input type="date" id="date">
             </p>
 
-            <input id="starttime" type="time" value="Start Time:">
-            <input id="endtime" type="time" value="End Time:">
+            <input id="startTime" type="time">
+            <input id="endTime" type="time">
 
         </div>
             @{ if (User.IsInRole("Regular"))
