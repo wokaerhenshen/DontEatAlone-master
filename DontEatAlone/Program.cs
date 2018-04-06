@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DontEatAlone.Data;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
+using DontEatAlone.Models;
 
 namespace DontEatAlone
 {
@@ -28,11 +29,27 @@ namespace DontEatAlone
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<Models.ApplicationUser>>();
+                    IServiceProvider serviceProvider = services.GetRequiredService<IServiceProvider>();
                     Initialize initializer = new Initialize(context, userManager);
                     //initializer.InitializeData();
                     RoleRepo roleIni = new RoleRepo(context);
                     roleIni.CreateInitialRoles();
                     Initialize DataIni = new Initialize(context, userManager);
+
+                    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                    var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    string[] roleNames = { "Admin", "Premium", "Member" };
+                    Task<IdentityResult> roleResult;
+
+                    foreach (var roleName in roleNames)
+                    {
+                        var roleExist = RoleManager.Roles.Where(r => r.Name == roleName).FirstOrDefault();
+                        if (roleExist != null)
+                        {
+                            //create the roles and seed them to the database: Question 1
+                            roleResult = RoleManager.CreateAsync(new IdentityRole(roleName));
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -41,7 +58,6 @@ namespace DontEatAlone
                 }
 
             }
-
             BuildWebHost(args).Run();
         }
 
