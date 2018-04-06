@@ -60,7 +60,7 @@ namespace DontEatAlone.Data
                .HasForeignKey(fk => new { fk.PlaceID })
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<User>()
+            builder.Entity<ApplicationUser>()
                 .HasMany(r => r.Reservations)
                 .WithOne(u => u.User)
                 .HasForeignKey(fk => fk.UserId)

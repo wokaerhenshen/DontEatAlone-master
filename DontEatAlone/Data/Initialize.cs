@@ -1,6 +1,7 @@
 ﻿using DontEatAlone.Models;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace DontEatAlone.Data
         {
             if (_context.Reservation.Count() == 0)
             {
+                ApplicationUser user = _context.ApplicationUser.FirstOrDefault();
                 _context.Reservation.Add(new Reservation
                 {
                     Id = 1,
@@ -36,7 +38,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id,
                     NumberOfPeople = 3,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(5)
+                    DateEnd = DateTime.Now.AddHours(5),
+                    UserId = user.Id
                 });
 
                 // _context.SaveChanges();
@@ -48,7 +51,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id,
                     NumberOfPeople = 5,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(1)
+                    DateEnd = DateTime.Now.AddHours(1),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -58,7 +62,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Black & Blue").FirstOrDefault().Id,
                     NumberOfPeople = 3,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(0.5)
+                    DateEnd = DateTime.Now.AddHours(0.5),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -68,7 +73,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Italian Kitchen").FirstOrDefault().Id,
                     NumberOfPeople = 2,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(1)
+                    DateEnd = DateTime.Now.AddHours(1),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -78,7 +84,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
                     NumberOfPeople = 5,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(4)
+                    DateEnd = DateTime.Now.AddHours(4),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -88,7 +95,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
                     NumberOfPeople = 4,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(2)
+                    DateEnd = DateTime.Now.AddHours(2),
+                    UserId = user.Id
                 });
 
                 _context.SaveChanges();
@@ -133,6 +141,58 @@ namespace DontEatAlone.Data
                     Alcohol = false,
                     Languages = "English",
                     Description = "welcome lady!!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 3,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 4,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 5,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
+                });
+
+                _context.Limitations.Add(new Limitations
+                {
+                    Id = 6,
+                    Gender = "man",
+                    CuisineType = "Chinese",
+                    Age = "18-34",
+                    Smoking = true,
+                    Pets = true,
+                    Alcohol = false,
+                    Languages = "Chinese and English",
+                    Description = "welcome any people of the world!"
                 });
 
                 _context.SaveChanges();
@@ -229,6 +289,7 @@ namespace DontEatAlone.Data
 
         private void InitUsers()
         {
+            // Check for _context.ApplicationUser.Where for count > 0 if yes, confirmed account 
             ApplicationUser testIfExists = _context.ApplicationUser.Where(au => au.Email.Equals("admin@admin.com")).FirstOrDefault();
             if (testIfExists == null)
             {

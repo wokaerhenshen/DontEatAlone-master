@@ -48,6 +48,8 @@ namespace DontEatAlone.Controllers
             _serviceProvider = serviceProvider;
         }
 
+
+
         [TempData]
         public string ErrorMessage { get; set; }
 
@@ -241,6 +243,7 @@ namespace DontEatAlone.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+       
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -248,8 +251,9 @@ namespace DontEatAlone.Controllers
 
                     UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
 
-                    var addUR = await userRoleRepo.AddUserRole(model.Email,
-                                                              "Regular");
+                    // var addUR = await userRoleRepo.AddUserRole(model.Email,
+                    //"Regular");
+                    await _userManager.AddToRoleAsync(user, "Member");
                     //ViewBag.status = "Regular";
 
                     _context.User.Add(new User
@@ -257,6 +261,7 @@ namespace DontEatAlone.Controllers
                         Id = user.Id
                     });
 
+        
                     _context.SaveChanges();
 
                     //_context.Reservation.Add(new Reservation

@@ -1,4 +1,5 @@
-﻿
+﻿@model DontEatAlone.Data.Reservation;
+
 @{
     ViewData["Title"] = "Reservation Page";
 }
@@ -19,164 +20,167 @@
     }
 </style>
 
-<h1>Frog legs and other French delights<span class="badge badge-success" style="background-color:green;">Available</span></h1>
-<div class="row">
-    <div class="col-md-6">
-        <h3>Info</h3>
-        <table class="table table-responsive-md">
-            <tbody>
-                <tr>
-                    <th scope="row">Title</th>
-                    <td>Frog legs and other French delights</td>
-                </tr>
-                <tr>
-                    <th scope="row">Location</th>
-                    <td>Chateau Aile Droite</td>
-                </tr>
-                <tr>
-                    <th scope="row">Party Size</th>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <th scope="row">Address</th>
-                    <td>Vancouver, 321 Commercial Dr, V3F 1B7</td>
-                </tr>
-                <tr>
-                    <th scope="row">Limitations</th>
-                    <td>No limitations</td>
-                </tr>
-                <tr>
-                    <th scope="row">Date and Time</th>
-                    <td>26 November 6PM - 11PM</td>
-                </tr>
-                <tr>
-                    <th scope="row">Status</th>
-                    <td>Available</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6">
-        <h3>Map</h3>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.6274800194483!2d-123.11742178431054!3d49.28345557933146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867178c92a69b9%3A0x6b40938af55472d6!2s555+Seymour+St%2C+Vancouver%2C+BC+V6B!5e0!3m2!1sen!2sca!4v1507095571512" width="100%" height="300px" frameborder="0" style="border:0" allowfullscreen></iframe>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <h3>Members</h3>
-        <div class="row">
-            <div class="col-md-2" style="padding:5px;">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="~/images/host_image.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">Karl</h4>
-                        <p class="card-text">fresh bird one</p>
-                    </div>
-                    <div class="card-body">
-                        <span class="badge badge-warning" style="background-color:red;">Host</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2" style="padding:5px;">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">Daniel</h4>
-                        <p class="card-text">Nice beard. </p>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2" style="padding:5px;">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="~/images/none.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">Vacant</h4>
-                        <p class="card-text"><br /></p>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="badge badge-light">In Progress</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2" style="padding:5px;">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="~/images/none.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">Vacant</h4>
-                        <p class="card-text"><br /></p>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="badge badge-light">In Progress</a>
-                    </div>
-                </div>
-            </div>
+<h1>@Html.Raw(ViewBag.id)</h1>
+<h1>@Html.DisplayFor(model => model.Title)<span class="badge badge-success" style="background-color:green;">Available</span></h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Info</h3>
+            <table class="table table-responsive-md">
+                <tbody>
+                    <tr>
+                        <th scope="row">Title</th>
+                        <td>@Html.DisplayFor(model => model.Title)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Location</th>
+                        <td>@Html.Raw(ViewBag.name)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Party Size</th>
+                        <td>@Html.DisplayFor(model => model.NumberOfPeople)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Address</th>
+                        <td>@Html.Raw(ViewBag.address)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Limitations</th>
+                        <td>@Html.Raw(ViewBag.limitations)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Date and Time</th>
+                        <td>@Html.DisplayFor(model => model.DateStart) To @Html.DisplayFor(model => model.DateEnd) </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>@Html.DisplayFor(model => model.Status)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-       
+        <div class="col-md-6">
+            <h3>Map</h3>
+            <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAhhb5fDHQ6ds91_9uEbw-X7aBKvmpr_Yw&q='@Html.Raw(ViewBag.address)'" width="100%" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
     </div>
-    <div class="col-md-12">
-        <br />
-        <br />
-    </div>
-    <div class="col-md-12">
-                <div class="comment-wrapper">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            Comment panel
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Members</h3>
+            <div class="row">
+                <div class="col-md-2" style="padding:5px;">
+                    <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="~/images/host_image.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Karl</h4>
+                            <p class="card-text">fresh bird one</p>
                         </div>
-                        <div class="panel-body">
-                            <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                            <br>
-                            <button type="button" class="btn btn-info pull-right">Post</button>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <ul class="media-list">
-                                <li class="media">
-                                    <a href="#" class="pull-left">
-                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                    </a>
-                                    <div class="media-body">
-                                        <span class="text-muted pull-right">
-                                            <small class="text-muted">30 min ago</small>
-                                        </span>
-                                        <strong class="text-success">MartinoMont</strong>
-                                        <p>
-                                            Can I pay with Bitcoins? $$$ <a href="#">#financialfreedom  </a>.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <a href="#" class="pull-left">
-                                        <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
-                                    </a>
-                                    <div class="media-body">
-                                        <span class="text-muted pull-right">
-                                            <small class="text-muted">30 min ago</small>
-                                        </span>
-                                        <strong class="text-success">LaurenceCorreil</strong>
-                                        <p>
-                                            How long are you going to be there? I can join you after 8
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <a href="#" class="pull-left">
-                                        <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-                                    </a>
-                                    <div class="media-body">
-                                        <span class="text-muted pull-right">
-                                            <small class="text-muted">30 min ago</small>
-                                        </span>
-                                        <strong class="text-success">JohnNida</strong>
-                                        <p>
-                                            Can I bring my friend? He is not in the system...
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
+                        <div class="card-body">
+                            <span class="badge badge-warning" style="background-color:red;">Host</span>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding:5px;">
+                    <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Daniel</h4>
+                            <p class="card-text">Nice beard. </p>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding:5px;">
+                    <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="~/images/none.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Vacant</h4>
+                            <p class="card-text"><br /></p>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="badge badge-light">In Progress</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding:5px;">
+                    <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="~/images/none.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Vacant</h4>
+                            <p class="card-text"><br /></p>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="badge badge-light">In Progress</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <br />
+            <br />
+        </div>
+        <div class="col-md-12">
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Comment panel
+                    </div>
+                    <div class="panel-body">
+                        <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
+                        <br>
+                        <button type="button" class="btn btn-info pull-right">Post</button>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <ul class="media-list">
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">MartinoMont</strong>
+                                    <p>
+                                        Can I pay with Bitcoins? $$$ <a href="#">#financialfreedom  </a>.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">LaurenceCorreil</strong>
+                                    <p>
+                                        How long are you going to be there? I can join you after 8
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">JohnNida</strong>
+                                    <p>
+                                        Can I bring my friend? He is not in the system...
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

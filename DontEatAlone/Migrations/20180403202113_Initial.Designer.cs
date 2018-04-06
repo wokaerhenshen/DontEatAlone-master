@@ -11,9 +11,10 @@ using System;
 namespace DontEatAlone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180403202113_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +66,8 @@ namespace DontEatAlone.Migrations
 
             modelBuilder.Entity("DontEatAlone.Data.Place", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
@@ -111,13 +113,9 @@ namespace DontEatAlone.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlaceID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Reservation");
                 });
@@ -347,11 +345,6 @@ namespace DontEatAlone.Migrations
                         .WithMany("Reservations")
                         .HasForeignKey("PlaceID")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("DontEatAlone.Data.User", "User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("DontEatAlone.Data.User", b =>
