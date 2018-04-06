@@ -19,12 +19,15 @@ namespace DontEatAlone.Models.AccountViewModels
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Not valid format for name")]
         public string FirstName { get; set; }
 
-
         [Required(ErrorMessage = "Last name required.")]
         [StringLength(50, ErrorMessage = "Name must be maximum of 50 characters.")]
         [Display(Name = "Last Name")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Not valid format for name")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Street address required.")]
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
 
         [Required(ErrorMessage = "City required.")]
         [StringLength(50, ErrorMessage = "City must be maximum of 50 characters.")]

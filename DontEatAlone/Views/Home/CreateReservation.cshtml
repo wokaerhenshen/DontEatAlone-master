@@ -18,14 +18,10 @@
         }
     </style>*@
 
-<head>
-    <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
-    <!-- need to change this line in other places -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKtdwDUEBfyH1WIceQmylNKXn0HfT4LyU"></script>
-    <script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
 
-    @*map code*@
-    <script>
+@*map code*@
+<script>
+    function initMap() {
         var geocoder;
         var map;
         var placeID;
@@ -38,45 +34,9 @@
         }
         var marker;
 
-        function initialize() {
-            geocoder = new google.maps.Geocoder();
-            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-            codeAddress();
-        }
-
-        function codeAddress() {
-            var address = document.getElementById('address').value;
-            geocoder.geocode({
-                'address': address
-            }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    placeID = results[0].place_id
-                    lat = results[0].geometry.location.lat
-                    lng = results[0].geometry.location.lng
-                    Globaladdress = results[0].formatted_address
-                    map.setCenter(results[0].geometry.location);
-                    if (marker)
-                        marker.setMap(null);
-                    var contentString = '<div id= "addressOnMap">' + address +
-                        '</div><input id="confirmButton" type="button" value="Confirm" onclick="confirmAddress()">';
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-                    marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location,
-                        draggable: true
-                    });
-
-                    marker.addListener('click', function () {
-                        infowindow.open(map, marker);
-                    });
-
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
+        geocoder = new google.maps.Geocoder();
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        codeAddress(geocoder, map, marker);
 
         function confirmAddress() {
             var address = document.getElementById('addressOnMap').innerHTML;
@@ -199,51 +159,84 @@
                 }
             })
         }
-        //function showlimit() {
-        //alert(description)
-        //}
-    </script>
-</head>
+    }
 
-<body onload="initialize()">
-    <div class="container">
-        <h2>Create a Reservation</h2>
-        <br />
-        <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
-        <br />
+    function codeAddress(geocoder, map, marker) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({
+            'address': address
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                placeID = results[0].place_id
+                lat = results[0].geometry.location.lat
+                lng = results[0].geometry.location.lng
+                Globaladdress = results[0].formatted_address
+                map.setCenter(results[0].geometry.location);
+                if (marker)
+                    marker.setMap(null);
+                var contentString = '<div id= "addressOnMap">' + address +
+                    '</div><input id="confirmButton" type="button" value="Confirm" onclick="confirmAddress()">';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    draggable: true
+                });
 
-        <div>
-            <input class="form-control" id="address" type="text" style="width:60%" value="bcit downtown">
-            <br />
-            <button type="button" class="btn btn-primary" onclick="codeAddress()">Search for Location</button>
-            @*
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+    //function showlimit() {
+    //alert(description)
+    //}
+</script>
+
+<div class="container">
+    <h2>Create a Reservation</h2>
+    <br />
+    <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
+    <br />
+
+    <div>
+        <input class="form-control" id="address" type="text" style="width:60%" value="bcit downtown">
+        <br />
+        <button type="button" class="btn btn-primary" onclick="codeAddress()">Search for Location</button>
+        @*
             <input type="text" id="lat" />
             <input type="text" id="lng" />*@
-        </div>
-        <br />
-        <div id="map_canvas" style="height:500px;width:100%"></div>
-        <br />
-        <div id="confirmed_address">Please confirm the address by selecting the map location.</div>
-        <br />
-        <div class="form-group">
+    </div>
+    <br />
+    <div id="map_canvas" style="height:500px;width:100%"></div>
+    <br />
+    <div id="confirmed_address">Please confirm the address by selecting the map location.</div>
+    <br />
+    <div class="form-group">
+        <p>
+            <strong>
+                Date:
+            </strong>
+            <input type="date" id="date">
+        </p>
+
+        <input id="startTime" type="time">
+        <input id="endTime" type="time">
+
+    </div>
+    @{ if (User.IsInRole("Regular"))
+        {
             <p>
-                <strong>
-                    Date:
-                </strong>
-                <input type="date" id="date">
+                Party Size:
+                <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*
             </p>
-
-            <input id="startTime" type="time">
-            <input id="endTime" type="time">
-
-        </div>
-            @{ if (User.IsInRole("Regular"))
-            {
-                <p>
-                    Party Size:
-                    <input id="number_of_People" type="radio" name="partysize" value="2" checked="checked"> 2*
-                </p>
-                <p>Limitations: **</p>
+            <p>Limitations: **</p>
         }
 
         else
@@ -379,17 +372,16 @@
                     </div>
                 </div>
             </div>
+        }
     }
-            }
 
-            <button type="button" class="btn btn-primary" onclick="makeReservation()">Make Reservation</button>
+    <button type="button" class="btn btn-primary" onclick="makeReservation()">Make Reservation</button>
 
-            @if (User.IsInRole("Regular"))
-        {
-            <div class="footnotes">
-                <h6>* Regular Users are limited to a party size of 2.</h6>
-                <h6>** Specifying limitations is a premium feature.</h6>
-            </div>
-    }
+    @if (User.IsInRole("Regular"))
+    {
+        <div class="footnotes">
+            <h6>* Regular Users are limited to a party size of 2.</h6>
+            <h6>** Specifying limitations is a premium feature.</h6>
         </div>
-</body>
+    }
+</div>
