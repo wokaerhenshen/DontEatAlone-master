@@ -29,12 +29,16 @@ namespace DontEatAlone.Repo
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
+                /*
                 _context.UserRoles.Add(new IdentityUserRole<string>() {
                     UserId= user.Id,
                     RoleId = roleName
                 });
-                _context.SaveChanges();
+                */
+                // _context.SaveChanges();
+
                 await UserManager.AddToRoleAsync(user, roleName);
+
             }
             return true;
         }
@@ -47,9 +51,12 @@ namespace DontEatAlone.Repo
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
-                //_context.UserRoles.Remove(_context.UserRoles.Where(i => i.UserId == user.Id && i.RoleId == roleName).FirstOrDefault());
-                //_context.SaveChanges();
+                // _context.UserRoles.Remove(_context.UserRoles.Where(i => i.UserId == user.Id && i.RoleId == roleName).FirstOrDefault());
+     
                 await UserManager.RemoveFromRoleAsync(user, roleName);
+
+                //_context.SaveChanges();
+
             }
             return true;
         }

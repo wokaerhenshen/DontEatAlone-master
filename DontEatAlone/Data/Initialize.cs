@@ -299,7 +299,10 @@ namespace DontEatAlone.Data
                     Email = "admin@user.com",
                 }, "Bcit123!");
             }
+
+
         }
+
 
         private void CleanData()
         {

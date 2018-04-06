@@ -25,6 +25,30 @@ namespace DontEatAlone
             Configuration = configuration;
         }
 
+<<<<<<< HEAD
+        /*
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] roleNames = { "Admin", "Premium", "Member" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+        }
+        */
+
+=======
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -106,6 +130,11 @@ namespace DontEatAlone
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+<<<<<<< HEAD
+
+           //CreateRoles(serviceProvider).Wait();
+=======
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
         }
     }
 }
