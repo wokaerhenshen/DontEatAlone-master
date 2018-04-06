@@ -34,7 +34,7 @@ namespace DontEatAlone.Repo
                     RoleId = roleName
                 });
                 _context.SaveChanges();
-                //await UserManager.AddToRoleAsync(user, roleName);
+                await UserManager.AddToRoleAsync(user, roleName);
             }
             return true;
         }
@@ -47,9 +47,9 @@ namespace DontEatAlone.Repo
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
-                _context.UserRoles.Remove(_context.UserRoles.Where(i => i.UserId == user.Id && i.RoleId == roleName).FirstOrDefault());
-                _context.SaveChanges();
-               // await UserManager.RemoveFromRoleAsync(user, roleName);
+                //_context.UserRoles.Remove(_context.UserRoles.Where(i => i.UserId == user.Id && i.RoleId == roleName).FirstOrDefault());
+                //_context.SaveChanges();
+                await UserManager.RemoveFromRoleAsync(user, roleName);
             }
             return true;
         }

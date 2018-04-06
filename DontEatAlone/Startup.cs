@@ -101,13 +101,6 @@ namespace DontEatAlone
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
-<<<<<<< HEAD
-
-
-            //   var builder = new ConfigurationBuilder();
-=======
-         //   var builder = new ConfigurationBuilder();
->>>>>>> 0a50525d31bd2c82ba4ddd872073dd1832ae7510
 
             if (env.IsDevelopment())
             {
