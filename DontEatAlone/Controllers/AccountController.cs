@@ -253,7 +253,7 @@ namespace DontEatAlone.Controllers
 
                     // var addUR = await userRoleRepo.AddUserRole(model.Email,
                     //"Regular");
-                    await _userManager.AddToRoleAsync(user, "Member");
+                    await _userManager.AddToRoleAsync(user, "Regular");
                     //ViewBag.status = "Regular";
 
                     _context.User.Add(new User

@@ -25,6 +25,7 @@ namespace DontEatAlone
             Configuration = configuration;
         }
 
+        /*
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             //initializing custom roles 
@@ -43,6 +44,7 @@ namespace DontEatAlone
                 }
             }
         }
+        */
 
         public IConfiguration Configuration { get; }
 
@@ -126,7 +128,7 @@ namespace DontEatAlone
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            CreateRoles(serviceProvider).Wait();
+           //CreateRoles(serviceProvider).Wait();
         }
     }
 }
