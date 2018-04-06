@@ -11,5 +11,6 @@ namespace DontEatAlone.Models
     public class ApplicationUser : IdentityUser
     {
        public virtual User User { get; set; }
+       public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

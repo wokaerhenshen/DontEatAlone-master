@@ -29,6 +29,7 @@ namespace DontEatAlone.Data
         {
             if (_context.Reservation.Count() == 0)
             {
+                ApplicationUser user = _context.ApplicationUser.FirstOrDefault();
                 _context.Reservation.Add(new Reservation
                 {
                     Id = 1,
@@ -36,10 +37,9 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id,
                     NumberOfPeople = 3,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(5)
+                    DateEnd = DateTime.Now.AddHours(5),
+                    UserId = user.Id
                 });
-
-
 
                 // _context.SaveChanges();
 
@@ -50,7 +50,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "BCIT Downtown").FirstOrDefault().Id,
                     NumberOfPeople = 5,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(1)
+                    DateEnd = DateTime.Now.AddHours(1),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -60,7 +61,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Black & Blue").FirstOrDefault().Id,
                     NumberOfPeople = 3,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(0.5)
+                    DateEnd = DateTime.Now.AddHours(0.5),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -70,7 +72,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Italian Kitchen").FirstOrDefault().Id,
                     NumberOfPeople = 2,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(1)
+                    DateEnd = DateTime.Now.AddHours(1),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -80,7 +83,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
                     NumberOfPeople = 5,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(4)
+                    DateEnd = DateTime.Now.AddHours(4),
+                    UserId = user.Id
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -90,7 +94,8 @@ namespace DontEatAlone.Data
                     PlaceID = _context.Place.Where(p => p.Name == "Cactus Club Cafe").FirstOrDefault().Id,
                     NumberOfPeople = 4,
                     DateStart = DateTime.Now,
-                    DateEnd = DateTime.Now.AddHours(2)
+                    DateEnd = DateTime.Now.AddHours(2),
+                    UserId = user.Id
                 });
 
                 _context.SaveChanges();

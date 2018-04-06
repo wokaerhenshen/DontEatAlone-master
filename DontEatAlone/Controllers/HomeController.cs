@@ -112,12 +112,6 @@ namespace DontEatAlone.Controllers
 
         public IActionResult ViewReservations()
         {
-            //    var myquery = _context.Reservation.Where(r=>r.Place.Id )
-
-            var query = from p in _context.Place
-                        from r in _context.Reservation
-                        where r.PlaceID == p.Id
-                        select new Place() { Id=p.Id, Address = p.Address, };
             List <Place> places = _context.Place.Select(p => new Place
             {
                 Id = p.Id,
@@ -127,7 +121,7 @@ namespace DontEatAlone.Controllers
                 Latitude = p.Latitude,
                 Reservations = _context.Reservation.Where(r => r.PlaceID == p.Id).ToList()
             }).ToList();
-            IEnumerable<Reservation> reservations = _context.Reservation.Select(r => new Reservation
+            List<ReservationViewModel> reservations = _context.Reservation.Select(r => new ReservationViewModel
             {
                 Id = r.Id,
                 Title = r.Title,
@@ -135,10 +129,15 @@ namespace DontEatAlone.Controllers
                 DateEnd = r.DateEnd,
                 NumberOfPeople = r.NumberOfPeople,
                 Status = r.Status,
-                PlaceID = r.PlaceID
-
-            });
-            return View(places);
+                LocationAddress = _context.Place.Where(p => p.Id == r.PlaceID).FirstOrDefault().Address,
+                AuthorName = _context.ApplicationUser.Where(au => au.Id == r.UserId).FirstOrDefault().UserName
+            }).ToList();
+            PlaceReservationViewModel model = new PlaceReservationViewModel()
+            {
+                Reservations = reservations,
+                Places = places
+            };
+            return View(model);
         }
 
         public IActionResult ReservationPage(int id)
@@ -151,13 +150,9 @@ namespace DontEatAlone.Controllers
             return View(reservation);
         }
 
-
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 }

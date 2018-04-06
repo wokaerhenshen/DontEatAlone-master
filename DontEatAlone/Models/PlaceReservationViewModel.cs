@@ -8,7 +8,7 @@ namespace DontEatAlone.Models
 {
     public class PlaceReservationViewModel
     {
+        public List<ReservationViewModel> Reservations { get; set; } 
         public List<Place> Places { get; set; }
-        public List<Reservation> Reservations { get; set; }
     }
 }
