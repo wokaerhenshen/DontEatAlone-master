@@ -1,10 +1,55 @@
-﻿body {
+﻿/* Reset Styles */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
     padding-top: 50px;
-    padding-bottom: 20px;
-    margin: 0;
+    padding-bottom: 100px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -30px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 30px;
+}
+
+#footer {
+    background-color: #f5f5f5;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 /* Wrapping element */
+
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -12,22 +57,26 @@
 }
 
 /* Carousel */
+
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
+
 .carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
 
 /* QR code generator */
+
 #qrCode {
     margin: 15px;
 }
 
 /* Hide/rearrange for smaller screens */
+
 @media screen and (max-width: 767px) {
     /* Hide captions */
     .carousel-caption {
@@ -48,27 +97,8 @@ img {
     text-decoration: none;
 }
 
-    /* Add a hover effect if you want */
-    .fa:hover {
-        opacity: 0.7;
-    }
+/* Add a hover effect if you want */
 
-/* Set a specific color for each brand */
-
-/* Facebook */
-.fa-facebook {
-    background: #3B5998;
-    color: white;
-}
-
-/* Twitter */
-.fa-twitter {
-    background: #55ACEE;
-    color: white;
-}
-
-/* Instagram */
-.fa-instagram {
-    background: #D4AA86;
-    color: white;
+.fa:hover {
+    opacity: 0.7;
 }
