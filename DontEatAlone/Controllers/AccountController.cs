@@ -48,8 +48,6 @@ namespace DontEatAlone.Controllers
             _serviceProvider = serviceProvider;
         }
 
-
-
         [TempData]
         public string ErrorMessage { get; set; }
 
@@ -104,7 +102,6 @@ namespace DontEatAlone.Controllers
                     return View(model);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -247,7 +244,7 @@ namespace DontEatAlone.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User created a new account and password.");
 
                     UserRoleRepository userRoleRepo = new UserRoleRepository(_serviceProvider,_context);
 
@@ -260,7 +257,6 @@ namespace DontEatAlone.Controllers
                     {
                         Id = user.Id
                     });
-
         
                     _context.SaveChanges();
 

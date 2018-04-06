@@ -17,6 +17,8 @@
 <!--Font Awesome (added because you use icons in your prepend/append)-->
 <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 
+<!-- Local jQuery -->
+<script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
 @{
     ViewData["Title"] = "Profile";
     ViewData.AddActivePage(ManageNavPages.Index);
@@ -28,6 +30,7 @@
     <div class="col-md-6">
         <div>Status</div>
         @{
+<<<<<<< HEAD
         // if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
         if (User.IsInRole("Premium"))
         {
@@ -46,17 +49,35 @@
         <button onclick="window.location.href='/Manage/SignUp'" class="btn btn-success">Become Prime!</button>
 
          }
+=======
+            // if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+            if (User.IsInRole("Premium"))
+            {
+
+                <div>Prime User</div>
+                <button onclick="window.location.href='/Manage/SignDown'" class="btn btn-danger">Drop Premium User!</button>
+            }
+            else
+            {
+                <div>Regular User</div>
+                <button onclick="window.location.href='/Manage/SignUp'" class="btn btn-success">Become a Premium User!</button>
+            }
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
         }
 
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
             <div class="form-group">
                 <label asp-for="Username"></label>
                 <input asp-for="Username" class="form-control" disabled />
             </div>
+<<<<<<< HEAD
             <div class="form-group">
                 <label asp-for="Email"></label>
                 @if (Model.IsEmailConfirmed)
@@ -74,11 +95,36 @@
                 @Html.Raw(ViewBag.email)
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+=======
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="form-control" />
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                }
+                @Html.Raw(ViewBag.email)
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
             <div class="form-group">
                 <label asp-for="PhoneNumber"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
             <div class="form-group">
                 <label asp-for="Address"></label>
                 <input asp-for="Address" class="form-control" placeholder="6520 Clematis Drive" />
@@ -87,6 +133,7 @@
                 @*<div class="bootstrap-iso">
 
 
+<<<<<<< HEAD
                     <div class="form-group ">
                         <label class="control-label col-sm-2 requiredField" for="date">
                             Date
@@ -99,11 +146,51 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar">
                                     </i>
+=======
+                        <div class="form-group ">
+                            <label class="control-label col-sm-2 requiredField" for="date">
+                                Date
+                                <span class="asteriskField">
+                                    *
+                                </span>
+                            </label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar">
+                                        </i>
+                                    </div>
+                                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" />
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
                                 </div>
-                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" />
                             </div>
-                        </div>
 
+                        </div>
+                    </div>*@
+                <label asp-for="DateOfBirth"></label><br />
+                <input id="date" type="date" value="2017-06-01">
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender"></label><br />
+                <label class="radio-inline"><input type="radio" name="optradio">Male</label>
+                <label class="radio-inline"><input type="radio" name="optradio">Female</label>
+                <label class="radio-inline"><input type="radio" name="optradio">Other</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CuisineType"></label><br />
+                <label class="checkbox-inline"><input type="checkbox" value="">Chiniese</label>
+                <label class="checkbox-inline"><input type="checkbox" value="">Italian</label>
+                <label class="checkbox-inline"><input type="checkbox" value="">Any Thing</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Others"></label><br />
+                <label class="checkbox-inline"><input type="checkbox" value="">Smoker</label>
+                <label class="checkbox-inline"><input type="checkbox" value="">Drinker</label>
+                <label class="checkbox-inline"><input type="checkbox" value="">Take pets</label>
+            </div>
+            @*<input name="_honey" style="display:none" type="text" />
+
+<<<<<<< HEAD
                     </div>
                 </div>*@
                 <label asp-for="DateOfBirth"></label><br />
@@ -146,12 +233,31 @@
                     })
                 })
             </script>*@
+=======
+
+                 Include Date Range Picker
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+                <script>
+                    $(document).ready(function () {
+                        var date_input = $('input[name="date"]'); //our date input has the name "date"
+                        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+                        date_input.datepicker({
+                            format: 'mm/dd/yyyy',
+                            container: container,
+                            todayHighlight: true,
+                            autoclose: true,
+                        })
+                    })
+                </script>*@
+>>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
             <button type="submit" class="btn btn-default">Save</button>
         </form>
     </div>
     <div class="col-md-4 col-lg-4 " align="center"> <img alt="User Pic" src="~/images/download.png" class=" img-responsive"> </div>
 </div>
 
- @section Scripts {
-   @await Html.PartialAsync("_ValidationScriptsPartial")
-                  }
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

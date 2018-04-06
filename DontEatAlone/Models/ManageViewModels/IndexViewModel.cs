@@ -17,11 +17,17 @@ namespace DontEatAlone.Models.ManageViewModels
         public string Email { get; set; }
 
         [Phone]
-        [Display(Name = "Phone number")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Address")]
-        public string Address { get; set; }
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "Province")]
+        public string Province { get; set; }
 
         [Display(Name = "Date of Birth")]
         public string DateOfBirth { get; set; }
