@@ -25,7 +25,6 @@ namespace DontEatAlone
             Configuration = configuration;
         }
 
-<<<<<<< HEAD
         /*
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
@@ -47,8 +46,6 @@ namespace DontEatAlone
         }
         */
 
-=======
->>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -119,7 +116,6 @@ namespace DontEatAlone
                 app.UseExceptionHandler("/Home/Error");
             }
 
-
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
@@ -130,11 +126,6 @@ namespace DontEatAlone
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-<<<<<<< HEAD
-
-           //CreateRoles(serviceProvider).Wait();
-=======
->>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
         }
     }
 }

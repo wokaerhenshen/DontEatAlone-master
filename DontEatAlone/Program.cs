@@ -30,28 +30,17 @@ namespace DontEatAlone
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<Models.ApplicationUser>>();
                     IServiceProvider serviceProvider = services.GetRequiredService<IServiceProvider>();
-<<<<<<< HEAD
+
                     RoleRepo roleIni = new RoleRepo(context);
                     roleIni.CreateInitialRoles();
+
                     Initialize initializer = new Initialize(context, userManager);
-                    //Initialize DataIni = new Initialize(context, userManager);
+
                     var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                     string[] roleNames = { "Admin", "Premium", "Regular" };
                     Task<IdentityResult> roleResult;
-=======
-                    Initialize initializer = new Initialize(context, userManager);
-                    //initializer.InitializeData();
-                    RoleRepo roleIni = new RoleRepo(context);
-                    roleIni.CreateInitialRoles();
-                    Initialize DataIni = new Initialize(context, userManager);
 
-                    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                    string[] roleNames = { "Admin", "Premium", "Member" };
-                    Task<IdentityResult> roleResult;
-
->>>>>>> 402fdd808f3fe4597c6d0d7f10547b26e2be5c42
                     foreach (var roleName in roleNames)
                     {
                         var roleExist = RoleManager.Roles.Where(r => r.Name == roleName).FirstOrDefault();
