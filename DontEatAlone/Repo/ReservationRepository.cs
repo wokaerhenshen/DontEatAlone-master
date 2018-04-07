@@ -64,6 +64,52 @@ namespace DontEatAlone.Repo
             return limiations;
         }
 
+        public Limitations getLimitationByReservationId(int id, string reservationId) //second parameter just to let method override
+        {
+            string sex = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Gender).FirstOrDefault();
+            string cuisineType = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.CuisineType).FirstOrDefault();
+            string age = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Age).FirstOrDefault();
+            bool smoking = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Smoking).FirstOrDefault();
+            bool pets = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Pets).FirstOrDefault();
+            string languages = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Languages).FirstOrDefault();
+            string description = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Description).FirstOrDefault();
+            bool alcohol = _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Alcohol).FirstOrDefault();
+
+            return new Limitations()
+            {
+                Gender = sex,
+                CuisineType = cuisineType,
+                Age = age,
+                Smoking = smoking,
+                Pets = pets,
+                Alcohol = alcohol,
+                Languages = languages
+            };
+        }
+
+        public List<Reservation> filterReservationByLimitations(List<Reservation> reservations, Limitations limitations)
+        {
+            List<Reservation> result = new List<Reservation>();
+            foreach (Reservation r in reservations)
+            {
+                Limitations rLimititions = getLimitationByReservationId(r.Id, r.Title);
+                if (
+                        (limitations.Gender == null || rLimititions.Gender.Equals(limitations.Gender, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (limitations.Languages == null || rLimititions.Languages.Equals(limitations.Languages, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (limitations.CuisineType == null || limitations.CuisineType.Equals(rLimititions.CuisineType, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (limitations.Age == null || limitations.Age.Equals(rLimititions.Age, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (limitations.Pets == false || limitations.Pets == rLimititions.Pets) &&
+                        (limitations.Alcohol == false || limitations.Alcohol == rLimititions.Alcohol) &&
+                        (limitations.Smoking == false || limitations.Smoking == rLimititions.Smoking) 
+                    )
+                {
+                    result.Add(r);
+                }
+            }
+
+            return result;
+        }
+
         public bool UpdateReservation(Reservation res)
         {
             Reservation reservation = _context.Reservation.Where(r => r.Id == res.Id).FirstOrDefault();

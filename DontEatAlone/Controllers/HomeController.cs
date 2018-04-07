@@ -121,7 +121,7 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
-        public IActionResult ViewReservations()
+        public IActionResult ViewReservations(Limitations limitations)
         {
             List <Place> places = _context.Place.Select(p => new Place
             {
@@ -132,7 +132,25 @@ namespace DontEatAlone.Controllers
                 Latitude = p.Latitude,
                 Reservations = _context.Reservation.Where(r => r.PlaceID == p.Id).ToList()
             }).ToList();
-            List<ReservationViewModel> reservations = _context.Reservation.Select(r => new ReservationViewModel
+
+            List<Reservation> reservationsFiltered = limitations.Id == 1 ? rr.filterReservationByLimitations(_context.Reservation.ToList(), limitations) : _context.Reservation.ToList();
+            
+            if (limitations.Id == 1)
+            {
+                ViewData["filterString"] = String.Format("Current Filters:   {0}   {1}   {2}   {3}   Others:  {4}   {5}",
+                    limitations.Languages == null ? "" : "Languages: " + limitations.Languages,
+                    limitations.CuisineType == null ? "" : "Cuisine Type: " + limitations.CuisineType,
+                    limitations.Gender == null ? "" : "Gender: " + limitations.Gender,
+                    limitations.Alcohol == false ? "" : "Alcohol free",
+                    limitations.Smoking == false ? "" : "Smoking free",
+                    limitations.Pets == false ? "" : "Pets free");
+            }
+            else
+            {
+                ViewData["filterString"] = "No filter specified";
+            }
+
+            List<ReservationViewModel> reservationsViewModel = reservationsFiltered.Select(r => new ReservationViewModel
             {
                 Id = r.Id,
                 Title = r.Title,
@@ -145,7 +163,7 @@ namespace DontEatAlone.Controllers
             }).ToList();
             PlaceReservationViewModel model = new PlaceReservationViewModel()
             {
-                Reservations = reservations,
+                Reservations = reservationsViewModel,
                 Places = places
             };
             return View(model);

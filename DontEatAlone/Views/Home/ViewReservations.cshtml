@@ -47,22 +47,8 @@
 
 
 <h2>View Reservations</h2>
-
-@*<form role="form">
-        <div class="form-group row">
-            <label for="contain">search</label>
-             <input class="form-control col-sm-10" type="text" />
-             <button type="submit" class="btn btn-primary col-sm-1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>s
-        </div>
-    </form>*@
-
-<form>
-    <div class="form-group row">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-        <div class="col-sm-11">
-            <input class="form-control" placeholder="Enter keyword..." type="text" />
-        </div>
-    </div>
+<div id="map"></div>
+<form action="/Home/ViewReservations" style="margin-top:40px">
     @if (!User.IsInRole("Regular"))
     {
         <div class="form-group row">
@@ -72,29 +58,37 @@
                         Set filters
                     </button>
                 </p>
+                <p>@ViewData["filterString"]</p>
                 <div class="collapse" id="collapseExample">
                     <div class="row">
                         <div class="col-md-4">
                             <fieldset class="form-group">
                                 <div class="row">
                                     <legend class="col-form-legend col-sm-2">Sex</legend>
+                                    <input type="hidden" name="id" value="1" />
                                     <div class="col-sm-10">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios1" value="option1">
+                                                <input class="form-check-input" type="radio" name="gender" value="male">
                                                 Male
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios2" value="option2">
+                                                <input class="form-check-input" type="radio" name="gender" value="female">
                                                 Female
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="gender" value="others">
+                                                Others
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios3" value="option3">
-                                                Others
+                                                <input class="form-check-input" type="radio" name="gender" value="all">
+                                                All
                                             </label>
                                         </div>
                                     </div>
@@ -108,25 +102,25 @@
                                     <div class="col-md-10">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios1" value="option1">
+                                                <input class="form-check-input" type="checkbox" name="smoking" value="true">
                                                 Smoking free
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios1" value="option1">
+                                                <input class="form-check-input" type="checkbox" name="alcohol" value="true">
                                                 Alcohol free
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios2" value="option2">
-                                                Animals free
+                                                <input class="form-check-input" type="checkbox" name="pets" value="true">
+                                                Pets free
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" name="gridRadios" id="gridRadios3" value="option3">
+                                                <input class="form-check-input" type="checkbox" name="kids" value="true">
                                                 Kids free
                                             </label>
                                         </div>
@@ -141,31 +135,31 @@
                                     <div class="col-md-10">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                                <input class="form-check-input" type="radio" name="age" value="all" checked>
                                                 All
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1">
+                                                <input class="form-check-input" type="radio" name="age" value="18-34">
                                                 18-34
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                                <input class="form-check-input" type="radio" name="age" value="35-50">
                                                 35-50
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                                                <input class="form-check-input" type="radio" name="age" value="51-69">
                                                 51-69
                                             </label>
                                         </div>
                                         <div class="form-check disabled">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                                                <input class="form-check-input" type="radio" name="age" value="70+">
                                                 70+
                                             </label>
                                         </div>
@@ -177,82 +171,71 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="inputPassword5">Cuisine</label>
-                            <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
-                            <small id="passwordHelpBlock" class="form-text text-muted">
+                            <input type="text" class="form-control" aria-describedby="cuisineHelpBlock" name="cuisineType">
+                            <small id="cuisineHelpBlock" class="form-text text-muted">
                                 You can specify cuisine vie comma separated values. For example: Italian, Ukrainian, Canadian, Chinese
                             </small>
                         </div>
                         <div class="col-md-4">
                             <label for="inputPassword5">Language</label>
-                            <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
-                            <small id="passwordHelpBlock" class="form-text text-muted">
+                            <input type="text" class="form-control" name="languages">
+                            <small class="form-text text-muted">
                                 You can specify languge vie comma separated values. For example: English, Russian, Italian, Chinese
                             </small>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group row">
-                                <label for="example-date-input" class="col-2 col-form-label">Date</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-time-input" class="col-2 col-form-label">Time Start</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="time" value="13:45:00" id="example-time-input">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-time-input" class="col-2 col-form-label">Time End</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="time" value="13:45:00" id="example-time-input">
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
+                    <button type="submit" class="btn btn-primary">Apply</button>
                 </div>
             </div>
         </div>
     }
 </form>
-<div id="map"></div>
-<table class="table" style="margin-top: 40px">
-    <thead>
-        <tr>
-            <th scope="col">Created By</th>
+@if (Model.Reservations.Count() == 0)
+{
+    <h1 style="text-align:center">No Reservations that satisfy your filters :(</h1>
+}
+else
+{
+    <table class="table" style="margin-top: 40px">
+        <thead>
+            <tr>
+                <th scope="col">Created By</th>
+                @{
+                    if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+                    {
+                        <th scope="col">Evaluation</th>
+                    }
+                }
+
+                <th scope="col">Title</th>
+                <th scope="col">Location</th>
+                <th scope="col">Party Size</th>
+
+
+                <th scope="col">Date and Time</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
             @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+                foreach (DontEatAlone.Models.ReservationViewModel p in Model.Reservations)
                 {
-                    <th scope="col">Evaluation</th>
+                    <tr>
+                        <th scope="row">@p.AuthorName</th>
+                        <td>@p.Title</td>
+                        <td>@p.LocationAddress</td>
+                        <td>@p.NumberOfPeople</td>
+
+                        <td>@p.DateStart.ToString("d MMMM h:m tt") - @p.DateEnd.ToString("h:m tt")</td>
+                        <td><button onclick="window.location.href='/Home/ReservationPage/?id=@p.Id'" class="btn btn-success">Open</button></td>
+                    </tr>
                 }
             }
+        </tbody>
+    </table>
+}
 
-            <th scope="col">Title</th>
-            <th scope="col">Location</th>
-            <th scope="col">Party Size</th>
-
-
-            <th scope="col">Date and Time</th>
-            <th scope="col">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ 
-            foreach (DontEatAlone.Models.ReservationViewModel p in Model.Reservations)
-            {
-            <tr>
-                <th scope="row">@p.AuthorName</th>
-                <td>@p.Title</td>
-                <td>@p.LocationAddress</td>
-                <td>@p.NumberOfPeople</td>
-
-                <td>@p.DateStart.ToString("d MMMM h:m tt") - @p.DateEnd.ToString("h:m tt")</td>
-                <td><button onclick="window.location.href='/Home/ReservationPage/?id=@p.Id'" class="btn btn-success">Open</button></td>
-            </tr>
-            }
-        }
-    </tbody>
-</table>
 @if (User.IsInRole("Regular"))
 {
     <div class="footnotes">
