@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DontEatAlone.Models;
 using DontEatAlone.Data;
 using DontEatAlone.Repo;
+using Microsoft.AspNetCore.Identity;
 
 namespace DontEatAlone.Controllers
 {
@@ -14,11 +15,13 @@ namespace DontEatAlone.Controllers
     {
         ApplicationDbContext _context;
         ReservationRepository rr;
+        private UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             this.rr = new ReservationRepository(context);
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -55,7 +58,7 @@ namespace DontEatAlone.Controllers
             string endString = date + " " + endTime;
             DateTime startDate = DateTime.ParseExact(startString, "yyyy-MM-dd HH:mm", null);
             DateTime endDate = DateTime.ParseExact(endString, "yyyy-MM-dd HH:mm", null);
-
+            string userID = _userManager.GetUserId(User);
             if (!rr.placeIdExist(placeId))
             {
                 Place place = new Place()
@@ -80,9 +83,17 @@ namespace DontEatAlone.Controllers
                 DateEnd = endDate,
                 NumberOfPeople = Int32.Parse(numberPeople),
                 Status = "open",
-                PlaceID = placeId
+                PlaceID = placeId,
+                UserId = userID
             };
             rr.CreateReservation(reservation);
+
+            UserReservation userReservation = new UserReservation()
+            {
+                UserID = userID,
+                ReservationID = reservation.Id
+            };
+            _context.SaveChanges();
 
             Limitations limitations = new Limitations()
             {

@@ -23,7 +23,7 @@ namespace DontEatAlone.Data
             InitUsers();
             initPlaces();
             InitializeData();
-            //CleanData();
+           // CleanData();
         }
 
         private void InitializeData()
@@ -52,7 +52,8 @@ namespace DontEatAlone.Data
                     NumberOfPeople = 5,
                     DateStart = DateTime.Now,
                     DateEnd = DateTime.Now.AddHours(1),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Status = "open"
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -63,7 +64,8 @@ namespace DontEatAlone.Data
                     NumberOfPeople = 3,
                     DateStart = DateTime.Now,
                     DateEnd = DateTime.Now.AddHours(0.5),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Status = "open"
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -74,7 +76,8 @@ namespace DontEatAlone.Data
                     NumberOfPeople = 2,
                     DateStart = DateTime.Now,
                     DateEnd = DateTime.Now.AddHours(1),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Status = "open"
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -85,7 +88,8 @@ namespace DontEatAlone.Data
                     NumberOfPeople = 5,
                     DateStart = DateTime.Now,
                     DateEnd = DateTime.Now.AddHours(4),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Status = "open"
                 });
 
                 _context.Reservation.Add(new Reservation()
@@ -96,26 +100,12 @@ namespace DontEatAlone.Data
                     NumberOfPeople = 4,
                     DateStart = DateTime.Now,
                     DateEnd = DateTime.Now.AddHours(2),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Status = "open"
                 });
 
                 _context.SaveChanges();
 
-                _context.UserReservation.Add(new UserReservation
-                {
-                    UserID = _context.User.FirstOrDefault().Id,
-                    ReservationID = 1,
-                    IsHost = true
-                });
-
-                _context.UserReservation.Add(new UserReservation
-                {
-                    UserID = _context.User.FirstOrDefault().Id,
-                    ReservationID = 2,
-                    IsHost = true
-                });
-
-                _context.SaveChanges();
 
                 _context.Limitations.Add(new Limitations
                 {
@@ -197,45 +187,51 @@ namespace DontEatAlone.Data
 
                 _context.SaveChanges();
 
-                _context.Comment.Add(new Comment
+                _context.Comment.Add(new Comment()
                 {
+                    ReservationID = 1,
                     Id = 1,
                     Body = "very nice man!",
-                    AuthorID = _context.User.FirstOrDefault().Id,
-                    Date = DateTime.Now,
-                    ReservationID = 1
+                    AuthorID = user.Id,
+                    Date = DateTime.Now
+
                 });
 
-                _context.Comment.Add(new Comment
+
+                _context.Comment.Add(new Comment()
                 {
+                    ReservationID = 1,
                     Id = 2,
                     Body = "very good man!",
-                    AuthorID = _context.User.FirstOrDefault().Id,
-                    Date = DateTime.Now,
-                    ReservationID = 1
-                });
+                    AuthorID = user.Id,
+                    Date = DateTime.Now
 
-                _context.Comment.Add(new Comment
-                {
-                    Id = 3,
-                    Body = "very beautiful lady!",
-                    AuthorID = _context.User.FirstOrDefault().Id,
-                    Date = DateTime.Now,
-                    ReservationID = 2
-                });
-
-
-                _context.Comment.Add(new Comment
-                {
-                    Id = 4,
-                    Body = "like her so much!",
-                    AuthorID = _context.User.FirstOrDefault().Id,
-                    Date = DateTime.Now,
-                    ReservationID = 2
                 });
 
                 _context.SaveChanges();
 
+                _context.Comment.Add(new Comment()
+                {
+                    ReservationID = 2,
+                    Id = 3,
+                    Body = "very beautiful lady!",
+                    AuthorID = user.Id,
+                    Date = DateTime.Now
+
+                });
+
+
+                _context.Comment.Add(new Comment()
+                {
+                    ReservationID = 2,
+                    Id = 4,
+                    Body = "like her so much!",
+                    AuthorID = user.Id,
+                    Date = DateTime.Now
+
+                });
+
+                _context.SaveChanges();                
             }
         }
 

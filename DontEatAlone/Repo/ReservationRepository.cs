@@ -106,7 +106,8 @@ namespace DontEatAlone.Repo
             r.NumberOfPeople = reservation.NumberOfPeople;
             r.Status = reservation.Status;
             r.PlaceID = reservation.PlaceID;
-            _context.Add(r);
+            r.UserId = reservation.UserId;
+            _context.Reservation.Add(r);
             _context.SaveChanges();
 
             return true;

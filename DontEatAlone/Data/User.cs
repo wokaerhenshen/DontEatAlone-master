@@ -26,6 +26,6 @@ namespace DontEatAlone.Data
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual PremiumSubscription PremiumSubscription { get; set; } 
         public virtual ICollection<UserReservation> UserReservations { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+
     }
 }

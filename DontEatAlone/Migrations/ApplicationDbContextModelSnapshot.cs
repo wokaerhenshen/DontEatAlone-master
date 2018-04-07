@@ -99,6 +99,8 @@ namespace DontEatAlone.Migrations
                 {
                     b.Property<int>("Id");
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<DateTime>("DateEnd");
 
                     b.Property<DateTime>("DateStart");
@@ -113,15 +115,11 @@ namespace DontEatAlone.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.Property<string>("UserId1");
-
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("PlaceID");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Reservation");
                 });
@@ -154,8 +152,6 @@ namespace DontEatAlone.Migrations
                     b.Property<string>("UserID");
 
                     b.Property<int>("ReservationID");
-
-                    b.Property<bool>("IsHost");
 
                     b.HasKey("UserID", "ReservationID");
 
@@ -347,19 +343,14 @@ namespace DontEatAlone.Migrations
 
             modelBuilder.Entity("DontEatAlone.Data.Reservation", b =>
                 {
+                    b.HasOne("DontEatAlone.Models.ApplicationUser")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("DontEatAlone.Data.Place", "Place")
                         .WithMany("Reservations")
                         .HasForeignKey("PlaceID")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("DontEatAlone.Models.ApplicationUser", "User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("DontEatAlone.Data.User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("DontEatAlone.Data.User", b =>
