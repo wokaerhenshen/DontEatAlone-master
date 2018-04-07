@@ -121,8 +121,11 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
-        public IActionResult ViewReservations()
+        public IActionResult ViewReservations(Limitations limitations, string sortBy)
         {
+            ViewBag.partySizeSort = sortBy == "party_size" ? "party_size_desc" : "party_size";
+            ViewBag.DateSort = sortBy == "date" ? "date_desc" : "date";
+
             List <Place> places = _context.Place.Select(p => new Place
             {
                 Id = p.Id,
@@ -132,7 +135,25 @@ namespace DontEatAlone.Controllers
                 Latitude = p.Latitude,
                 Reservations = _context.Reservation.Where(r => r.PlaceID == p.Id).ToList()
             }).ToList();
-            List<ReservationViewModel> reservations = _context.Reservation.Select(r => new ReservationViewModel
+
+            List<Reservation> reservationsFiltered = limitations.Id == 1 ? rr.filterReservationByLimitations(_context.Reservation.ToList(), limitations) : _context.Reservation.ToList();
+            
+            if (limitations.Id == 1)
+            {
+                ViewData["filterString"] = String.Format("Current Filters:   {0}   {1}   {2}   {3}   Others:  {4}   {5}",
+                    limitations.Languages == null ? "" : "Languages: " + limitations.Languages,
+                    limitations.CuisineType == null ? "" : "Cuisine Type: " + limitations.CuisineType,
+                    limitations.Gender == null ? "" : "Gender: " + limitations.Gender,
+                    limitations.Alcohol == false ? "" : "Alcohol free",
+                    limitations.Smoking == false ? "" : "Smoking free",
+                    limitations.Pets == false ? "" : "Pets free");
+            }
+            else
+            {
+                ViewData["filterString"] = "No filter specified";
+            }
+
+            List<ReservationViewModel> reservationsViewModel = reservationsFiltered.Select(r => new ReservationViewModel
             {
                 Id = r.Id,
                 Title = r.Title,
@@ -143,9 +164,29 @@ namespace DontEatAlone.Controllers
                 LocationAddress = _context.Place.Where(p => p.Id == r.PlaceID).FirstOrDefault().Address,
                 AuthorName = _context.ApplicationUser.Where(au => au.Id == r.UserId).FirstOrDefault().UserName
             }).ToList();
+
+            switch (sortBy)
+            {
+                case "date":
+                    reservationsViewModel.Sort((x, y) => x.DateStart.CompareTo(y.DateStart));
+                    break;
+                case "date_desc":
+                    reservationsViewModel.Sort((x, y) => y.DateStart.CompareTo(x.DateStart));
+                    break;
+                case "party_size":
+                    reservationsViewModel.Sort((x, y) => x.NumberOfPeople.CompareTo(y.NumberOfPeople));
+                    break;
+                case "party_size_desc":
+                    reservationsViewModel.Sort((x, y) => y.NumberOfPeople.CompareTo(x.NumberOfPeople));
+                    break;
+                default:
+                    reservationsViewModel.Sort((x, y) => x.DateStart.CompareTo(y.DateStart));
+                    break;
+            }
+
             PlaceReservationViewModel model = new PlaceReservationViewModel()
             {
-                Reservations = reservations,
+                Reservations = reservationsViewModel,
                 Places = places
             };
             return View(model);
