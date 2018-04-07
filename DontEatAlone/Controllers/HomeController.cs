@@ -121,8 +121,11 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
-        public IActionResult ViewReservations(Limitations limitations)
+        public IActionResult ViewReservations(Limitations limitations, string sortBy)
         {
+            ViewBag.partySizeSort = sortBy == "party_size" ? "party_size_desc" : "party_size";
+            ViewBag.DateSort = sortBy == "date" ? "date_desc" : "date";
+
             List <Place> places = _context.Place.Select(p => new Place
             {
                 Id = p.Id,
@@ -161,6 +164,26 @@ namespace DontEatAlone.Controllers
                 LocationAddress = _context.Place.Where(p => p.Id == r.PlaceID).FirstOrDefault().Address,
                 AuthorName = _context.ApplicationUser.Where(au => au.Id == r.UserId).FirstOrDefault().UserName
             }).ToList();
+
+            switch (sortBy)
+            {
+                case "date":
+                    reservationsViewModel.Sort((x, y) => x.DateStart.CompareTo(y.DateStart));
+                    break;
+                case "date_desc":
+                    reservationsViewModel.Sort((x, y) => y.DateStart.CompareTo(x.DateStart));
+                    break;
+                case "party_size":
+                    reservationsViewModel.Sort((x, y) => x.NumberOfPeople.CompareTo(y.NumberOfPeople));
+                    break;
+                case "party_size_desc":
+                    reservationsViewModel.Sort((x, y) => y.NumberOfPeople.CompareTo(x.NumberOfPeople));
+                    break;
+                default:
+                    reservationsViewModel.Sort((x, y) => x.DateStart.CompareTo(y.DateStart));
+                    break;
+            }
+
             PlaceReservationViewModel model = new PlaceReservationViewModel()
             {
                 Reservations = reservationsViewModel,
