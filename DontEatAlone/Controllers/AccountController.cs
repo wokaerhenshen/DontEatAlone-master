@@ -255,7 +255,10 @@ namespace DontEatAlone.Controllers
 
                     _context.User.Add(new User
                     {
-                        Id = user.Id
+                        Id = user.Id,
+                        Email = user.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName
                     });
         
                     _context.SaveChanges();

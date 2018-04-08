@@ -117,7 +117,7 @@
                 }
             }
 
-            cuisineType = document.getElementById("CuisineType").value
+            
 
             var ageCheck = document.getElementsByName("ageCheck")
             for (var i = 0; i < ageCheck.length; i++) {
@@ -153,10 +153,25 @@
 
             }
 
+            cuisineType = document.getElementById("CuisineType").value
+
             languages = document.getElementById("Language").value
 
-
             description = document.getElementById("Description").value
+
+            if (cuisineType == "") {
+                cuisineType = "Not Specified"
+            }
+
+            if (languages == "") {
+
+                languages = "Not Specified"
+            }
+
+            if (description == "") {
+
+                description = "none"
+            }
 
             //alert(title)
             //alert(placeId)

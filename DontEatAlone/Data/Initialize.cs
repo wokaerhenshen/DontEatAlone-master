@@ -23,14 +23,78 @@ namespace DontEatAlone.Data
             InitUsers();
             initPlaces();
             InitializeData();
+            initUserReservations();
            // CleanData();
+        }
+
+        private void initUserReservations()
+        {
+            if (_context.UserReservation.Count() == 0)
+            {
+                User user = _context.User.FirstOrDefault();
+                User userTwo = _context.User.LastOrDefault();
+                _context.UserReservation.Add(new UserReservation() {
+                    ReservationID = 1,
+                    UserID = user.Id,
+                    isHost = true
+
+                });
+
+                _context.UserReservation.Add(new UserReservation()
+                {
+                    ReservationID = 1,
+                    UserID = userTwo.Id,
+                    isHost = false
+                });
+
+                _context.UserReservation.Add(new UserReservation()
+                {
+                    ReservationID = 2,
+                    UserID = user.Id,
+                    isHost = true
+
+                });
+
+                _context.UserReservation.Add(new UserReservation()
+                {
+                    ReservationID = 3,
+                    UserID = user.Id,
+                    isHost = true
+
+                });
+
+                _context.UserReservation.Add(new UserReservation()
+                {
+                    ReservationID = 4,
+                    UserID = user.Id,
+                    isHost = true
+
+                });
+
+                _context.UserReservation.Add(new UserReservation()
+                {
+                    ReservationID = 5,
+                    UserID = user.Id,
+                    isHost = true
+
+                });
+
+                _context.UserReservation.Add(new UserReservation()
+                {
+                    ReservationID = 6,
+                    UserID = user.Id,
+                    isHost = true
+
+                });
+                _context.SaveChanges();
+            }
         }
 
         private void InitializeData()
         {
             if (_context.Reservation.Count() == 0)
             {
-                ApplicationUser user = _context.ApplicationUser.FirstOrDefault();
+                User user = _context.User.FirstOrDefault();
                 _context.Reservation.Add(new Reservation
                 {
                     Id = 1,
@@ -192,7 +256,7 @@ namespace DontEatAlone.Data
                     ReservationID = 1,
                     Id = 1,
                     Body = "very nice man!",
-                    AuthorID = user.Id,
+                    AuthorID = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -203,7 +267,7 @@ namespace DontEatAlone.Data
                     ReservationID = 1,
                     Id = 2,
                     Body = "very good man!",
-                    AuthorID = user.Id,
+                    AuthorID = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -215,7 +279,7 @@ namespace DontEatAlone.Data
                     ReservationID = 2,
                     Id = 3,
                     Body = "very beautiful lady!",
-                    AuthorID = user.Id,
+                    AuthorID = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -226,7 +290,7 @@ namespace DontEatAlone.Data
                     ReservationID = 2,
                     Id = 4,
                     Body = "like her so much!",
-                    AuthorID = user.Id,
+                    AuthorID = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -289,14 +353,44 @@ namespace DontEatAlone.Data
             ApplicationUser testIfExists = _context.ApplicationUser.Where(au => au.Email.Equals("admin@admin.com")).FirstOrDefault();
             if (testIfExists == null)
             {
-                _userManager.CreateAsync(new ApplicationUser()
+
+                var user = new ApplicationUser { UserName = "admin@user.com", Email = "admin@user.com" };
+
+                var result = _userManager.CreateAsync(user, "Bcit123!");
+
+                if (result.IsCompletedSuccessfully)
                 {
-                    UserName = "admin@user.com",
-                    Email = "admin@user.com",
-                }, "Bcit123!");
+                    _context.User.Add(new User
+                    {
+                        Id = user.Id,
+                        FirstName = "karl",
+                        LastName  = "Xu",
+                        Email = user.Email
+
+
+                    });
+                    _context.SaveChanges();
+                }
+
+
+                var userTwo = new ApplicationUser { UserName = "regular@user.com", Email = "regular@user.com" };
+
+                var resultTwo= _userManager.CreateAsync(userTwo, "Bcit123!");
+
+                if (resultTwo.IsCompletedSuccessfully)
+                {
+                    _context.User.Add(new User
+                    {
+                        Id = userTwo.Id,
+                        FirstName = "Carolyn",
+                        LastName = "Ho",
+                        Email = userTwo.Email
+
+
+                    });
+                    _context.SaveChanges();
+                }
             }
-
-
         }
 
 

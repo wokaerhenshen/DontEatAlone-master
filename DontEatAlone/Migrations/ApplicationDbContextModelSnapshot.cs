@@ -153,6 +153,8 @@ namespace DontEatAlone.Migrations
 
                     b.Property<int>("ReservationID");
 
+                    b.Property<bool>("isHost");
+
                     b.HasKey("UserID", "ReservationID");
 
                     b.HasAlternateKey("ReservationID", "UserID");

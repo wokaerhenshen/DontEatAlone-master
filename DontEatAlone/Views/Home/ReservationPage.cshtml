@@ -19,6 +19,9 @@
         margin-bottom: 25px;
     }
 </style>
+<script>
+    function initMap() { }
+</script>
 <h1>@Html.DisplayFor(model => model.Title)<span class="badge badge-success" style="background-color:green;">Available</span></h1>
 <div class="container">
     <div class="row">
@@ -70,50 +73,34 @@
                     <div class="card" style="width: 20rem;">
                         <img class="card-img-top" src="~/images/host_image.jpg" alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title">Karl</h4>
-                            <p class="card-text">fresh bird one</p>
+                            <h4 class="card-title">@Html.Raw(ViewBag.host.FirstName)</h4>
+                            <p class="card-text">@Html.Raw(ViewBag.host.Email)</p>
                         </div>
                         <div class="card-body">
                             <span class="badge badge-warning" style="background-color:red;">Host</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2" style="padding:5px;">
-                    <div class="card" style="width: 20rem;">
-                        <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Daniel</h4>
-                            <p class="card-text">Nice beard. </p>
-                        </div>
-                        <div class="card-body">
-                            <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
-                        </div>
+                @if (ViewBag.participant != null)
+    {
+            @foreach (var participant in ViewBag.participant)
+{
+            <div class="col-md-2" style="padding:5px;">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.Raw(participant.FirstName)</h4>
+                        <p class="card-text">@Html.Raw(participant.Email) </p>
+                    </div>
+                    <div class="card-body">
+                        <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
                     </div>
                 </div>
-                <div class="col-md-2" style="padding:5px;">
-                    <div class="card" style="width: 20rem;">
-                        <img class="card-img-top" src="~/images/none.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Vacant</h4>
-                            <p class="card-text"><br /></p>
-                        </div>
-                        <div class="card-body">
-                            <a href="#" class="badge badge-light">In Progress</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2" style="padding:5px;">
-                    <div class="card" style="width: 20rem;">
-                        <img class="card-img-top" src="~/images/none.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Vacant</h4>
-                            <p class="card-text"><br /></p>
-                        </div>
-                        <div class="card-body">
-                            <a href="#" class="badge badge-light">In Progress</a>
-                        </div>
-                    </div>
-                </div>
+            </div>
+
+}
+
+}
             </div>
 
         </div>
@@ -128,58 +115,80 @@
                         Comment panel
                     </div>
                     <div class="panel-body">
-                        <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
+                        <textarea class="form-control" placeholder="write a comment..." rows="3" id="comment_text"></textarea>
+                        <p id="warning"></p>
                         <br>
-                        <button type="button" class="btn btn-info pull-right">Post</button>
+                        <button type="button" class="btn btn-info pull-right" onclick="postComment()">Post</button>
                         <div class="clearfix"></div>
                         <hr>
                         <ul class="media-list">
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">MartinoMont</strong>
-                                    <p>
-                                        Can I pay with Bitcoins? $$$ <a href="#">#financialfreedom  </a>.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">LaurenceCorreil</strong>
-                                    <p>
-                                        How long are you going to be there? I can join you after 8
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">JohnNida</strong>
-                                    <p>
-                                        Can I bring my friend? He is not in the system...
-                                    </p>
-                                </div>
-                            </li>
+                            @if (ViewBag.comments != null)
+        {
+
+                    @foreach (var comment in ViewBag.comments)
+{
+                    <li class="media">
+                        <a href="#" class="pull-left">
+                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                        </a>
+                        <div class="media-body">
+                            <span class="text-muted pull-right">
+                                <small class="text-muted">@Html.Raw(comment.Date)</small>
+                            </span>
+                            <strong class="text-success">@Html.Raw(comment.AuthorID)</strong>
+                            <p>
+                                @Html.Raw(comment.Body)
+                            </p>
+                        </div>
+                    </li>
+
+}
+
+}
+else
+{
+                    <li class="media">
+                        <p>No comments so far!</p>
+                    </li>
+}
                         </ul>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function postComment() {
+        if (!$('#comment_text').val()) {
+            $('#warning').html("<br/> <div class='alert alert-warning' role='alert'>You can not submit empty comment!</div>");
+            // alert("empty input");
+        } else {
+            $('#warning').html("");
+            var body = $('#comment_text').val();
+            var reservationId = @ViewBag.id;
+            $.ajax({
+                type: "post",
+                url: "/Home/createComment",
+                data: {
+                    msg: "success",
+                    body: body,
+                    reservationId: reservationId
+                },
+                dataType: "json",
+                success: function (msg) {
+                    window.location.href = "/Home/ReservationPage/?id=@ViewBag.id"
+
+                },
+                //why there is error????
+                error: function (msg) {
+                    //alert("fail")
+                    window.location.href = "/Home/ReservationPage/?id=@ViewBag.id"
+                }
+            })
+        }
+
+    }
+</script>

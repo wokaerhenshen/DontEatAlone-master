@@ -14,6 +14,8 @@ namespace DontEatAlone.Data
 
         [Key, Column(Order = 1)]
         public int ReservationID { get; set; }
+
+        public bool isHost { get; set; }
        
 
         public virtual User User {get;set;}

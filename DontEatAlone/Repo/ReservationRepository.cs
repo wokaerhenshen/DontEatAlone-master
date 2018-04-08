@@ -51,17 +51,48 @@ namespace DontEatAlone.Repo
 
         public string getLimitationByReservationId(int id)
         {
-            string sex = "Gender: " + _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Gender).FirstOrDefault();
-            string cuisineType = "Cussine Type: " + _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.CuisineType).FirstOrDefault();
-            string age = "Age "+_context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Age).FirstOrDefault();
-            string smoking = " Smoke: " + _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Smoking).FirstOrDefault();
-            string pets = " Pets: " + _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Pets).FirstOrDefault();
-            string languages = "Languages: " + _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Languages).FirstOrDefault();
-            string description = "Description: "+ _context.Reservation.Where(r => r.Id == id).Select(lm => lm.Limitations.Description).FirstOrDefault();
 
-            string limiations = sex + " " + cuisineType + " " + age + " " + smoking + " " + pets + " " + languages + " " + description;
+            Limitations limitations = _context.Limitations.Where(r => r.Id == id).FirstOrDefault();
 
-            return limiations;
+            string sex = "Gender: " + limitations.Gender + ".";
+            string cuisineType = "Cussine Type: " + limitations.CuisineType + ".";
+            string age = "Age "+limitations.Age + ".";
+            string smoking = "";
+            string pets = "";
+            string alcohol = "";
+            if (limitations.Smoking == true)
+            {
+                 smoking = " Smoking Allowed.";
+            }else
+            {
+                smoking = " Smoking Not Allowed.";
+            }
+
+            if (limitations.Pets == true)
+            {
+                pets = " Pets Allowed.";
+            }else
+            {
+                pets = " Pets Not Allowed.";
+            }
+            if (limitations.Alcohol == true)
+            {
+                alcohol = " Alcohol Allowed.";
+            }else
+            {
+                alcohol = " Alcohol Not Allowed.";
+            }
+
+
+
+            
+            
+            string languages = "Languages: " + limitations.Languages + ".";
+            string description = "Description: "+ limitations.Description + ".";
+
+            string thisLimiation = sex + " " + cuisineType + " " + age + " " + smoking + " " + pets + " " + alcohol +" " + languages + " " + description;
+
+            return thisLimiation;
         }
 
         public Limitations getLimitationByReservationId(int id, string reservationId) //second parameter just to let method override
@@ -157,6 +188,31 @@ namespace DontEatAlone.Repo
             _context.SaveChanges();
 
             return true;
+        }
+
+        public List<Comment> getCommentsByReservationId(int id)
+        {
+            return _context.Comment.Where(i => i.ReservationID == id).ToList();
+        }
+
+        public User getHostByReservationId(int id)
+        {
+            string userID = _context.UserReservation.Where(ur => ur.ReservationID == id && ur.isHost == true).Select(ui => ui.UserID).FirstOrDefault();
+            return _context.User.Where(ui => ui.Id == userID).FirstOrDefault();
+        }
+
+        public List<User> getParticipantByReservationId(int id)
+        {
+            List<string> usersID = _context.UserReservation.Where(ur => ur.ReservationID == id && ur.isHost == false).Select(ui => ui.UserID).ToList();
+            List<User> users = new List<User>();
+            foreach(var userID in usersID)
+            {
+                User user = _context.User.Where(ui => ui.Id == userID).FirstOrDefault();
+                users.Add(user);
+                
+
+            }
+            return users;
         }
 
         public bool placeIdExist(string placeId)

@@ -8,6 +8,7 @@ using DontEatAlone.Models;
 using DontEatAlone.Data;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DontEatAlone.Controllers
 {
@@ -88,11 +89,13 @@ namespace DontEatAlone.Controllers
             };
             rr.CreateReservation(reservation);
 
-            UserReservation userReservation = new UserReservation()
+            UserReservation userReservation = new UserReservation
             {
-                UserID = userID,
-                ReservationID = reservation.Id
+                UserID = reservation.UserId,
+                ReservationID = reservation.Id,
+                isHost = true
             };
+            _context.UserReservation.Add(userReservation);
             _context.SaveChanges();
 
             Limitations limitations = new Limitations()
@@ -113,6 +116,23 @@ namespace DontEatAlone.Controllers
             _context.SaveChanges();
 
 
+        }
+
+        
+        [HttpPost]
+        public void createComment(string msg, string body, string reservationId)
+        {
+            Comment comment = new Comment()
+            {
+                Id = _context.Comment.Select(i=> i.Id).Max() +1,
+                ReservationID = Int32.Parse(reservationId),
+                Body = body,
+                AuthorID = _context.User.Where(i=> i.Id == _userManager.GetUserId(User)).Select(fn=> fn.FirstName).FirstOrDefault(),
+                Date = DateTime.Now,
+                
+            };
+            _context.Comment.Add(comment);
+            _context.SaveChanges();
         }
 
         public IActionResult CreateReservation()
@@ -199,7 +219,11 @@ namespace DontEatAlone.Controllers
             ViewBag.name = rr.getLocationNameByReservationId(id);
             ViewBag.address = rr.getAddressByReservationId(id);
             ViewBag.limitations = rr.getLimitationByReservationId(id);
+            ViewBag.comments = rr.getCommentsByReservationId(id);
+            ViewBag.host = rr.getHostByReservationId(id);
+            ViewBag.participant = rr.getParticipantByReservationId(id);
             return View(reservation);
+
         }
 
         public IActionResult Error()
