@@ -10,6 +10,8 @@ namespace DontEatAlone.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+       //public string testProperty { get; set; }
+
        public virtual User User { get; set; }
        public virtual ICollection<Reservation> Reservations { get; set; }
     }

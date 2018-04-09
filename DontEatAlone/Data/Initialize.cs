@@ -358,8 +358,13 @@ namespace DontEatAlone.Data
 
                 var result = _userManager.CreateAsync(user, "Bcit123!");
 
+               
+
                 if (result.IsCompletedSuccessfully)
                 {
+
+                    _userManager.AddToRoleAsync(user, "Premium");
+
                     _context.User.Add(new User
                     {
                         Id = user.Id,
@@ -377,8 +382,13 @@ namespace DontEatAlone.Data
 
                 var resultTwo= _userManager.CreateAsync(userTwo, "Bcit123!");
 
+                
+
                 if (resultTwo.IsCompletedSuccessfully)
                 {
+
+                    _userManager.AddToRoleAsync(userTwo, "Regular");
+
                     _context.User.Add(new User
                     {
                         Id = userTwo.Id,

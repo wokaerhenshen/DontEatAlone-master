@@ -31,10 +31,9 @@ namespace DontEatAlone
                     var userManager = services.GetRequiredService<UserManager<Models.ApplicationUser>>();
                     IServiceProvider serviceProvider = services.GetRequiredService<IServiceProvider>();
 
+                    //It seems like I need to keep these two lines to ensure the creation of roles.
                     RoleRepo roleIni = new RoleRepo(context);
                     roleIni.CreateInitialRoles();
-
-                    Initialize initializer = new Initialize(context, userManager);
 
                     var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -50,6 +49,9 @@ namespace DontEatAlone
                             roleResult = RoleManager.CreateAsync(new IdentityRole(roleName));
                         }
                     }
+
+                    Initialize initializer = new Initialize(context, userManager);
+
                 }
                 catch (Exception ex)
                 {

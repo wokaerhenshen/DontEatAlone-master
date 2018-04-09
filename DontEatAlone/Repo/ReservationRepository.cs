@@ -215,6 +215,11 @@ namespace DontEatAlone.Repo
             return users;
         }
 
+        public List<Reservation> getReservationsByUserId(string userId)
+        {
+            return _context.Reservation.Where(ui => ui.UserId == userId).ToList();
+        }
+
         public bool placeIdExist(string placeId)
         {
           string name =  _context.Place.Where(i => i.Id == placeId).Select(place=> place.Name).FirstOrDefault();

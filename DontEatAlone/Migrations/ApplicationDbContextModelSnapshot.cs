@@ -138,10 +138,6 @@ namespace DontEatAlone.Migrations
 
                     b.Property<string>("LastName");
 
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<string>("UserType");
-
                     b.HasKey("Id");
 
                     b.ToTable("User");

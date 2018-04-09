@@ -32,6 +32,7 @@ namespace DontEatAlone.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IServiceProvider _serviceProvider;
         public ApplicationDbContext _context;
+        ReservationRepository rr;
 
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -54,6 +55,7 @@ namespace DontEatAlone.Controllers
             this._httpContextAccessor = httpContextAccessor;
             _serviceProvider = serviceProvider;
             _context = context;
+            this.rr = new ReservationRepository(context);
         }
 
         [TempData]
@@ -525,6 +527,62 @@ namespace DontEatAlone.Controllers
 
             return View(model);
         }
+
+        //get my reservation
+        [HttpGet]
+        public IActionResult MyReservation()
+        {
+            List<Reservation> reservations = rr.getReservationsByUserId(_userManager.GetUserId(User));
+
+            return View(reservations);
+        }
+
+        //delete one Reservation
+        [HttpGet]
+        public IActionResult DeleteReservation(int id)
+        {
+            IEnumerable<UserReservation> userReservations = _context.UserReservation.Where(ri => ri.ReservationID == id);
+            _context.UserReservation.RemoveRange(userReservations);
+            _context.SaveChanges();
+
+            Limitations limitations = _context.Limitations.Where(i => i.Id == id).FirstOrDefault();
+            _context.Limitations.Remove(limitations);
+            _context.SaveChanges();
+
+            IEnumerable<Comment> comments = _context.Comment.Where(ri => ri.ReservationID == id);
+            _context.Comment.RemoveRange(comments);
+            _context.SaveChanges();
+
+            Reservation reservation = _context.Reservation.Where(i => i.Id == id).FirstOrDefault();
+            _context.Reservation.Remove(reservation);
+            _context.SaveChanges();
+
+            return RedirectToAction("MyReservation");
+        }
+
+        [HttpGet]
+        public IActionResult UserDetail()
+        {
+            User user = _context.User.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault();
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult UserDetail(User editedUser)
+        {
+            User user = _context.User.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault();
+            user.Email = editedUser.Email;
+            user.FirstName = editedUser.FirstName;
+            user.LastName = editedUser.LastName;
+            user.Gender = editedUser.Gender;
+            user.DateOfBirth = editedUser.DateOfBirth;
+            _context.SaveChanges();
+
+            return RedirectToAction("UserDetail");
+
+        }
+
+
 
         #region Helpers
 
