@@ -19,6 +19,8 @@ namespace DontEatAlone.Views.Manage
 
         public static string MyReservations => "MyReservations";
 
+        public static string MyRequests => "MyRequests";
+
         public static string ExternalLogins => "ExternalLogins";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
@@ -30,6 +32,8 @@ namespace DontEatAlone.Views.Manage
         public static string UserDetailNavClass(ViewContext viewContext) => PageNavClass(viewContext, UserDetail);
 
         public static string MyReservationsNavClass(ViewContext viewContext) => PageNavClass(viewContext, MyReservations);
+
+        public static string MyRequestsNavClass(ViewContext viewContext) => PageNavClass(viewContext, MyRequests);
 
         public static string ExternalLoginsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExternalLogins);
 

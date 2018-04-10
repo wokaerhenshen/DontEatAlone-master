@@ -1,0 +1,83 @@
+﻿@model IEnumerable<DontEatAlone.Models.RequestManagementVM>
+
+@{
+    ViewData["Title"] = "ManageRequest";
+    Layout = "~/Views/Manage/_Layout.cshtml";
+}
+
+<h2>ManageRequest</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @if(item.Status == "pending")
+                {
+                    <button id="approve" type="button" class="btn btn-success" onclick="approveRequest('@item.UserId','@item.ReservationId')">Approve</button> 
+                    <button id="decline" type="button" class="btn btn-danger" onclick="declineRequest('@item.UserId','@item.ReservationId')">Decline</button>
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    function approveRequest(userId,reservationId) {
+        $.ajax({
+            type: "post",
+            url: "/Manage/ApproveRequest",
+            data: { userId: userId, reservationId: reservationId},
+            datatype: "json",
+            success: function (msg) {
+                alert("success")
+                window.location.href = "/Manage/ManageRequest/?id=" + reservationId
+            },
+            error: function (msg) {
+                alert("error")
+            }
+        })
+    }
+
+    function declineRequest(userId, reservationId) {
+        $.ajax({
+            type: "post",
+            url: "/Manage/DeclineRequest",
+            data: { userId: userId, reservationId: reservationId },
+            datatype: "json",
+            success: function (msg) {
+                alert("success")
+                window.location.href = "/Manage/ManageRequest/?id=" + reservationId
+            },
+            error: function (msg) {
+                alert("error")
+            }
+        })
+
+    }
+</script>

@@ -537,6 +537,13 @@ namespace DontEatAlone.Controllers
             return View(reservations);
         }
 
+        public IActionResult MyRequests()
+        {
+            List<RequestVM> requests = rr.GetRequestsByUserId(_userManager.GetUserId(User));
+
+            return View(requests);
+        }
+
         //delete one Reservation
         [HttpGet]
         public IActionResult DeleteReservation(int id)
@@ -580,6 +587,28 @@ namespace DontEatAlone.Controllers
 
             return RedirectToAction("UserDetail");
 
+        }
+
+        public IActionResult ManageRequest(int id)
+        {
+            IEnumerable<RequestManagementVM> requests = rr.GetAllRequestForManagement(id);
+            return View(requests);
+        }
+
+        public bool ApproveRequest(string userId, int reservationId)
+        {
+            UserReservation userReservation = _context.UserReservation.Where(i => i.UserID == userId && i.ReservationID == reservationId).FirstOrDefault();
+            userReservation.status = "approved";
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool DeclineRequest(string userId, int reservationId)
+        {
+            UserReservation userReservation = _context.UserReservation.Where(i => i.UserID == userId && i.ReservationID == reservationId).FirstOrDefault();
+            userReservation.status = "declined";
+            _context.SaveChanges();
+            return true;
         }
 
 

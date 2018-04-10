@@ -44,7 +44,8 @@ namespace DontEatAlone.Data
                 {
                     ReservationID = 1,
                     UserID = userTwo.Id,
-                    isHost = false
+                    isHost = false,
+                    status = "approved"
                 });
 
                 _context.UserReservation.Add(new UserReservation()
@@ -103,7 +104,8 @@ namespace DontEatAlone.Data
                     NumberOfPeople = 3,
                     DateStart = DateTime.Now,
                     DateEnd = DateTime.Now.AddHours(5),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Status = "open"
                 });
 
                 // _context.SaveChanges();

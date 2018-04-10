@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DontEatAlone.Models.RequestVM>
+
+@{
+    ViewData["Title"] = "MyRequests";
+    Layout = "~/Views/Manage/_Layout.cshtml";
+}
+
+<h2>MyRequests</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReservationTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReservationLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

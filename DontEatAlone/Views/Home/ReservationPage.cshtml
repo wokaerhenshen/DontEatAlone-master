@@ -1,9 +1,9 @@
 ﻿@model DontEatAlone.Data.Reservation;
+@using Microsoft.AspNetCore.Identity
 
 @{
     ViewData["Title"] = "Reservation Page";
 }
-
 <style>
     .comment-wrapper .panel-body {
         overflow: auto;
@@ -57,8 +57,12 @@
                         <th scope="row">Status</th>
                         <td>@Html.DisplayFor(model => model.Status)</td>
                     </tr>
+
                 </tbody>
+
             </table>
+            <br />
+            <button id="join" type="button" class="btn btn-success">Join Now!</button>
         </div>
         <div class="col-md-6">
             <h3>Map</h3>
@@ -82,25 +86,25 @@
                     </div>
                 </div>
                 @if (ViewBag.participant != null)
-    {
-            @foreach (var participant in ViewBag.participant)
-{
-            <div class="col-md-2" style="padding:5px;">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">@Html.Raw(participant.FirstName)</h4>
-                        <p class="card-text">@Html.Raw(participant.Email) </p>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
-                    </div>
-                </div>
-            </div>
+                {
+                    @foreach (var participant in ViewBag.participant)
+                    {
+                        <div class="col-md-2" style="padding:5px;">
+                            <div class="card" style="width: 20rem;">
+                                <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">@Html.Raw(participant.FirstName)</h4>
+                                    <p class="card-text">@Html.Raw(participant.Email) </p>
+                                </div>
+                                <div class="card-body">
+                                    <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
+                                </div>
+                            </div>
+                        </div>
 
-}
+                    }
 
-}
+                }
             </div>
 
         </div>
@@ -123,34 +127,34 @@
                         <hr>
                         <ul class="media-list">
                             @if (ViewBag.comments != null)
-        {
+                            {
 
-                    @foreach (var comment in ViewBag.comments)
-{
-                    <li class="media">
-                        <a href="#" class="pull-left">
-                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                        </a>
-                        <div class="media-body">
-                            <span class="text-muted pull-right">
-                                <small class="text-muted">@Html.Raw(comment.Date)</small>
-                            </span>
-                            <strong class="text-success">@Html.Raw(comment.AuthorID)</strong>
-                            <p>
-                                @Html.Raw(comment.Body)
-                            </p>
-                        </div>
-                    </li>
+                                @foreach (var comment in ViewBag.comments)
+                                {
+                                    <li class="media">
+                                        <a href="#" class="pull-left">
+                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                        </a>
+                                        <div class="media-body">
+                                            <span class="text-muted pull-right">
+                                                <small class="text-muted">@Html.Raw(comment.Date)</small>
+                                            </span>
+                                            <strong class="text-success">@Html.Raw(comment.AuthorID)</strong>
+                                            <p>
+                                                @Html.Raw(comment.Body)
+                                            </p>
+                                        </div>
+                                    </li>
 
-}
+                                }
 
-}
-else
-{
-                    <li class="media">
-                        <p>No comments so far!</p>
-                    </li>
-}
+                            }
+                            else
+                            {
+                                <li class="media">
+                                    <p>No comments so far!</p>
+                                </li>
+                            }
                         </ul>
 
                     </div>
@@ -179,16 +183,54 @@ else
                 },
                 dataType: "json",
                 success: function (msg) {
+                    alert("success");
                     window.location.href = "/Home/ReservationPage/?id=@ViewBag.id"
 
                 },
                 //why there is error????
                 error: function (msg) {
                     //alert("fail")
+                    alert("small fail");
                     window.location.href = "/Home/ReservationPage/?id=@ViewBag.id"
                 }
             })
         }
 
     }
+</script>
+
+<script type="text/javascript">
+    $('#join').click(function () {
+        console.log("i'm here");
+        console.log("@User.Identity.Name");
+        let userName = "@User.Identity.Name"
+		let id =  @ViewBag.id
+			$.ajax({
+				type: 'post',
+                url: '/Home/JoinReservation',
+                data: { id: id, name: userName },
+				datatype: "json",
+				success: function (msg) {
+                    if (msg == true) {
+                        alert("success")
+
+					}
+					else {
+
+                        alert("fail")
+					}
+				   // layer.msg('内容')
+					//alert('success')
+
+				   // window.location.href = "/Home/WishList"
+				},
+				error: function (msg) {
+					//弹窗，告知用户写入失败
+					//alert("评论内容写入失败");
+					alert("Fail !!!");
+				}
+
+			});
+
+	})
 </script>

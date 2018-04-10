@@ -203,7 +203,7 @@ namespace DontEatAlone.Repo
 
         public List<User> getParticipantByReservationId(int id)
         {
-            List<string> usersID = _context.UserReservation.Where(ur => ur.ReservationID == id && ur.isHost == false).Select(ui => ui.UserID).ToList();
+            List<string> usersID = _context.UserReservation.Where(ur => ur.ReservationID == id && ur.isHost == false && ur.status == "approved").Select(ui => ui.UserID).ToList();
             List<User> users = new List<User>();
             foreach(var userID in usersID)
             {
@@ -219,6 +219,35 @@ namespace DontEatAlone.Repo
         {
             return _context.Reservation.Where(ui => ui.UserId == userId).ToList();
         }
+
+        public List<RequestVM> GetRequestsByUserId(string userId)
+        {
+            IEnumerable<RequestVM> query = from r in _context.UserReservation
+                                    where (r.UserID == userId && r.isHost == false)
+                                    select new RequestVM
+                                    {
+                                        ReservationTitle = r.Reservation.Title,
+                                        ReservationLocation = r.Reservation.Place.Name,
+                                        status = r.status
+
+                                    };
+            return query.ToList();
+        }
+
+        public IEnumerable<RequestManagementVM> GetAllRequestForManagement(int id)
+        {
+            IEnumerable<RequestManagementVM> query = from r in _context.UserReservation
+                                                     where (r.ReservationID == id && r.isHost == false)
+                                                     select new RequestManagementVM
+                                                     {
+                                                         ReservationId = r.ReservationID,
+                                                         UserId = r.UserID,
+                                                         Email = r.User.Email,
+                                                         FirstName = r.User.FirstName,
+                                                         Status = r.status
+                                                     };
+            return query;
+        } 
 
         public bool placeIdExist(string placeId)
         {

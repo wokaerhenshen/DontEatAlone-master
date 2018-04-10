@@ -51,7 +51,7 @@ namespace DontEatAlone.Controllers
         }
 
         [HttpPost]
-        public void createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
+        public bool createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
            string sexString, string ageString,string cuisineType, bool smoke,bool pet,bool alcohol,string languages,string description)
         {
             // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
@@ -115,12 +115,12 @@ namespace DontEatAlone.Controllers
             _context.Limitations.Add(limitations);
             _context.SaveChanges();
 
-
+            return true;
         }
 
         
         [HttpPost]
-        public void createComment(string msg, string body, string reservationId)
+        public bool createComment(string msg, string body, string reservationId)
         {
             Comment comment = new Comment()
             {
@@ -133,6 +133,7 @@ namespace DontEatAlone.Controllers
             };
             _context.Comment.Add(comment);
             _context.SaveChanges();
+            return true;
         }
 
         public IActionResult CreateReservation()
@@ -182,7 +183,8 @@ namespace DontEatAlone.Controllers
                 NumberOfPeople = r.NumberOfPeople,
                 Status = r.Status,
                 LocationAddress = _context.Place.Where(p => p.Id == r.PlaceID).FirstOrDefault().Address,
-                AuthorName = _context.ApplicationUser.Where(au => au.Id == r.UserId).FirstOrDefault().UserName
+                // i change from applicaionUser to User
+                AuthorName = _context.User.Where(au => au.Id == r.UserId).FirstOrDefault().FirstName
             }).ToList();
 
             switch (sortBy)
@@ -225,6 +227,41 @@ namespace DontEatAlone.Controllers
             return View(reservation);
 
         }
+
+        public bool JoinReservation(int id, string name)
+        {
+            string userId = _context.ApplicationUser.Where(i => i.UserName == name).Select(i => i.Id).FirstOrDefault();
+            if (userId == _context.UserReservation.Where(i => i.ReservationID == id && i.isHost == true).Select(ui => ui.UserID).FirstOrDefault())
+            {
+                // host want to join himself
+                return false;
+            }
+
+            if (_context.UserReservation.Where(i => i.ReservationID == id && i.UserID == userId).FirstOrDefault() != null)
+            {
+                // One person want to join a reservation that is pending/approved/declined to him is not possible
+                return false;
+            }
+            //if ()
+            //{
+
+            //}
+
+            UserReservation userReservation = new UserReservation()
+            {
+                ReservationID = id,
+                UserID = userId,
+                isHost = false,
+                status = "pending"
+            };
+
+            _context.UserReservation.Add(userReservation);
+            _context.SaveChanges();
+            return true;
+
+        }
+
+        
 
         public IActionResult Error()
         {
