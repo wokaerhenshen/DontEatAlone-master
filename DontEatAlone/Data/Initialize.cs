@@ -372,7 +372,10 @@ namespace DontEatAlone.Data
                         Id = user.Id,
                         FirstName = "karl",
                         LastName  = "Xu",
-                        Email = user.Email
+                        Email = user.Email,
+                        DateOfBirth = "1994-04-10",
+                        Gender = "male"
+                        
 
 
                     });
@@ -396,7 +399,9 @@ namespace DontEatAlone.Data
                         Id = userTwo.Id,
                         FirstName = "Carolyn",
                         LastName = "Ho",
-                        Email = userTwo.Email
+                        Email = userTwo.Email,
+                        DateOfBirth = "1994-04-22",
+                        Gender = "female"
 
 
                     });

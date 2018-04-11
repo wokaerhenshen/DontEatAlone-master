@@ -244,7 +244,9 @@ namespace DontEatAlone.Repo
                                                          UserId = r.UserID,
                                                          Email = r.User.Email,
                                                          FirstName = r.User.FirstName,
-                                                         Status = r.status
+                                                         Status = r.status,
+                                                         Gender = r.User.Gender,
+                                                         BirthDay = r.User.DateOfBirth
                                                      };
             return query;
         } 

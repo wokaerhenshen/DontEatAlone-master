@@ -258,7 +258,9 @@ namespace DontEatAlone.Controllers
                         Id = user.Id,
                         Email = user.Email,
                         FirstName = model.FirstName,
-                        LastName = model.LastName
+                        LastName = model.LastName,
+                        DateOfBirth = model.BirthDay.ToShortDateString(),
+                        Gender = model.Gender
                     });
         
                     _context.SaveChanges();
