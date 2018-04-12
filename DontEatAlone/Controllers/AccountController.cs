@@ -256,11 +256,12 @@ namespace DontEatAlone.Controllers
                     _context.User.Add(new User
                     {
                         Id = user.Id,
-                        Email = user.Email,
+                        //Email = user.Email,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         DateOfBirth = model.BirthDay.ToShortDateString(),
-                        Gender = model.Gender
+                        Gender = model.Gender,
+                        profileImg = "none.jpg"
                     });
         
                     _context.SaveChanges();

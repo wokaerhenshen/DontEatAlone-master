@@ -71,14 +71,14 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h3>Members</h3>
+            <h3>Members</h3>@*//~/images/@Html.Raw(ViewBag.host.profileImg)*@
             <div class="row">
                 <div class="col-md-2" style="padding:5px;">
                     <div class="card" style="width: 20rem;">
-                        <img class="card-img-top" src="~/images/host_image.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="~/images/@Html.Raw(ViewBag.host.profileImg)" alt="Card image cap" style="width:150px ;height:184px"  >
                         <div class="card-body">
                             <h4 class="card-title">@Html.Raw(ViewBag.host.FirstName)</h4>
-                            <p class="card-text">@Html.Raw(ViewBag.host.Email)</p>
+                            
                         </div>
                         <div class="card-body">
                             <span class="badge badge-warning" style="background-color:red;">Host</span>
@@ -91,10 +91,10 @@
                     {
                         <div class="col-md-2" style="padding:5px;">
                             <div class="card" style="width: 20rem;">
-                                <img class="card-img-top" src="~/images/first_member.JPG" alt="Card image cap">
+                                <img class="card-img-top" src="~/images/@Html.Raw(participant.profileImg)" alt="Card image cap"style="width:150px ;height:184px"  >
                                 <div class="card-body">
                                     <h4 class="card-title">@Html.Raw(participant.FirstName)</h4>
-                                    <p class="card-text">@Html.Raw(participant.Email) </p>
+
                                 </div>
                                 <div class="card-body">
                                     <a href="#" class="badge badge-success" style="background-color:green;">Joined</a>
@@ -133,15 +133,15 @@
                                 {
                                     <li class="media">
                                         <a href="#" class="pull-left">
-                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                            <img src="~/images/@Html.Raw(comment.ProfileImg)" alt="" class="img-circle">
                                         </a>
                                         <div class="media-body">
                                             <span class="text-muted pull-right">
                                                 <small class="text-muted">@Html.Raw(comment.Date)</small>
                                             </span>
-                                            <strong class="text-success">@Html.Raw(comment.AuthorID)</strong>
+                                            <strong class="text-success">@Html.Raw(comment.AuthorName)</strong>
                                             <p>
-                                                @Html.Raw(comment.Body)
+                                                @Html.Raw(comment.Content)
                                             </p>
                                         </div>
                                     </li>

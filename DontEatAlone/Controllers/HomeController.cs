@@ -127,7 +127,8 @@ namespace DontEatAlone.Controllers
                 Id = _context.Comment.Select(i=> i.Id).Max() +1,
                 ReservationID = Int32.Parse(reservationId),
                 Body = body,
-                AuthorID = _context.User.Where(i=> i.Id == _userManager.GetUserId(User)).Select(fn=> fn.FirstName).FirstOrDefault(),
+                AuthorID = _userManager.GetUserId(User),
+                AuthorFirstName = _context.User.Where(i=> i.Id == _userManager.GetUserId(User)).Select(fn=> fn.FirstName).FirstOrDefault(),
                 Date = DateTime.Now,
                 
             };
@@ -242,6 +243,13 @@ namespace DontEatAlone.Controllers
                 // One person want to join a reservation that is pending/approved/declined to him is not possible
                 return false;
             }
+
+            if (rr.reservationFull(id))
+            {
+                return false;
+            }
+
+            
             //if ()
             //{
 

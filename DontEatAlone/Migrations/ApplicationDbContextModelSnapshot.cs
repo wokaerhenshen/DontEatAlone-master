@@ -23,6 +23,8 @@ namespace DontEatAlone.Migrations
                 {
                     b.Property<int>("Id");
 
+                    b.Property<string>("AuthorFirstName");
+
                     b.Property<string>("AuthorID");
 
                     b.Property<string>("Body");
@@ -130,13 +132,13 @@ namespace DontEatAlone.Migrations
 
                     b.Property<string>("DateOfBirth");
 
-                    b.Property<string>("Email");
-
                     b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
 
                     b.Property<string>("LastName");
+
+                    b.Property<string>("profileImg");
 
                     b.HasKey("Id");
 

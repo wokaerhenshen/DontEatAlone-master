@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Http;
 using DontEatAlone.Repo;
 using System.Web;
 using DontEatAlone.Data;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace DontEatAlone.Controllers
 {
@@ -33,6 +35,7 @@ namespace DontEatAlone.Controllers
         private IServiceProvider _serviceProvider;
         public ApplicationDbContext _context;
         ReservationRepository rr;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -45,7 +48,8 @@ namespace DontEatAlone.Controllers
           UrlEncoder urlEncoder,
           IServiceProvider serviceProvider,
           IHttpContextAccessor httpContextAccessor,
-          ApplicationDbContext context)
+          ApplicationDbContext context,
+          IHostingEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -56,6 +60,7 @@ namespace DontEatAlone.Controllers
             _serviceProvider = serviceProvider;
             _context = context;
             this.rr = new ReservationRepository(context);
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [TempData]
@@ -79,6 +84,8 @@ namespace DontEatAlone.Controllers
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
+
+            ViewBag.ProfileImg = _context.User.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault().profileImg; 
 
             return View(model);
         }
@@ -578,7 +585,7 @@ namespace DontEatAlone.Controllers
         public IActionResult UserDetail(User editedUser)
         {
             User user = _context.User.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault();
-            user.Email = editedUser.Email;
+            //user.Email = editedUser.Email;
             user.FirstName = editedUser.FirstName;
             user.LastName = editedUser.LastName;
             user.Gender = editedUser.Gender;
@@ -609,6 +616,34 @@ namespace DontEatAlone.Controllers
             userReservation.status = "declined";
             _context.SaveChanges();
             return true;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FileSave()
+        {
+            var files = Request.Form.Files;
+            string webRootPath = _hostingEnvironment.WebRootPath;
+
+            foreach (var file in files)
+            {
+                // to do save
+                //I will ask abou this :
+                //感谢分享，请问在第二种方法 ajax上传中，为何要随机生成一个新的文件名呢，用原来的不好吗？
+                string fileExt = Path.GetExtension(file.FileName); //文件扩展名，不含“.”
+                long fileSize = file.Length; //获得文件大小，以字节为单位
+                string fileName = file.FileName;
+                string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
+                var filePath = webRootPath + "\\images\\" + fileName;
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                _context.User.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault().profileImg = fileName;
+                _context.SaveChanges();
+
+            }
+
+            return Ok();
         }
 
 
