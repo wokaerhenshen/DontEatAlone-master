@@ -54,8 +54,8 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public bool createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
            string sexString, string ageString,string cuisineType, bool smoke,bool pet,bool alcohol,string languages,string description)
         {
@@ -79,7 +79,6 @@ namespace DontEatAlone.Controllers
                 _context.SaveChanges();
 
             }
-
 
             Reservation reservation = new Reservation()
             {
@@ -123,9 +122,8 @@ namespace DontEatAlone.Controllers
             return true;
         }
 
-        
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public bool createComment(string msg, string body, string reservationId)
         {
             Comment comment = new Comment()
