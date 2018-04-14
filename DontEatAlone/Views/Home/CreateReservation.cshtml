@@ -48,6 +48,11 @@
 
     function codeAddress() {
         var address = document.getElementById('address').value;
+        if (address == "") {
+            address = "bcit downtown";
+
+        };
+
         geocoder.geocode({
             'address': address
         }, function (results, status) {
@@ -227,7 +232,7 @@
     <div>
         <input class="form-control" id="address" placeholder="Restaurant Address" type="text" style="width:60%" />
         <br />
-        <button type="button" class="btn btn-primary" onclick="codeAddress()">Search for Location</button>
+        <button type="button" class="btn btn-primary" onclick="codeAddress()" >Search for Location</button>
         @*
             <input type="text" id="lat" />
             <input type="text" id="lng" />*@
