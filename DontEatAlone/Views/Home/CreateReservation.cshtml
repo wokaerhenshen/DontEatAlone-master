@@ -1,5 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@{ ViewData["Title"] = "CreateReservation"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+@{ ViewData["Title"] = "Create a Reservation"; Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 @*
     <style>
@@ -17,7 +17,6 @@
             margin-bottom: 25px;
         }
     </style>*@
-
 
 <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
 <!-- need to change this line in other places -->
@@ -108,7 +107,7 @@
         var alcohol
         var languages
         var description
-       
+
         var sexCheck = document.getElementsByName("sexRadios")
         for (var i = 0; i < sexCheck.length; i++) {
             if (sexCheck[i].checked == true) {
