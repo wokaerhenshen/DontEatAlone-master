@@ -14,6 +14,7 @@ using DontEatAlone.Models;
 using DontEatAlone.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 
 namespace DontEatAlone
 {
@@ -53,6 +54,7 @@ namespace DontEatAlone
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
 
             services.Configure<MvcOptions>(options =>
             {
@@ -94,7 +96,12 @@ namespace DontEatAlone
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+
+
             });
+
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             services.AddMvc();
             services.Configure<AuthMessageSenderOptions>(Configuration);
@@ -103,6 +110,7 @@ namespace DontEatAlone
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
+
 
             if (env.IsDevelopment())
             {
@@ -126,6 +134,9 @@ namespace DontEatAlone
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
+
         }
     }
 }

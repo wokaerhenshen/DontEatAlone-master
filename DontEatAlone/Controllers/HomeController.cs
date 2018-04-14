@@ -9,6 +9,7 @@ using DontEatAlone.Data;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Stripe;
 
 namespace DontEatAlone.Controllers
 {
@@ -276,6 +277,7 @@ namespace DontEatAlone.Controllers
             return true;
 
         }
+
 
 
         public IActionResult Error()
