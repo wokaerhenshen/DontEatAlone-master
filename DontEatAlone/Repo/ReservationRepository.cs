@@ -128,7 +128,7 @@ namespace DontEatAlone.Repo
                         (limitations.Gender == null || rLimititions.Gender.Equals(limitations.Gender, StringComparison.InvariantCultureIgnoreCase)) &&
                         (limitations.Languages == null || rLimititions.Languages.Equals(limitations.Languages, StringComparison.InvariantCultureIgnoreCase)) &&
                         (limitations.CuisineType == null || limitations.CuisineType.Equals(rLimititions.CuisineType, StringComparison.InvariantCultureIgnoreCase)) &&
-                        (limitations.Age == null || limitations.Age.Equals(rLimititions.Age, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (limitations.Age == null || limitations.Age.ToLower() == "all" || limitations.Age.Equals(rLimititions.Age, StringComparison.InvariantCultureIgnoreCase)) &&
                         (limitations.Pets == false || limitations.Pets == rLimititions.Pets) &&
                         (limitations.Alcohol == false || limitations.Alcohol == rLimititions.Alcohol) &&
                         (limitations.Smoking == false || limitations.Smoking == rLimititions.Smoking) 

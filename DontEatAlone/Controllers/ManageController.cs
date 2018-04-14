@@ -642,6 +642,7 @@ namespace DontEatAlone.Controllers
 
             await FinishSignUp();
             return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> FileSave()
