@@ -17,8 +17,10 @@ using Microsoft.AspNetCore.Http;
 using DontEatAlone.Repo;
 using System.Web;
 using DontEatAlone.Data;
+using Stripe;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+
 
 namespace DontEatAlone.Controllers
 {
@@ -618,6 +620,30 @@ namespace DontEatAlone.Controllers
             return true;
         }
 
+
+        public async Task<IActionResult> Charge(string stripeEmail, string stripeToken)
+        {
+            var customers = new StripeCustomerService();
+            var charges = new StripeChargeService();
+
+            var customer = customers.Create(new StripeCustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new StripeChargeCreateOptions
+            {
+                Amount = 500,
+                Description = "Don't Eat Alone Premium Subscription",
+                Currency = "CAD",
+                CustomerId = customer.Id
+            });
+
+            await FinishSignUp();
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> FileSave()
         {
@@ -644,6 +670,7 @@ namespace DontEatAlone.Controllers
             }
 
             return Ok();
+
         }
 
 

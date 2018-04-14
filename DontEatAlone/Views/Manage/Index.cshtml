@@ -1,7 +1,8 @@
 ﻿@using DontEatAlone.Models.ManageViewModels
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model DontEatAlone.Models.ManageViewModels.IndexViewModel
-
+@using Microsoft.Extensions.Options
+@inject IOptions<StripeSettings> Stripe
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -28,22 +29,27 @@
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 <div class="row">
     <div class="col-md-6">
-        <div>Status</div>
-        @{ // if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
+        <p class="text-danger">Status:</p>
+        @*if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())*@
+        @{
             if (User.IsInRole("Premium"))
             {
 
-                <div>Prime User</div>
-                <button onclick="window.location.href='/Manage/SignDown'" class="btn btn-danger">Drop Premium!</button>
-            }
-            else if (User.IsInRole("Regular"))
-            {
-                <div>Regular User</div>
-                <button onclick="window.location.href='/Manage/SignUp'" class="btn btn-success">Become Premium!</button>
-            }
-            else if (User.IsInRole("Admin"))
-            {
-                <div>You are an Admin User, with Premium Abilities</div>
+                if (User.IsInRole("Premium"))
+                {
+                    <p class="text-primary">Premium User</p>
+                    <button onclick="window.location.href='/Manage/SignDown'" class="btn btn-danger">Drop Premium!</button>
+                }
+                else if (User.IsInRole("Regular"))
+                {
+                    <p class="text-primary">Regular User</p>
+                    <button onclick="window.location.href='/Manage/SignUp'" class="btn btn-success">Become Premium!</button>
+
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <p class="text-primary">You are an Admin User, with Premium Priveleges</p>
+                }
             }
         }
 
@@ -71,13 +77,21 @@
                 @Html.Raw(ViewBag.email)
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
             <button type="submit" class="btn btn-default">Save</button>
         </form>
     </div>
     <div class="col-md-4 col-lg-4 " align="center"> <img alt="User Pic" src="~/images/@Html.Raw(ViewBag.ProfileImg)" class=" img-responsive" style="width:180px;height:260px"> </div>
     <div class="col-md-4 col-lg-4" style="margin-left:40px;">
         <form id="uploadForm">
-            Change Profile Img： <input type="file" name="file" id="my_upload_img"  />
+            <p>Change Profile Picture：</p>
+            <input type="file" name="file" id="my_upload_img" />
             <br />
             <input type="button" value="Upload" onclick="doUpload()" />
         </form>
@@ -85,10 +99,7 @@
 </div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
-
-
+    @await Html.PartialAsync("_ValidationScriptsPartial")}
 
 <script>
     function doUpload() {

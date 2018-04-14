@@ -1,11 +1,11 @@
 ﻿@model DontEatAlone.Data.User
 
 @{
-    ViewData["Title"] = "UserDetail";
+    ViewData["Title"] = "User Details";
     Layout = "~/Views/Manage/_Layout.cshtml";
 }
 
-<h2>UserDetail</h2>
+<h2>User Details</h2>
 
 <hr />
 <div class="row">
@@ -34,7 +34,7 @@
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOfBirth" class="control-label"></label>
+                <label asp-for="DateOfBirth" class="control-label">Date of Birth</label>
                 <input asp-for="DateOfBirth" class="form-control" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>

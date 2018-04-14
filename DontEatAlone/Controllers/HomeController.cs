@@ -9,6 +9,7 @@ using DontEatAlone.Data;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Stripe;
 
 namespace DontEatAlone.Controllers
 {
@@ -25,11 +26,13 @@ namespace DontEatAlone.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult APIDocs()
         {
             ViewData["Title"] = "Public API";
@@ -38,11 +41,13 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -50,6 +55,7 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public bool createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
            string sexString, string ageString,string cuisineType, bool smoke,bool pet,bool alcohol,string languages,string description)
@@ -74,7 +80,6 @@ namespace DontEatAlone.Controllers
                 _context.SaveChanges();
 
             }
-
 
             Reservation reservation = new Reservation()
             {
@@ -118,7 +123,7 @@ namespace DontEatAlone.Controllers
             return true;
         }
 
-        
+        [Authorize]
         [HttpPost]
         public bool createComment(string msg, string body, string reservationId)
         {
@@ -137,12 +142,14 @@ namespace DontEatAlone.Controllers
             return true;
         }
 
+        [Authorize]
         public IActionResult CreateReservation()
         {
             // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             return View();
         }
 
+        [Authorize]
         public IActionResult ViewReservations(Limitations limitations, string sortBy)
         {
             ViewBag.partySizeSort = sortBy == "party_size" ? "party_size_desc" : "party_size";
@@ -215,6 +222,7 @@ namespace DontEatAlone.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult ReservationPage(int id)
         {
             Reservation reservation = rr.GetReservation(id);
@@ -229,6 +237,7 @@ namespace DontEatAlone.Controllers
 
         }
 
+        [Authorize]
         public bool JoinReservation(int id, string name)
         {
             string userId = _context.ApplicationUser.Where(i => i.UserName == name).Select(i => i.Id).FirstOrDefault();
@@ -269,7 +278,7 @@ namespace DontEatAlone.Controllers
 
         }
 
-        
+
 
         public IActionResult Error()
         {

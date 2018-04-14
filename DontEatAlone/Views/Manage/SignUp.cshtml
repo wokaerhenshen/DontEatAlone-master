@@ -3,11 +3,80 @@
     ViewData["Title"] = "SignUp";
 }
 
-<h2>SignUp</h2>
+@using Microsoft.Extensions.Options
+@inject IOptions<StripeSettings> Stripe
 
-<form asp-controller="Manage" asp-action="FinishSignUp" method="get">
-    <!-- Input and Submit elements -->
-   
-    <input type="submit" value="Sign Up!" class="btn btn-primary" />
+<h1>Sign Up For Premium With Us and Never Eat Alone Again!</h1>
+
+<h2>Check out the amazing benefits you get for upgrading!</h2>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Regular Users</th>
+                <th>Premium Benefits</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Profile</td>
+                <td>&#x2714;</td>
+                <td>&#x2714;</td>
+            </tr>
+            <tr>
+                <td>Meal History</td>
+                <td>&#x2714;</td>
+                <td>&#x2714;</td>
+
+            </tr>
+            <tr>
+                <td>Statistics</td>
+                <td>&#x2714;</td>
+                <td>&#x2714;</td>
+
+            </tr>
+            <tr>
+                <td>Promoted Check-Ins</td>
+                <td>&#x2715;</td>
+                <td>&#x2714;</td>
+
+            </tr>
+            <tr>
+                <td>Advanced Filters</td>
+                <td>&#x2715;</td>
+                <td>&#x2714;</td>
+            </tr>
+            <tr>
+                <td>Additional Visibility For Postings</td>
+                <td>&#x2715;</td>
+                <td>&#x2714;</td>
+            </tr>
+            <tr>
+                <td>Check Other Users Attendance Rate </td>
+                <td>&#x2715;</td>
+                <td>&#x2714;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form action="/Manage/Charge" method="POST">
+    <article>
+        <label>Amount: $5.00</label>
+    </article>
+    <script src="//checkout.stripe.com/v2/checkout.js"
+            class="stripe-button"
+            data-key="@Stripe.Value.PublishableKey"
+            data-locale="auto"
+            data-description="Sample Charge"
+            data-amount="500">
+    </script>
 </form>
 
+@*
+<form asp-controller="Manage" asp-action="FinishSignUp" method="get">
+
+    <input type="submit" value="Sign Up!" class="btn btn-primary" />
+</form>
+*@
