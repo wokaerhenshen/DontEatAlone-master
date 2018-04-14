@@ -9,6 +9,7 @@ using DontEatAlone.Data;
 using DontEatAlone.Repo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Stripe;
 
 namespace DontEatAlone.Controllers
 {
@@ -261,7 +262,28 @@ namespace DontEatAlone.Controllers
 
         }
 
-        
+        public IActionResult Charge(string stripeEmail, string stripeToken)
+        {
+            var customers = new StripeCustomerService();
+            var charges = new StripeChargeService();
+
+            var customer = customers.Create(new StripeCustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new StripeChargeCreateOptions
+            {
+                Amount = 5,
+                Description = "Sample Charge",
+                Currency = "CAD",
+                CustomerId = customer.Id
+            });
+
+            return View();
+        }
+
 
         public IActionResult Error()
         {
