@@ -2,78 +2,90 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="row" id="box-search">
-        <div class="thumbnail text-center" style="border: none">
-            <img src="~/images/icon-donteatalone-01.png" alt="Sample Photo" class="img-responsive" />
-        </div>
-        <div class="main-message">
-            <p align=center style='text-align:center'>
-                <strong>
-                    Lonely?
-                </strong>
-            </p>
 
-            <p align=center style='text-align:center'>
-                <span style='font-size:16.0pt;line-height:107%'>
-                    Many Vancouverites know how you feel.
-                </span>
-            </p>
-            <p></p>
+<style>
+    img {
+        border: none;
+    }
 
-            <p>
-                <span style='font-size:12.0pt;line-height:107%'>
-                    In Vancouver, 30% of young people report that they experience loneliness &quot;almost always&quot; or &quot;often.&quot;
-                    But if you're looking for a friend instead of a date, it can be hard to meet others in the city.
-                    And with your city's rich culinary options to explore, maybe it's time you <strong>Don't Eat Alone</strong>.
-                </span>
-            </p>
-            <p></p>
+    div.centerMessage {
+        /*style*/
+        padding: 10px;
+        background: rgb(34,34,34); /* for IE */
+        background: rgba(34,34,34,0.75);
+        font-size: 18px;
+        color: ghostwhite;
+        text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
+        /*positioning*/
+        position: center;
+    }
 
-            <p>
-                <span style='font-size:12.0pt;line-height:107%'>
-                    <strong>Don't Eat Alone</strong>
-                    here to help you meet someone new and grab a bite. If you're the only one in your friend group who's interested in trying
-                    that new Moroccan restaurant, if you're in town on business and would like meet someone for dinner,
-                    if you're just looking for a break from takeout and someone to join you
-                    <strong>
-                        Don't Eat Alone
-                    </strong>
-                    is the way to meet people and explore the culinary scene.
-                </span>
-            </p>
+    div.image-container {
+        display: flex;
+        justify-content: center;
+    }
 
-            <table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0 style='margin: 0px auto; border-collapse:collapse;border:none;'>
+    #enter-site {
+        margin: auto;
+        display: block;
+        font-size: 25px;
+    }
+</style>
+
+<div class="container">
+    <div class="image-container">
+        <img src="~/images/icon-donteatalone-01.png" alt="Sample Photo" class="img-responsive" />
+    </div>
+
+    <br />
+
+    <input type="button" id="enter-site" class="btn" value="Find Your Dinner Friends" onclick="location.href='@Url.Action("ViewReservations")'" />
+
+    <br />
+    <br />
+
+    <div class="centerMessage">
+        <p class="text-center">
+            <strong>
+                Lonely?
+            </strong>
+        </p>
+
+        <p class="text-center">Many Vancouverites know how you feel.</p>
+
+        <p>
+            In Vancouver, 30% of young people report that they experience loneliness &quot;almost always&quot; or &quot;often.&quot;
+            But if you're looking for a friend instead of a date, it can be hard to meet others in the city.
+            And with your city's rich culinary options to explore, maybe it's time you <strong>Don't Eat Alone</strong>.
+        </p>
+
+        <p>
+            <strong>Don't Eat Alone</strong>
+            here to help you meet someone new and grab a bite. If you're the only one in your friend group who's interested in trying
+            that new Moroccan restaurant, if you're in town on business and would like meet someone for dinner,
+            if you're just looking for a break from takeout and someone to join you
+            <strong>
+                Don't Eat Alone
+            </strong>
+            is the way to meet people and explore the culinary scene.
+        </p>
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td width=312 valign=top style='width:233.75pt;padding:0cm 5.4pt 0cm 5.4pt'>
-                        <p style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
-                            <span style='font-size:12.0pt'>
-                                Create Reservations
-                            </span>
-                            <span style='font-size:12.0pt'>
-                                for a restaurant you want to try, a special event you want to celebrate, a neighbourhood you've never been to.
-                                <o:p></o:p>
-                            </span>
-                        </p>
-                        <p></p>
-                    </td>
-                    <td width=312 valign=top style='width:233.75pt;padding:0cm 5.4pt 0cm 5.4pt'>
-                        <p style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>
-                            <span style='font-size:12.0pt'>
-                                Join Reservations
-                            </span>
-                            <span style='font-size:12.0pt'>
-                                at your favourite restaurant, for your favourite cuisine, with someone new who shares your interests.
-                            </span>
-                        </p>
-                    </td>
+                    <th>Create a Reservation</th>
+                    <th>Join a Reservation</th>
                 </tr>
-            </table>
-            <p align=center style='text-align:center'>
-                <span style='font-size:14.0pt; line-height:108%'>
-                    And Don't Eat Alone!
-                </span>
-            </p>
-        </div>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>a restaurant you want to try, a special event you want to celebrate, a neighbourhood you've never been to</td>
+                    <td>at your favourite restaurant, for your favourite cuisine, with someone new who shares your interests</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-center">
+            <strong>And Don't Eat Alone!</strong>
+        </p>
     </div>
 </div>

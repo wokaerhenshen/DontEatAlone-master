@@ -15,6 +15,7 @@ namespace DontEatAlone.Data
         public int ReservationID { get; set; }
         public string Body { get; set; }
         public string AuthorID { get; set; }
+        public string AuthorFirstName { get; set; }
         public DateTime Date { get; set; }
         
         public virtual Reservation Reservation { get; set; }

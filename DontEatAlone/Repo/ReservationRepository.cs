@@ -190,9 +190,18 @@ namespace DontEatAlone.Repo
             return true;
         }
 
-        public List<Comment> getCommentsByReservationId(int id)
+        public List<CommentVM> getCommentsByReservationId(int id)
         {
-            return _context.Comment.Where(i => i.ReservationID == id).ToList();
+            List<Comment> comments = _context.Comment.Where(i => i.ReservationID == id).ToList();
+            IEnumerable<CommentVM> commentVM = from c in comments
+                                        select new CommentVM
+                                        {
+                                            AuthorName = c.AuthorFirstName,
+                                            Date = c.Date,
+                                            Content = c.Body,
+                                            ProfileImg = _context.User.Where(i => i.Id == c.AuthorID).Select(i => i.profileImg).FirstOrDefault()
+                                        };
+            return commentVM.ToList();
         }
 
         public User getHostByReservationId(int id)
@@ -242,9 +251,11 @@ namespace DontEatAlone.Repo
                                                      {
                                                          ReservationId = r.ReservationID,
                                                          UserId = r.UserID,
-                                                         Email = r.User.Email,
+                                                         Email = r.User.ApplicationUser.Email,
                                                          FirstName = r.User.FirstName,
-                                                         Status = r.status
+                                                         Status = r.status,
+                                                         Gender = r.User.Gender,
+                                                         BirthDay = r.User.DateOfBirth
                                                      };
             return query;
         } 
@@ -259,6 +270,17 @@ namespace DontEatAlone.Repo
             {
                 return false;
             }
+        }
+
+        public bool reservationFull(int id)
+        {
+            int maxPeople = _context.Reservation.Where(i => i.Id == id).Select(i => i.NumberOfPeople).FirstOrDefault();
+            int currentPeople = _context.UserReservation.Where(i => i.ReservationID == id && i.status == "approved").Count();
+            if (currentPeople < maxPeople -1)
+            {
+                return false;
+            }
+            else return true;
         }
     }
 }

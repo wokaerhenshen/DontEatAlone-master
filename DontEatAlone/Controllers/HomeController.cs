@@ -26,11 +26,13 @@ namespace DontEatAlone.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult APIDocs()
         {
             ViewData["Title"] = "Public API";
@@ -39,11 +41,13 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -51,6 +55,7 @@ namespace DontEatAlone.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public bool createReservation(string title,string placeId, string placeName, string placeAddress,string placeLat,string placeLng,  string date, string startTime, string endTime, string numberPeople,
            string sexString, string ageString,string cuisineType, bool smoke,bool pet,bool alcohol,string languages,string description)
@@ -75,7 +80,6 @@ namespace DontEatAlone.Controllers
                 _context.SaveChanges();
 
             }
-
 
             Reservation reservation = new Reservation()
             {
@@ -119,7 +123,7 @@ namespace DontEatAlone.Controllers
             return true;
         }
 
-        
+        [Authorize]
         [HttpPost]
         public bool createComment(string msg, string body, string reservationId)
         {
@@ -128,7 +132,8 @@ namespace DontEatAlone.Controllers
                 Id = _context.Comment.Select(i=> i.Id).Max() +1,
                 ReservationID = Int32.Parse(reservationId),
                 Body = body,
-                AuthorID = _context.User.Where(i=> i.Id == _userManager.GetUserId(User)).Select(fn=> fn.FirstName).FirstOrDefault(),
+                AuthorID = _userManager.GetUserId(User),
+                AuthorFirstName = _context.User.Where(i=> i.Id == _userManager.GetUserId(User)).Select(fn=> fn.FirstName).FirstOrDefault(),
                 Date = DateTime.Now,
                 
             };
@@ -137,12 +142,14 @@ namespace DontEatAlone.Controllers
             return true;
         }
 
+        [Authorize]
         public IActionResult CreateReservation()
         {
             // ViewData["UserType"] = Request.Cookies["UserType"] ?? "regular";
             return View();
         }
 
+        [Authorize]
         public IActionResult ViewReservations(Limitations limitations, string sortBy)
         {
             ViewBag.partySizeSort = sortBy == "party_size" ? "party_size_desc" : "party_size";
@@ -215,6 +222,7 @@ namespace DontEatAlone.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult ReservationPage(int id)
         {
             Reservation reservation = rr.GetReservation(id);
@@ -229,6 +237,7 @@ namespace DontEatAlone.Controllers
 
         }
 
+        [Authorize]
         public bool JoinReservation(int id, string name)
         {
             string userId = _context.ApplicationUser.Where(i => i.UserName == name).Select(i => i.Id).FirstOrDefault();
@@ -243,6 +252,13 @@ namespace DontEatAlone.Controllers
                 // One person want to join a reservation that is pending/approved/declined to him is not possible
                 return false;
             }
+
+            if (rr.reservationFull(id))
+            {
+                return false;
+            }
+
+            
             //if ()
             //{
 
@@ -262,27 +278,6 @@ namespace DontEatAlone.Controllers
 
         }
 
-        public IActionResult Charge(string stripeEmail, string stripeToken)
-        {
-            var customers = new StripeCustomerService();
-            var charges = new StripeChargeService();
-
-            var customer = customers.Create(new StripeCustomerCreateOptions
-            {
-                Email = stripeEmail,
-                SourceToken = stripeToken
-            });
-
-            var charge = charges.Create(new StripeChargeCreateOptions
-            {
-                Amount = 5,
-                Description = "Sample Charge",
-                Currency = "CAD",
-                CustomerId = customer.Id
-            });
-
-            return View();
-        }
 
 
         public IActionResult Error()

@@ -202,7 +202,7 @@ namespace DontEatAlone.Data
                 _context.Limitations.Add(new Limitations
                 {
                     Id = 3,
-                    Gender = "man",
+                    Gender = "male",
                     CuisineType = "Chinese",
                     Age = "18-34",
                     Smoking = true,
@@ -215,7 +215,7 @@ namespace DontEatAlone.Data
                 _context.Limitations.Add(new Limitations
                 {
                     Id = 4,
-                    Gender = "man",
+                    Gender = "male",
                     CuisineType = "Chinese",
                     Age = "18-34",
                     Smoking = true,
@@ -228,7 +228,7 @@ namespace DontEatAlone.Data
                 _context.Limitations.Add(new Limitations
                 {
                     Id = 5,
-                    Gender = "man",
+                    Gender = "male",
                     CuisineType = "Chinese",
                     Age = "18-34",
                     Smoking = true,
@@ -241,7 +241,7 @@ namespace DontEatAlone.Data
                 _context.Limitations.Add(new Limitations
                 {
                     Id = 6,
-                    Gender = "man",
+                    Gender = "male",
                     CuisineType = "Chinese",
                     Age = "18-34",
                     Smoking = true,
@@ -258,7 +258,8 @@ namespace DontEatAlone.Data
                     ReservationID = 1,
                     Id = 1,
                     Body = "very nice man!",
-                    AuthorID = user.FirstName,
+                    AuthorID = user.Id,
+                    AuthorFirstName = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -269,7 +270,8 @@ namespace DontEatAlone.Data
                     ReservationID = 1,
                     Id = 2,
                     Body = "very good man!",
-                    AuthorID = user.FirstName,
+                    AuthorID = user.Id,
+                    AuthorFirstName = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -281,7 +283,8 @@ namespace DontEatAlone.Data
                     ReservationID = 2,
                     Id = 3,
                     Body = "very beautiful lady!",
-                    AuthorID = user.FirstName,
+                    AuthorID = user.Id,
+                    AuthorFirstName = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -292,7 +295,8 @@ namespace DontEatAlone.Data
                     ReservationID = 2,
                     Id = 4,
                     Body = "like her so much!",
-                    AuthorID = user.FirstName,
+                    AuthorID = user.Id,
+                    AuthorFirstName = user.FirstName,
                     Date = DateTime.Now
 
                 });
@@ -372,7 +376,11 @@ namespace DontEatAlone.Data
                         Id = user.Id,
                         FirstName = "karl",
                         LastName  = "Xu",
-                        Email = user.Email
+                        
+                        DateOfBirth = "1994-04-10",
+                        Gender = "male",
+                        profileImg = "karl.jpg"
+                        
 
 
                     });
@@ -396,7 +404,10 @@ namespace DontEatAlone.Data
                         Id = userTwo.Id,
                         FirstName = "Carolyn",
                         LastName = "Ho",
-                        Email = userTwo.Email
+
+                        DateOfBirth = "1994-04-22",
+                        Gender = "female",
+                        profileImg = "carolyn.jpg"
 
 
                     });

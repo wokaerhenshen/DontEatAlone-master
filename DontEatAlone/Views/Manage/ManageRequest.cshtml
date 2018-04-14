@@ -10,11 +10,18 @@
 <table class="table">
     <thead>
         <tr>
+
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BirthDay)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
@@ -25,11 +32,18 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDay)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
@@ -42,17 +56,17 @@
                 }
 
             </td>
+
         </tr>
 }
     </tbody>
 </table>
-
 <script>
-    function approveRequest(userId,reservationId) {
+    function approveRequest(userId, reservationId) {
         $.ajax({
             type: "post",
             url: "/Manage/ApproveRequest",
-            data: { userId: userId, reservationId: reservationId},
+            data: { userId: userId, reservationId: reservationId },
             datatype: "json",
             success: function (msg) {
                 alert("success")
