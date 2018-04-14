@@ -30,28 +30,27 @@
 <div class="row">
     <div class="col-md-6">
         <div>Status</div>
-        @{ // if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())
-
-        if (User.IsInRole("Premium"))
-        {
-
+        @*if (HttpContextAccessor.HttpContext.Request.Cookies.Where(cookie => cookie.Key == "DonotEatAlone").Any())*@
+        @{
             if (User.IsInRole("Premium"))
             {
 
+                if (User.IsInRole("Premium"))
+                {
+                    <div>Prime User</div>
+                    <button onclick="window.location.href='/Manage/SignDown'" class="btn btn-danger">Drop Premium!</button>
+                }
+                else if (User.IsInRole("Regular"))
+                {
+                    <div>Regular User</div>
+                    <button onclick="window.location.href='/Manage/SignUp'" class="btn btn-success">Become Premium!</button>
 
-            <div>Prime User</div>
-            <button onclick="window.location.href='/Manage/SignDown'" class="btn btn-danger">Drop Premium!</button>
-    }
-    else if (User.IsInRole("Regular"))
-    {
-        <div>Regular User</div>
-        <button onclick="window.location.href='/Manage/SignUp'" class="btn btn-success">Become Premium!</button>
-
-}
-else if (User.IsInRole("Admin"))
-{
-    <div>You are an Admin User, with Premium Abilities</div>
-}
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <div>You are an Admin User, with Premium Abilities</div>
+                }
+            }
         }
 
         <form method="post">
@@ -64,17 +63,17 @@ else if (User.IsInRole("Admin"))
             <div class="form-group">
                 <label asp-for="Email"></label>
                 @if (Model.IsEmailConfirmed)
-            {
-                <div class="input-group">
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
                     <input asp-for="Email" class="form-control" />
-                    <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
-                </div>
-        }
-        else
-        {
-            <input asp-for="Email" class="form-control" />
-            <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-    }
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                }
                 @Html.Raw(ViewBag.email)
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
@@ -85,9 +84,9 @@ else if (User.IsInRole("Admin"))
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" placeholder="6520 Clematis Drive" />
-            </div>*@
+                    <label asp-for="Address"></label>
+                    <input asp-for="Address" class="form-control" placeholder="6520 Clematis Drive" />
+                </div>*@
             <div class="form-group">
                 <label asp-for="DateOfBirth"></label><br />
                 <input id="date" type="date" value="2017-06-01">
@@ -99,7 +98,7 @@ else if (User.IsInRole("Admin"))
     <div class="col-md-4 col-lg-4 " align="center"> <img alt="User Pic" src="~/images/@Html.Raw(ViewBag.ProfileImg)" class=" img-responsive" style="width:180px;height:260px"> </div>
     <div class="col-md-4 col-lg-4" style="margin-left:40px;">
         <form id="uploadForm">
-            Change Profile Img： <input type="file" name="file" id="my_upload_img"  />
+            Change Profile Img： <input type="file" name="file" id="my_upload_img" />
             <br />
             <input type="button" value="Upload" onclick="doUpload()" />
         </form>
@@ -107,10 +106,7 @@ else if (User.IsInRole("Admin"))
 </div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
-
-
+    @await Html.PartialAsync("_ValidationScriptsPartial")}
 
 <script>
     function doUpload() {
