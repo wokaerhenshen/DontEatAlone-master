@@ -155,6 +155,9 @@ namespace DontEatAlone.Controllers
             ViewBag.partySizeSort = sortBy == "party_size" ? "party_size_desc" : "party_size";
             ViewBag.DateSort = sortBy == "date" ? "date_desc" : "date";
 
+            //if (limitations )
+
+
             List <Place> places = _context.Place.Select(p => new Place
             {
                 Id = p.Id,
