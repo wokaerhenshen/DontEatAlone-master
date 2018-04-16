@@ -1,5 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@{ ViewData["Title"] = "Create a Reservation"; Layout = "~/Views/Shared/_Layout.cshtml"; }
+@{ ViewData["Title"] = "Create a Reservation"; Layout = "~/Views/Shared/_Layout.cshtml";}
 
 @*
     <style>
@@ -221,9 +221,9 @@
     //}
 </script>
 
-
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
 <div class="container">
-    <h2>Create Reservation</h2>
     <br />
     <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
     <br />
@@ -231,7 +231,7 @@
     <div>
         <input class="form-control" id="address" placeholder="Restaurant Address" type="text" style="width:60%" />
         <br />
-        <button type="button" class="btn btn-primary" onclick="codeAddress()" >Search for Location</button>
+        <button type="button" class="btn btn-primary" onclick="codeAddress()">Search for Location</button>
         @*
             <input type="text" id="lat" />
             <input type="text" id="lng" />*@
@@ -321,7 +321,7 @@
                                             </div>
                                             <div class="form-check disabled">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="sexRadios" id="sexRadios3" value="others" > Others
+                                                    <input class="form-check-input" type="radio" name="sexRadios" id="sexRadios3" value="others"> Others
                                                 </label>
                                             </div>
                                         </div>
