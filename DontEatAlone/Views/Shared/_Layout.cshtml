@@ -1,128 +1,129 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Don't Eat Alone</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="~/css/layui.css" />
-    <script src="~/js/layui.js"></script>
-    <environment include="Development">
-        <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    </environment>
-    <style>
-        #map {
-            height: 500px;
-            width: 100%;
-        }
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Don't Eat Alone</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="~/css/layui.css" />
+        <script src="~/js/layui.js"></script>
+        <environment include="Development">
+            <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        </environment>
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        </environment>
 
-        .table td {
-            text-align: center;
-        }
+        <style>
+            #map {
+                height: 500px;
+                width: 100%;
+            }
 
-        .table th {
-            text-align: center;
-        }
-    </style>
+            .table td {
+                text-align: center;
+            }
 
-    @*<script>
-            $(document).ready(function() {
+            .table th {
+                text-align: center;
+            }
+        </style>
 
-            var docHeight = $(window).height();
-            var footerHeight = $('#footer').height();
-            var footerTop = $('#footer').position().top + footerHeight;
+        @*<script>
+                $(document).ready(function() {
 
-            if (footerTop < docHeight) {
-                    $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
-                }
-            });
-        </script>*@
-</head>
-<body>
-    <div id="wrap">
-        <div class="container">
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Don't Eat Alone</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                            @if (SignInManager.IsSignedIn(User))
-                            {
+                var docHeight = $(window).height();
+                var footerHeight = $('#footer').height();
+                var footerTop = $('#footer').position().top + footerHeight;
+
+                if (footerTop < docHeight) {
+                        $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
+                    }
+                });
+            </script>*@
+    </head>
+
+    <body>
+        <div id="wrap">
+            <div class="container">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Don't Eat Alone</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li><a asp-area="" asp-controller="Home" asp-action="CreateReservation">Create a Reservation</a></li>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="ViewReservations">Find Reservations</a></li>
+                                }
+                                <li><a asp-area="" asp-controller="Home" asp-action="APIDocs">API</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="CreateReservation">Create Reservation</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="ViewReservations">Reservations</a></li>
-                            }
-                            <li><a asp-area="" asp-controller="Home" asp-action="APIDocs">API</a></li>
-                        </ul>
-                        @await Html.PartialAsync("_LoginPartial")
+                            </ul>
+                            @await Html.PartialAsync("_LoginPartial")
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
 
-
-            @RenderBody()
+                @RenderBody()
+            </div>
+            <div id="push"></div>
         </div>
-        <div id="push"></div>
-    </div>
 
-    <div id="footer">
-        <div class="container">
-            @*<p>
-                <strong>
-                    Last updated: (2018-02-27 2:30 PM)
-                </strong>
-                </p>
-                <div class="dropup">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        Documentation
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="~/doc/Application Summary.docx">Application Summary (Updated: 13-Feb-2017 13:00)</a></li>
-                        <li><a href="~/doc/Functional Requirements.docx">Functional Requirements (Updated: 13-Feb-2017 15:00)</a></li>
-                        <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram (Updated: 20-Dec-2017 12:00)</a></li>
-                        <li><a href="~/doc/ERD.png">ERD (Updated: 27-Feb-2018 10:00)</a></li>
-                        <li><a href="~/doc/appdb.txt" >SQL Script (Updated: 27-Feb-2018 13:30)</a></li>
-                    </ul>
-                </div>*@
-            <div class="text-center">
-                <div class="pull-center">
-                    <p>Connect with us via social media!</p>
-                    <img src="~/images/Social-Media-Bar.png" alt="Social Media Links" style="width:360px;height:45px;border:unset" />
+        <div id="footer">
+            <div class="container">
+                @*<p>
+                    <strong>
+                        Last updated: (2018-02-27 2:30 PM)
+                    </strong>
+                    </p>
+                    <div class="dropup">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            Documentation
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/doc/Application Summary.docx">Application Summary (Updated: 13-Feb-2017 13:00)</a></li>
+                            <li><a href="~/doc/Functional Requirements.docx">Functional Requirements (Updated: 13-Feb-2017 15:00)</a></li>
+                            <li><a href="~/doc/Use Case Diagram.png">Use Case Diagram (Updated: 20-Dec-2017 12:00)</a></li>
+                            <li><a href="~/doc/ERD.png">ERD (Updated: 27-Feb-2018 10:00)</a></li>
+                            <li><a href="~/doc/appdb.txt" >SQL Script (Updated: 27-Feb-2018 13:30)</a></li>
+                        </ul>
+                    </div>*@
+                <div class="text-center">
+                    <div class="pull-center">
+                        <p>Connect with us via social media!</p>
+                        <img src="~/images/Social-Media-Bar.png" alt="Social Media Links" style="width:360px;height:45px;border:unset" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKtdwDUEBfyH1WIceQmylNKXn0HfT4LyU&callback=initMap"></script>
 
-    @RenderSection("Scripts", required: false)
-</body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKtdwDUEBfyH1WIceQmylNKXn0HfT4LyU&callback=initMap"></script>
+
+        @RenderSection("Scripts", required: false)
+    </body>
 
 </html>

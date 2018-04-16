@@ -1,13 +1,71 @@
 ﻿@{
-
+    ViewBag.Title = "About Us";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-<br />
-<br />
+<style>
+    div.image-container {
+        display: flex;
+        justify-content: center;
+    }
 
-<div class="container">
-    <div class="row">
-        
+    img {
+        border: none;
+    }
+</style>
+
+<br />
+<br />
+<div class="image-container">
+    <img src="~/images/bearEatingAlone.jpg" alt="Bear Alone">
+</div>
+<div class="content">
+    <h2 class="text-center"><strong>Don't Eat Alone</strong> is by a quartet of Vancouverites passionate about good food and good company.</h2>
+
+    <br />
+
+    <h4>
+        Don't Eat Alone is an app to help you meet someone new and grab a bite. If you're the only one in your friend group who's interested in trying
+        that new Moroccan restaurant, if you're in town on business and would like meet someone new for dinner, if you're just looking for a break from takeout and someone to join you. Don't Eat Alone is the way to meet people and explore the culinary scene.
+    </h4>
+
+    <br />
+
+    <h4 class="text-center"><strong>Create Reservations</strong></h4>
+
+    <br />
+
+    <p class="text-center">
+        Create Reservations for a restaurant you want to try, a special event you want to celebrate, a neighbourhood you've never been to.
+    </p>
+
+    <br /><br />
+
+    <h4 class="text-center"><strong>Join Reservations</strong></h4>
+
+    <br />
+
+    <p class="text-center">
+        Join Reservations at your favourite restaurant, for your favourite cuisine, with someone new who shares your interests.
+    </p>
+
+    <br /><br />
+
+    <h4 class="text-center"><strong>API</strong></h4>
+
+    <br />
+
+    <p class="text-center">
+        Use our API for making your own amazing app, and change people's life for the better!
+    </p>
+
+    <br />
+
+    <h4 class="text-center">
+        Learn more from our code on GitHub:
+    </h4>
+
+    <div style="padding-bottom: 50px" class="image-container">
+        <a href="https://github.com/wokaerhenshen/DontEatAlone-master">
+            <img src="~/images/github.png" alt="GitHub Icon" />
+        </a>
     </div>
 </div>
