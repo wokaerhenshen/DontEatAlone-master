@@ -17,7 +17,8 @@
         }
 
 
-        function addMarker(object) {
+        function addMarker() {
+            let object = markersArray[index++];
             var marker = new google.maps.Marker({
                 position: { lat: object.latitude, lng: object.longtitude },
                 map: map
@@ -28,6 +29,8 @@
             marker.addListener('click', () => {
                 infoWindow.open(map, marker)
             })
+
+            setInterval(addMarker, 1000);
         }
 
         let options = {
@@ -41,7 +44,9 @@
 
         //console.log(@Html.Raw(Json.Serialize(Model)));
 
-        markersArray.map(r => addMarker(r))
+        //markersArray.map(r => addMarker(r))
+        let index = 0;
+        setInterval(addMarker, 1000);
     }
 </script>
 
