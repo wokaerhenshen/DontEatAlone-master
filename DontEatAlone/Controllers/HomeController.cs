@@ -150,13 +150,10 @@ namespace DontEatAlone.Controllers
         }
 
         [Authorize]
-        public IActionResult ViewReservations(Limitations limitations, string sortBy)
+        public IActionResult ViewReservations(Limitations limitations, string sortBy, int? page)
         {
             ViewBag.partySizeSort = sortBy == "party_size" ? "party_size_desc" : "party_size";
             ViewBag.DateSort = sortBy == "date" ? "date_desc" : "date";
-
-            //if (limitations )
-
 
             List <Place> places = _context.Place.Select(p => new Place
             {
@@ -222,6 +219,7 @@ namespace DontEatAlone.Controllers
                 Reservations = reservationsViewModel,
                 Places = places
             };
+            int pageSize = 5;
             return View(model);
         }
 

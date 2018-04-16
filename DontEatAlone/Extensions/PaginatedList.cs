@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DontEatAlone.Data;
+using DontEatAlone.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +36,7 @@ namespace DontEatAlone.Extensions
             }
         }
 
-        public static PaginatedList<T> Create(IQueryable<T> source, int pageIndex,
+        public static PaginatedList<T> Create(List<T> source, int pageIndex,
                       int pageSize)
         {
             var count = source.Count();

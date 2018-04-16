@@ -10,8 +10,17 @@
         function generateMarkerInfoWIndow(title, address, reservations, placeId) {
             let result = `<h5>${title}</h5><h6>${address}</h6>`
             reservations.forEach(r => {
+                //for azure:
+                //result += `<a href='https://donteatalone.azurewebsites.net/Home/ReservationPage/?id=${r.id}'><p>${r.title}</p></a>`
+
+                //for local host:
                 result += `<a href='https://localhost:44351/Home/ReservationPage/?id=${r.id}'><p>${r.title}</p></a>`
             })
+
+            //for azure:
+            //result += `<a href='https://donteatalone.azurewebsites.net/Home/CreateReservation/?id=${placeId}'><p>Create Reservation</p></a>`
+
+            //for localhost:
             result += `<a href='https://localhost:44351/Home/CreateReservation/?id=${placeId}'><p>Create Reservation</p></a>`
             return result
         }
