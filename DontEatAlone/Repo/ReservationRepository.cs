@@ -60,7 +60,7 @@ namespace DontEatAlone.Repo
             string smoking = "";
             string pets = "";
             string alcohol = "";
-            if (limitations.Smoking == true)
+            if (limitations.Smoking == false)
             {
                  smoking = " Smoking Allowed.";
             }else
@@ -68,14 +68,14 @@ namespace DontEatAlone.Repo
                 smoking = " Smoking Not Allowed.";
             }
 
-            if (limitations.Pets == true)
+            if (limitations.Pets == false)
             {
                 pets = " Pets Allowed.";
             }else
             {
                 pets = " Pets Not Allowed.";
             }
-            if (limitations.Alcohol == true)
+            if (limitations.Alcohol == false)
             {
                 alcohol = " Alcohol Allowed.";
             }else

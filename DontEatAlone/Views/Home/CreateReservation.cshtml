@@ -222,9 +222,8 @@
 </script>
 
 
-
 <div class="container">
-    <h2>Create a Reservation</h2>
+    <h2>Create Reservation</h2>
     <br />
     <input class="form-control" id="reservation_title" placeholder="Reservation Title" type="text" />
     <br />
@@ -273,7 +272,6 @@
             <input class="form-check-input" type="radio" name="ageCheck" id="gridRadios1" value="All" checked hidden="hidden">
             <input type="text" id="CuisineType" hidden="hidden">
             <input type="text" id="Language" hidden="hidden">
-            <input type="text" id="Description" hidden="hidden">
         }
 
         else
@@ -318,7 +316,12 @@
                                             </div>
                                             <div class="form-check disabled">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" type="radio" name="sexRadios" id="sexRadios3" value="others" checked="checked"> All
+                                                    <input class="form-check-input" type="radio" name="sexRadios" id="sexRadios3" value="all" checked="checked"> All
+                                                </label>
+                                            </div>
+                                            <div class="form-check disabled">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="sexRadios" id="sexRadios3" value="others" > Others
                                                 </label>
                                             </div>
                                         </div>
