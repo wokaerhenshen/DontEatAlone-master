@@ -51,7 +51,7 @@ namespace DontEatAlone.Services
                 = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
 
                 System.Net.NetworkCredential credentials
-                = new System.Net.NetworkCredential("timetrapper", ":sG]5[2sWKkLNDXY");
+                = new System.Net.NetworkCredential("xxxxx", "xxxxx");
 
                 smtpClient.Credentials = credentials;
                 smtpClient.Send(mailMsg);
